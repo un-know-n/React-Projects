@@ -1,12 +1,24 @@
 .nav {
   grid-area: n;
   background-color: rgb(119, 107, 197);
+  padding-top: 50px;
 }
 
 .item {
   color: #fff;
+  padding-left: 35px;
+  font-size: 20px;
+  margin: 6px 0;
+  text-decoration: none;
 }
 
-.item.active {
-  border-bottom: 2px solid red;
+.item a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.active {
+  border-bottom: 2px solid green;
+  border-bottom-style: dashed;
 }

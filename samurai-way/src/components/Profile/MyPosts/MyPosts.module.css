@@ -1,4 +1,7 @@
-.content {
-  grid-area: c;
-  background-color: rgb(230, 227, 248);
+.posts {
+  padding: 10px;
+}
+
+.postsOverlay {
+  padding: 10px;
 }
