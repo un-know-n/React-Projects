@@ -22,3 +22,32 @@
   border-bottom: 2px solid green;
   border-bottom-style: dashed;
 }
+
+.friendsWrapper {
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: repeat(1fr, auto);
+  grid-template-rows: 1fr;
+  text-align: center;
+}
+
+.friendsTitle {
+  color: #fff;
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+.friendsItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.friendsItem:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+.friendsIcon img {
+  width: 30px;
+  border-radius: 50%;
+}

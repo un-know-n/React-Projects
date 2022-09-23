@@ -3,7 +3,21 @@ import classes from './Navbar.module.css';
 
 const activeLink = ({ isActive }) => (isActive ? classes.active : '');
 
-const Navbar = () => {
+const Navbar = (props) => {
+  const friends = props.friends.map((friend) => {
+    return (
+      <div className={classes.friendsItem}>
+        <div className={classes.friendsIcon}>
+          <img
+            src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+            alt=""
+          />
+        </div>
+        <div className={classes.friendsName}>{friend.name}</div>
+      </div>
+    );
+  });
+
   return (
     <nav className={classes.nav}>
       <div className={classes.item}>
@@ -30,6 +44,11 @@ const Navbar = () => {
         <NavLink to="/settings" className={activeLink}>
           Settings
         </NavLink>
+      </div>
+
+      <div className={classes.friendsWrapper}>
+        <h2 className={classes.friendsTitle}>Friends</h2>
+        {friends}
       </div>
     </nav>
   );

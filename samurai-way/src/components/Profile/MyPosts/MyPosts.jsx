@@ -1,13 +1,31 @@
-import classes from './MyPosts.module.css';
+import React from 'react';
 import Post from './Post/Post';
+import classes from './MyPosts.module.css';
+import { addPost_AC, updateProfileField_AC } from '../../../redux/state';
 
-const MyPosts = () => {
-  let postsData = [
-    { id: 1, post: 'Post 1', likesCount: '12' },
-    { id: 2, post: 'Post 2', likesCount: '14' },
-    { id: 3, post: 'Post 3', likesCount: '1' },
-    { id: 4, post: 'Post 4', likesCount: '18' },
-  ];
+const MyPosts = (props) => {
+  // console.log(props);
+  let posts = props.posts.postsData.map((post) => (
+    <Post title={post.title} positiveCounter={post.likesCount} />
+  ));
+
+  let textareaRef = React.createRef();
+
+  let addPost = () => {
+    //let value = textareaRef.current.value;
+    //addPost(value);
+    // props.addPost();
+    props.dispatch(addPost_AC());
+    // textareaRef.current.value = '';
+    // props.updateInput('');
+  };
+
+  let updateField = () => {
+    props.dispatch(updateProfileField_AC(textareaRef.current.value));
+    // props.updateInput();
+    // console.log(textareaRef.current.value);
+    // console.log(props.posts);
+  };
 
   return (
     <div>
@@ -15,20 +33,18 @@ const MyPosts = () => {
         <h3>my posts</h3>
         <div>
           <div>
-            <textarea>Enter new post</textarea>
+            <textarea
+              ref={textareaRef}
+              value={props.posts.textField}
+              onChange={updateField}
+            ></textarea>
           </div>
           <div>
-            <button>Add post</button>
+            <button onClick={addPost}>Add post</button>
           </div>
         </div>
       </div>
-      <div className={classes.posts}>
-        <Post title="post1" positiveCounter="12" />
-        <Post title="postasfasdf" positiveCounter="13" />
-        <Post title="postdasf" positiveCounter="2" />
-        <Post title="post2" />
-        <Post title="post3" />
-      </div>
+      <div className={classes.posts}>{posts}</div>
     </div>
   );
 };

@@ -1,47 +1,46 @@
-import { NavLink } from 'react-router-dom';
+import React from 'react';
+import { addMessage_AC, updateMessageField_AC } from '../../redux/state';
+import DialogItem from './DialogItem/DialogItem';
 import classes from './Dialogs.module.css';
-
-const DialogItem = (props) => {
-  return (
-    <div className={classes.dialog_item}>
-      <NavLink to={props.id}>{props.name}</NavLink>
-    </div>
-  );
-};
-
-const Message = (props) => {
-  return <div className={classes.message}>{props.message}</div>;
-};
+import Message from './Message/Message';
 
 const Dialogs = (props) => {
-  let dialogsData = [
-    { id: 1, name: 'Person 1' },
-    { id: 2, name: 'Person 2' },
-    { id: 3, name: 'Person 3' },
-    { id: 4, name: 'Person 4' },
-    { id: 5, name: 'Person 5' },
-  ];
+  const dialogs = props.messages.dialogsData.map((dialog) => (
+    <DialogItem name={dialog.name} id={dialog.id} />
+  ));
 
-  let messagesData = [
-    { id: 1, message: 'Message 1' },
-    { id: 2, message: 'Message 2' },
-    { id: 3, message: 'Message 3' },
-    { id: 4, message: 'Message 4' },
-  ];
+  const messages = props.messages.messagesData.map((message) => (
+    <Message message={message.message} />
+  ));
+
+  let textareaRef = React.createRef();
+
+  let addMessage = () => {
+    props.dispatch(addMessage_AC());
+  };
+
+  let updateField = () => {
+    props.dispatch(updateMessageField_AC(textareaRef.current.value));
+  };
 
   return (
     <div className={classes.dialogs}>
-      <div className={classes.dialogs_items}>
-        <DialogItem name="Person 1" id="1" />
-        <DialogItem name="Person 2" id="2" />
-        <DialogItem name="Person 3" id="3" />
-      </div>
-      <div className={classes.messages}>
-        <Message message="lorem" />
-        <Message message="lorem" />
-        <Message message="lorem" />
-        <Message message="lorem" />
-        <Message message="lorem" />
+      <div className={classes.dialogs_items}>{dialogs}</div>
+      <div>
+        <div className={classes.messages}>{messages}</div>
+        <div>
+          <div>
+            <textarea
+              ref={textareaRef}
+              placeholder="Enter new post"
+              value={props.messages.textField}
+              onChange={updateField}
+            ></textarea>
+          </div>
+          <div>
+            <button onClick={addMessage}>Add post</button>
+          </div>
+        </div>
       </div>
     </div>
   );
