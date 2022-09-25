@@ -1,5 +1,4 @@
 import React from 'react';
-import { addMessage_AC, updateMessageField_AC } from '../../redux/state';
 import DialogItem from './DialogItem/DialogItem';
 import classes from './Dialogs.module.css';
 import Message from './Message/Message';
@@ -15,12 +14,12 @@ const Dialogs = (props) => {
 
   let textareaRef = React.createRef();
 
-  let addMessage = () => {
-    props.dispatch(addMessage_AC());
+  let addMessageOnChange = () => {
+    props.addMessage();
   };
 
-  let updateField = () => {
-    props.dispatch(updateMessageField_AC(textareaRef.current.value));
+  let updateFieldOnChange = () => {
+    props.updateField(textareaRef.current.value);
   };
 
   return (
@@ -32,13 +31,12 @@ const Dialogs = (props) => {
           <div>
             <textarea
               ref={textareaRef}
-              placeholder="Enter new post"
+              placeholder='Enter new post'
               value={props.messages.textField}
-              onChange={updateField}
-            ></textarea>
+              onChange={updateFieldOnChange}></textarea>
           </div>
           <div>
-            <button onClick={addMessage}>Add post</button>
+            <button onClick={addMessageOnChange}>Add post</button>
           </div>
         </div>
       </div>

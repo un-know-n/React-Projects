@@ -1,7 +1,6 @@
-const ADD_POST = 'ADD-POST';
-const ADD_MESSAGE = 'ADD-MESSAGE';
-const UPDATE_PROFILE_FIELD = 'UPDATE-PROFILE-FIELD';
-const UPDATE_MESSAGE_FIELD = 'UPDATE-MESSAGE-FIELD';
+import sidebarReducer from './sidebar-reducer';
+import dialogReducer from './dialog-reducer';
+import profileReducer from './profile-reducer';
 
 let store = {
   _callSubscriber() {},
@@ -86,40 +85,11 @@ let store = {
   },
 
   dispatch(action) {
-    switch (action.type) {
-      case ADD_POST:
-        this._addPost();
-        break;
-
-      case ADD_MESSAGE:
-        this._addMessage();
-        break;
-
-      case UPDATE_PROFILE_FIELD:
-        this._updateProfileField(action.updText);
-        break;
-
-      case UPDATE_MESSAGE_FIELD:
-        this._updateMessageField(action.updText);
-        break;
-
-      default:
-        console.error('There is no such action!!!');
-        break;
-    }
+    this._state.profile = profileReducer(this._state.profile, action);
+    this._state.messages = dialogReducer(this._state.messages, action);
+    this._state.sidebar = sidebarReducer(this._state.sidebar, action);
+    this._callSubscriber(this._state);
   },
 };
-
-export const addPost_AC = () => ({ type: ADD_POST });
-export const addMessage_AC = () => ({ type: ADD_MESSAGE });
-
-export const updateProfileField_AC = (updText) => ({
-  type: UPDATE_PROFILE_FIELD,
-  updText: updText,
-});
-export const updateMessageField_AC = (updText) => ({
-  type: UPDATE_MESSAGE_FIELD,
-  updText: updText,
-});
 
 export default store;
