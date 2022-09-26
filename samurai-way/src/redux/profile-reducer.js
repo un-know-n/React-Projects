@@ -1,3 +1,5 @@
+import news from '../components/News/News';
+
 const ADD_POST = 'ADD-POST';
 const UPDATE_PROFILE_FIELD = 'UPDATE-PROFILE-FIELD';
 
@@ -20,18 +22,22 @@ const profileReducer = (state = initialState, action) => {
         title: state.textField,
         likesCount: '0',
       };
-      state.postsData.push(newPostObj);
-      state.textField = '';
-      break;
+      return {
+        ...state,
+        postsData: [...state.postsData, newPostObj],
+        textField: '',
+      };
 
     case UPDATE_PROFILE_FIELD:
-      state.textField = action.updText;
-      break;
+      return {
+        ...state,
+        textField: action.updText,
+      };
 
     default:
       return state;
   }
-  return { ...state };
+  // return { ...state };
 };
 
 export default profileReducer;

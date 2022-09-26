@@ -5,7 +5,7 @@ import classes from './MyPosts.module.css';
 const MyPosts = (props) => {
   // console.log(props);
   let posts = props.posts.postsData.map((post) => (
-    <Post title={post.title} positiveCounter={post.likesCount} />
+    <Post title={post.title} positiveCounter={post.likesCount} key={post.id} />
   ));
 
   let textareaRef = React.createRef();

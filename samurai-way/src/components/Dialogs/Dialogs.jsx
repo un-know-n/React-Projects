@@ -5,11 +5,11 @@ import Message from './Message/Message';
 
 const Dialogs = (props) => {
   const dialogs = props.messages.dialogsData.map((dialog) => (
-    <DialogItem name={dialog.name} id={dialog.id} />
+    <DialogItem name={dialog.name} id={dialog.id} key={dialog.id} />
   ));
 
   const messages = props.messages.messagesData.map((message) => (
-    <Message message={message.message} />
+    <Message message={message.message} key={message.id} />
   ));
 
   let textareaRef = React.createRef();

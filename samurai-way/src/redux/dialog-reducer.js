@@ -26,19 +26,24 @@ const dialogReducer = (state = initialState, action) => {
         id: currentID ? currentID + 1 : 1,
         message: state.textField,
       };
-      state.messagesData.push(message);
-      state.textField = '';
-      break;
+      return {
+        ...state,
+        messagesData: [...state.messagesData, message],
+        textField: '',
+      };
 
     case UPDATE_MESSAGE_FIELD:
-      state.textField = action.updText;
-      break;
+      // state.textField = action.updText;
+      return {
+        ...state,
+        textField: action.updText,
+      };
 
     default:
       return state;
   }
   // return state;
-  return { ...state };
+  // return { ...state };
 };
 
 export default dialogReducer;

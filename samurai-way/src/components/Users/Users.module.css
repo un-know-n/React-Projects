@@ -1,0 +1,14 @@
+.userContainer {
+    display: flex;
+    align-items: center;
+    /*justify-content: center;*/
+}
+
+.userImage {
+    width: 100px;
+    height: 100px;
+}
+
+.selectedPage{
+    font-size: 20px;
+}
