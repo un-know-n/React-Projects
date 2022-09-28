@@ -1,15 +1,18 @@
 import classes from './ProfileInfo.module.css';
 
-const ProfileInfo = () => {
+const ProfileInfo = (props) => {
   return (
     <div>
       <div className={classes.profileBackground}>
-        <img
-          src="https://media.istockphoto.com/photos/extreme-close-up-of-thrashing-emerald-ocean-waves-picture-id1368264124?b=1&k=20&m=1368264124&s=170667a&w=0&h=VzwEBjaq609S8HxHQdT47HB6WRP-MO_bkXgxo9MdGMI="
-          alt=""
-        />
+        <img src={props.profile.photos.large} alt='' />
       </div>
-      <div className={classes.descriptionBlock}>ava + desc</div>
+      <div className={classes.descriptionBlock}>
+        <div className={classes.fullName}>{props.profile.fullName}</div>
+        <div className={classes.aboutMe}>{props.profile.aboutMe}</div>
+        <div className={classes.lookingForJob}>
+          {props.profile.lookingForAJob}
+        </div>
+      </div>
     </div>
   );
 };

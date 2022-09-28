@@ -2,6 +2,7 @@ import news from '../components/News/News';
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_PROFILE_FIELD = 'UPDATE-PROFILE-FIELD';
+const SET_USER_PROFILE = 'SET-USER-PROFILE';
 
 let initialState = {
   postsData: [
@@ -11,6 +12,7 @@ let initialState = {
     { id: 4, title: 'Post 4', likesCount: '18' },
   ],
   textField: '',
+  profile: null,
 };
 
 const profileReducer = (state = initialState, action) => {
@@ -34,6 +36,9 @@ const profileReducer = (state = initialState, action) => {
         textField: action.updText,
       };
 
+    case SET_USER_PROFILE:
+      return { ...state, profile: action.profile };
+
     default:
       return state;
   }
@@ -46,4 +51,8 @@ export const addPost_AC = () => ({ type: ADD_POST });
 export const updateProfileField_AC = (updText) => ({
   type: UPDATE_PROFILE_FIELD,
   updText: updText,
+});
+export const setUserProfile = (profile) => ({
+  type: SET_USER_PROFILE,
+  profile,
 });

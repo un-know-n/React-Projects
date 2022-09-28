@@ -9,6 +9,7 @@ import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
 import UsersContainer from './components/Users/UsersContainer';
+import ProfileContainer from './components/Profile/ProfileContainer';
 
 const App = (props) => {
   return (
@@ -19,9 +20,9 @@ const App = (props) => {
         <div className='app-wrapper-content'>
           <Routes>
             <Route
-              path='/profile'
+              path='/profile/:userId'
               element={
-                <Profile />
+                <ProfileContainer />
                 // posts={props.posts} dispatch={props.dispatch}
               }
             />
