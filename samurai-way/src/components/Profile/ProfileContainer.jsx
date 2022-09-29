@@ -1,8 +1,10 @@
 import React from 'react';
 import Profile from './Profile';
 import { connect } from 'react-redux';
-import { setUserProfile } from '../../redux/profile-reducer';
-import * as axios from 'axios';
+import {
+  setUserProfile,
+  takeUserThunkCreator,
+} from '../../redux/profile-reducer';
 import Preloader from '../common/Preloader/Preloader';
 import { useParams } from 'react-router-dom';
 
@@ -14,15 +16,12 @@ class ProfileContainer extends React.Component {
   componentDidMount() {
     let userId = this.props.param.userId;
     // if (!userId) userId = '2';
-    axios
-      .get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
-      .then((response) => {
-        this.props.setUserProfile(response.data);
-      });
+    this.props.takeUser(userId);
+    //usersAPI.takeUser(userId).then((data) => this.props.setUserProfile(data));
   }
 
   render() {
-    console.log(this.props.param);
+    // console.log(this.props.param);
     if (!this.props.profile) return <Preloader />;
     return <Profile {...this.props} />;
   }
@@ -38,4 +37,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { setUserProfile })(TakeParams);
+export default connect(mapStateToProps, { takeUser: takeUserThunkCreator })(
+  TakeParams,
+);

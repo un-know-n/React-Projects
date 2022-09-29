@@ -1,4 +1,5 @@
 import news from '../components/News/News';
+import { usersAPI } from '../api/api';
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_PROFILE_FIELD = 'UPDATE-PROFILE-FIELD';
@@ -56,3 +57,9 @@ export const setUserProfile = (profile) => ({
   type: SET_USER_PROFILE,
   profile,
 });
+
+export const takeUserThunkCreator = (userId) => {
+  return (dispatch) => {
+    usersAPI.takeUser(userId).then((data) => dispatch(setUserProfile(data)));
+  };
+};

@@ -1,9 +1,14 @@
 import classes from './Users.module.css';
 import userPhoto from '../../assets/images/user.webp';
 import { NavLink } from 'react-router-dom';
+import { usersAPI } from '../../api/api';
+import {
+  followUserThunkCreator,
+  unfollowUserThunkCreator,
+} from '../../redux/users-reducer';
 
 const Users = (props) => {
-  let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
+  let pagesCount = Math.ceil(props.totalUsersCount / props.usersAmount);
   let pages = [];
   let currentPage = props.currentPage;
   for (
@@ -45,11 +50,25 @@ const Users = (props) => {
               </div>
               <div>
                 {user.followed ? (
-                  <button onClick={() => props.unfollow(user.id)}>
+                  <button
+                    disabled={props.followInProgress.some(
+                      (id) => id === user.id,
+                    )}
+                    onClick={() => {
+                      props.unfollowUserThunkCreator(user.id);
+                    }}>
                     Unfollow
                   </button>
                 ) : (
-                  <button onClick={() => props.follow(user.id)}>Follow</button>
+                  <button
+                    disabled={props.followInProgress.some(
+                      (id) => id === user.id,
+                    )}
+                    onClick={() => {
+                      props.followUserThunkCreator(user.id);
+                    }}>
+                    Follow
+                  </button>
                 )}
               </div>
             </span>
