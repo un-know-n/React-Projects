@@ -5,6 +5,8 @@ import {
 import Dialogs from './Dialogs';
 // import StoreContext from '../../StoreContext';
 import { connect } from 'react-redux';
+import { withAuthRedirect } from '../../hoc/withAuthRedirect';
+import { compose } from 'redux';
 
 // const DialogsContainer = () => {
 //   return (
@@ -32,6 +34,7 @@ import { connect } from 'react-redux';
 const mapStateToProps = (state) => {
   return {
     messages: state.messages,
+    isAuth: state.auth.isAuth,
   };
 };
 
@@ -42,6 +45,13 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs);
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withAuthRedirect,
+)(Dialogs);
 
-export default DialogsContainer;
+// const DialogsContainer = withAuthRedirect(
+//   connect(mapStateToProps, mapDispatchToProps)(Dialogs),
+// );
+//
+// export default DialogsContainer;
