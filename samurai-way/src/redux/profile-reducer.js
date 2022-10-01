@@ -1,9 +1,8 @@
-import news from '../components/News/News';
-import { usersAPI } from '../api/api';
+import { profileAPI } from '../api/api';
 
 const ADD_POST = 'ADD-POST';
-const UPDATE_PROFILE_FIELD = 'UPDATE-PROFILE-FIELD';
 const SET_USER_PROFILE = 'SET-USER-PROFILE';
+const SET_USER_STATUS = 'SET-USER-STATUS';
 
 let initialState = {
   postsData: [
@@ -12,8 +11,8 @@ let initialState = {
     { id: 3, title: 'Post 3', likesCount: '1' },
     { id: 4, title: 'Post 4', likesCount: '18' },
   ],
-  textField: '',
   profile: null,
+  status: '',
 };
 
 const profileReducer = (state = initialState, action) => {
@@ -22,44 +21,61 @@ const profileReducer = (state = initialState, action) => {
       let currentID = state.postsData.at(-1).id;
       const newPostObj = {
         id: currentID ? currentID + 1 : 1,
-        title: state.textField,
+        title: action.message,
         likesCount: '0',
       };
       return {
         ...state,
         postsData: [...state.postsData, newPostObj],
-        textField: '',
-      };
-
-    case UPDATE_PROFILE_FIELD:
-      return {
-        ...state,
-        textField: action.updText,
       };
 
     case SET_USER_PROFILE:
       return { ...state, profile: action.profile };
 
+    case SET_USER_STATUS:
+      return { ...state, status: action.userStatus };
+
     default:
       return state;
   }
-  // return { ...state };
 };
 
 export default profileReducer;
 
-export const addPost_AC = () => ({ type: ADD_POST });
-export const updateProfileField_AC = (updText) => ({
-  type: UPDATE_PROFILE_FIELD,
-  updText: updText,
-});
+export const addPost_AC = (message) => ({ type: ADD_POST, message });
 export const setUserProfile = (profile) => ({
   type: SET_USER_PROFILE,
   profile,
 });
+export const setUserStatus = (userStatus) => ({
+  type: SET_USER_STATUS,
+  userStatus,
+});
 
-export const takeUserThunkCreator = (userId) => {
+export const takeUser_TC = (userId) => {
   return (dispatch) => {
-    usersAPI.takeUser(userId).then((data) => dispatch(setUserProfile(data)));
+    profileAPI
+      .takeUserProfile(userId)
+      .then((data) => dispatch(setUserProfile(data)));
+  };
+};
+
+export const getUserStatus_TC = (userId) => {
+  return (dispatch) => {
+    profileAPI.getUserStatus(userId).then((data) => {
+      // console.log(data);
+      dispatch(setUserStatus(data));
+    });
+  };
+};
+
+export const updateUserStatus_TC = (status) => {
+  return (dispatch) => {
+    profileAPI.updateUserStatus(status).then((response) => {
+      if (response.data.resultCode === 0) {
+        // console.log(response.data);
+        dispatch(setUserStatus(status));
+      }
+    });
   };
 };

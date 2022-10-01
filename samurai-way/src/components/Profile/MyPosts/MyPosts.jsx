@@ -1,6 +1,7 @@
 import React from 'react';
 import Post from './Post/Post';
 import classes from './MyPosts.module.css';
+import { Field, reduxForm } from 'redux-form';
 
 const MyPosts = (props) => {
   // console.log(props);
@@ -8,43 +9,39 @@ const MyPosts = (props) => {
     <Post title={post.title} positiveCounter={post.likesCount} key={post.id} />
   ));
 
-  let textareaRef = React.createRef();
-
-  let addPostOnChange = () => {
-    //let value = textareaRef.current.value;
-    //addPost(value);
-    // props.addPost();
-    props.addPost();
-    // textareaRef.current.value = '';
-    // props.updateInput('');
-  };
-
-  let updateFieldOnChange = () => {
-    props.updateField(textareaRef.current.value);
-    // props.updateInput();
-    // console.log(textareaRef.current.value);
-    // console.log(props.posts);
+  const onPostSubmit = (formData) => {
+    // console.log(formData.messageField);
+    props.addPost(formData.messageField);
   };
 
   return (
     <div>
       <div className={classes.postsOverlay}>
         <h3>my posts</h3>
-        <div>
-          <div>
-            <textarea
-              ref={textareaRef}
-              value={props.posts.textField}
-              onChange={updateFieldOnChange}></textarea>
-          </div>
-          <div>
-            <button onClick={addPostOnChange}>Add post</button>
-          </div>
-        </div>
+        <MyPostsReduxForm onSubmit={onPostSubmit} />
       </div>
       <div className={classes.posts}>{posts}</div>
     </div>
   );
 };
+
+const MyPostsForm = (props) => {
+  return (
+    <div>
+      <form onSubmit={props.handleSubmit}>
+        <div>
+          <Field name='messageField' component='textarea' />
+        </div>
+        <div>
+          <button>Add post</button>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+const MyPostsReduxForm = reduxForm({
+  form: 'myPostsMessage',
+})(MyPostsForm);
 
 export default MyPosts;

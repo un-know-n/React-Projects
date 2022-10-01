@@ -1,7 +1,4 @@
-import {
-  addPost_AC,
-  updateProfileField_AC,
-} from '../../../redux/profile-reducer';
+import { addPost_AC } from '../../../redux/profile-reducer';
 import MyPosts from './MyPosts';
 // import StoreContext from '../../../StoreContext';
 import { connect } from 'react-redux';
@@ -38,8 +35,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateField: (value) => dispatch(updateProfileField_AC(value)),
-    addPost: () => dispatch(addPost_AC()),
+    addPost: (message) => dispatch(addPost_AC(message)),
   };
 };
 

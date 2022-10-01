@@ -1,7 +1,4 @@
-import {
-  addMessage_AC,
-  updateMessageField_AC,
-} from '../../redux/dialog-reducer';
+import { addMessage_AC } from '../../redux/dialog-reducer';
 import Dialogs from './Dialogs';
 // import StoreContext from '../../StoreContext';
 import { connect } from 'react-redux';
@@ -40,8 +37,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateField: (value) => dispatch(updateMessageField_AC(value)),
-    addMessage: () => dispatch(addMessage_AC()),
+    addMessage: (message) => dispatch(addMessage_AC(message)),
   };
 };
 

@@ -3,11 +3,9 @@ import DialogItem from './DialogItem/DialogItem';
 import classes from './Dialogs.module.css';
 import Message from './Message/Message';
 import { Navigate } from 'react-router-dom';
+import { Field, reduxForm } from 'redux-form';
 
 const Dialogs = (props) => {
-  // console.log(props);
-  // debugger;
-
   if (props.isAuth === false) return <Navigate to='/login' />;
 
   const dialogs = props.messages.dialogsData.map((dialog) => (
@@ -18,14 +16,8 @@ const Dialogs = (props) => {
     <Message message={message.message} key={message.id} />
   ));
 
-  let textareaRef = React.createRef();
-
-  let addMessageOnChange = () => {
-    props.addMessage();
-  };
-
-  let updateFieldOnChange = () => {
-    props.updateField(textareaRef.current.value);
+  const onDialogSubmit = (formData) => {
+    props.addMessage(formData.dialogField);
   };
 
   return (
@@ -33,21 +25,33 @@ const Dialogs = (props) => {
       <div className={classes.dialogs_items}>{dialogs}</div>
       <div>
         <div className={classes.messages}>{messages}</div>
-        <div>
-          <div>
-            <textarea
-              ref={textareaRef}
-              placeholder='Enter new post'
-              value={props.messages.textField}
-              onChange={updateFieldOnChange}></textarea>
-          </div>
-          <div>
-            <button onClick={addMessageOnChange}>Add post</button>
-          </div>
-        </div>
+        <DialogsReduxForm onSubmit={onDialogSubmit} />
       </div>
     </div>
   );
 };
+
+const DialogsForm = (props) => {
+  return (
+    <div>
+      <form onSubmit={props.handleSubmit}>
+        <div>
+          <Field
+            name='dialogField'
+            component='textarea'
+            placeholder='Enter new post'
+          />
+        </div>
+        <div>
+          <button>Add post</button>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+const DialogsReduxForm = reduxForm({
+  form: 'dialogsForm',
+})(DialogsForm);
 
 export default Dialogs;

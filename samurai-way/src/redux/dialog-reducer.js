@@ -1,5 +1,4 @@
 const ADD_MESSAGE = 'ADD-MESSAGE';
-const UPDATE_MESSAGE_FIELD = 'UPDATE-MESSAGE-FIELD';
 
 let initialState = {
   dialogsData: [
@@ -15,7 +14,6 @@ let initialState = {
     { id: 3, message: 'Message 3' },
     { id: 4, message: 'Message 4' },
   ],
-  textField: '',
 };
 
 const dialogReducer = (state = initialState, action) => {
@@ -24,32 +22,18 @@ const dialogReducer = (state = initialState, action) => {
       const currentID = state.messagesData.at(-1).id;
       let message = {
         id: currentID ? currentID + 1 : 1,
-        message: state.textField,
+        message: action.message,
       };
       return {
         ...state,
         messagesData: [...state.messagesData, message],
-        textField: '',
-      };
-
-    case UPDATE_MESSAGE_FIELD:
-      // state.textField = action.updText;
-      return {
-        ...state,
-        textField: action.updText,
       };
 
     default:
       return state;
   }
-  // return state;
-  // return { ...state };
 };
 
 export default dialogReducer;
 
-export const addMessage_AC = () => ({ type: ADD_MESSAGE });
-export const updateMessageField_AC = (updText) => ({
-  type: UPDATE_MESSAGE_FIELD,
-  updText: updText,
-});
+export const addMessage_AC = (message) => ({ type: ADD_MESSAGE, message });
