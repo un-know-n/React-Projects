@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from './Header';
 import { connect } from 'react-redux';
-import { authUserThunkCreator } from '../../redux/auth-reducer';
+import { isUserAuthorized_TC, logOutUser_TC } from '../../redux/auth-reducer';
 
 class HeaderContainer extends React.Component {
   constructor(props) {
@@ -9,7 +9,7 @@ class HeaderContainer extends React.Component {
   }
 
   componentDidMount() {
-    this.props.authUserThunkCreator();
+    this.props.isUserAuthorized_TC();
     // usersAPI.authorizeUser().then((response) => {
     //   if (response.data.resultCode === 0) {
     //     let { id, login, email } = response.data.data;
@@ -31,6 +31,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { authUserThunkCreator })(
+export default connect(mapStateToProps, { isUserAuthorized_TC, logOutUser_TC })(
   HeaderContainer,
 );

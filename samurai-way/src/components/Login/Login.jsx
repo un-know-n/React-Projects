@@ -1,10 +1,27 @@
 import classes from './Login.module.css';
 import { Field, reduxForm } from 'redux-form';
+import { FormControlElement } from '../common/FormsControls/FormsControls';
+import {
+  maxField,
+  minField,
+  requiredField,
+} from '../../utils/validators/validators';
+import { connect } from 'react-redux';
+import { logInUser_TC } from '../../redux/auth-reducer';
+import { Navigate } from 'react-router-dom';
+
+const maxSymbols15 = maxField(30);
+const minSymbols3 = minField(3);
+
+const Input = FormControlElement('input');
 
 const Login = (props) => {
-  const onSubmitLogin = (formData) => {
-    console.log(formData);
+  const onSubmitLogin = ({ email, password, rememberMe }) => {
+    //console.log(email, password, rememberMe);
+    props.logInUser_TC(email, password, rememberMe);
   };
+
+  if (props.isAuth) return <Navigate to='/profile' />;
 
   return (
     <div className={classes.loginWrapper}>
@@ -15,17 +32,31 @@ const Login = (props) => {
 };
 
 const LoginForm = (props) => {
+  // console.log(props.error);
   return (
     <>
+      {props.error ? <div className={classes.error}>{props.error}</div> : ''}
       <form onSubmit={props.handleSubmit}>
         <div>
-          <Field placeholder='Login' component={'input'} name={'login'} />
+          <Field
+            label='Email'
+            component={Input}
+            name='email'
+            type='email'
+            validate={[requiredField, maxSymbols15, minSymbols3]}
+          />
         </div>
         <div>
-          <Field placeholder='Password' component={'input'} name={'password'} />
+          <Field
+            label='Password'
+            component={Input}
+            name='password'
+            type='password'
+            validate={[requiredField, maxSymbols15, minSymbols3]}
+          />
         </div>
         <div>
-          <Field component={'input'} type={'checkbox'} name={'rememberMe'} />
+          <Field component={Input} type='checkbox' name='rememberMe' />
           remember me
         </div>
         <div>
@@ -40,4 +71,10 @@ const LoginReduxForm = reduxForm({
   form: 'login',
 })(LoginForm);
 
-export default Login;
+const mapState = (state) => {
+  return {
+    isAuth: state.auth.isAuth,
+  };
+};
+
+export default connect(mapState, { logInUser_TC })(Login);

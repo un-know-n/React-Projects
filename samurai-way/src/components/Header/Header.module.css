@@ -1,12 +1,24 @@
 .header {
-  grid-area: h;
-  background-color: darkslateblue;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
+    grid-area: h;
+    background-color: darkslateblue;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
 }
 
 .header img {
-  width: 50px;
+    width: 50px;
+}
+
+.loginLink {
+    text-decoration: none;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    transition: all .5s;
+}
+
+.loginLink:hover {
+    opacity: 0.7;
 }

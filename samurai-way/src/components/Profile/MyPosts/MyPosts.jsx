@@ -2,6 +2,11 @@ import React from 'react';
 import Post from './Post/Post';
 import classes from './MyPosts.module.css';
 import { Field, reduxForm } from 'redux-form';
+import { maxField, requiredField } from '../../../utils/validators/validators';
+import { FormControlElement } from '../../common/FormsControls/FormsControls';
+
+const maxSymbols50 = maxField(50);
+const Textarea = FormControlElement('textarea');
 
 const MyPosts = (props) => {
   // console.log(props);
@@ -30,7 +35,12 @@ const MyPostsForm = (props) => {
     <div>
       <form onSubmit={props.handleSubmit}>
         <div>
-          <Field name='messageField' component='textarea' />
+          <Field
+            name='messageField'
+            component={Textarea}
+            label='Enter your post'
+            validate={[requiredField, maxSymbols50]}
+          />
         </div>
         <div>
           <button>Add post</button>
