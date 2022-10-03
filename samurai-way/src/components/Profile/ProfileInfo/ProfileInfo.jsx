@@ -1,5 +1,5 @@
 import classes from './ProfileInfo.module.css';
-import ProfileStatus from './ProfileStatus/ProfileStatus';
+import ProfileStatusWithHooks from './ProfileStatus/ProfileStatusWithHooks';
 
 const ProfileInfo = (props) => {
   return (
@@ -13,7 +13,7 @@ const ProfileInfo = (props) => {
         <div className={classes.lookingForJob}>
           {props.profile.lookingForAJob}
         </div>
-        <ProfileStatus
+        <ProfileStatusWithHooks
           status={props.status}
           updateUserStatus={props.updateUserStatus}
         />

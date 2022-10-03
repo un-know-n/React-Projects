@@ -9,13 +9,11 @@ const maxSymbols50 = maxField(50);
 const Textarea = FormControlElement('textarea');
 
 const MyPosts = (props) => {
-  // console.log(props);
   let posts = props.posts.postsData.map((post) => (
     <Post title={post.title} positiveCounter={post.likesCount} key={post.id} />
   ));
 
   const onPostSubmit = (formData) => {
-    // console.log(formData.messageField);
     props.addPost(formData.messageField);
   };
 

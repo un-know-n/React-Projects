@@ -1,31 +1,6 @@
 import { addPost_AC } from '../../../redux/profile-reducer';
 import MyPosts from './MyPosts';
-// import StoreContext from '../../../StoreContext';
 import { connect } from 'react-redux';
-
-// const MyPostsContainer = () => {
-//   return (
-//     <StoreContext.Consumer>
-//       {(store) => {
-//         // console.log(store.getState());
-//         let addPost = () => {
-//           store.dispatch(addPost_AC());
-//         };
-//
-//         let updateField = (value) => {
-//           store.dispatch(updateProfileField_AC(value));
-//         };
-//         return (
-//           <MyPosts
-//             updateField={updateField}
-//             addPost={addPost}
-//             posts={store.getState().profile}
-//           />
-//         );
-//       }}
-//     </StoreContext.Consumer>
-//   );
-// };
 
 const mapStateToProps = (state) => {
   return {

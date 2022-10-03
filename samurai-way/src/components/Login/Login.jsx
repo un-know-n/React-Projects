@@ -17,7 +17,6 @@ const Input = FormControlElement('input');
 
 const Login = (props) => {
   const onSubmitLogin = ({ email, password, rememberMe }) => {
-    //console.log(email, password, rememberMe);
     props.logInUser_TC(email, password, rememberMe);
   };
 
@@ -32,7 +31,6 @@ const Login = (props) => {
 };
 
 const LoginForm = (props) => {
-  // console.log(props.error);
   return (
     <>
       {props.error ? <div className={classes.error}>{props.error}</div> : ''}

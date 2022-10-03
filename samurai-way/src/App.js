@@ -1,8 +1,6 @@
 import './App.css';
-import Header from './components/Header/Header';
 import Navbar from './components/Navbar/Navbar';
-import Profile from './components/Profile/Profile';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './assets/images/header-logo.png';
 import News from './components/News/News';
 import Music from './components/Music/Music';
@@ -12,48 +10,46 @@ import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import Login from './components/Login/Login';
+import { Component } from 'react';
+import { initializeApp } from './redux/app-reducer';
+import { connect } from 'react-redux';
+import Preloader from './components/common/Preloader/Preloader';
 
-const App = (props) => {
-  return (
-    <BrowserRouter>
-      <div className='app-wrapper'>
-        <HeaderContainer />
-        <Navbar friends={props.friends} />
-        <div className='app-wrapper-content'>
-          <Routes>
-            <Route
-              path='/profile/:userId'
-              element={
-                <ProfileContainer />
-                // posts={props.posts} dispatch={props.dispatch}
-              }
-            />
-            <Route
-              path='/profile'
-              element={
-                <ProfileContainer />
-                // posts={props.posts} dispatch={props.dispatch}
-              }
-            />
+class App extends Component {
+  componentDidMount() {
+    this.props.initializeApp();
+  }
 
-            <Route
-              path='/dialogs/*'
-              element={
-                <DialogsContainer />
-                // messages={props.messages}
-                // dispatch={props.dispatch}
-              }
-            />
-            <Route path='/login' element={<Login />}></Route>
-            <Route path='/users' element={<UsersContainer />}></Route>
-            <Route path='/news' element={<News />} />
-            <Route path='/music' element={<Music />} />
-            <Route path='/settings' element={<Settings />} />
-          </Routes>
+  render() {
+    if (!this.props.isInitialized) return <Preloader />;
+    return (
+      <BrowserRouter>
+        <div className='app-wrapper'>
+          <HeaderContainer />
+          <Navbar friends={this.props.friends} />
+          <div className='app-wrapper-content'>
+            <Routes>
+              <Route path='/profile/:userId' element={<ProfileContainer />} />
+              <Route path='/profile' element={<ProfileContainer />} />
+
+              <Route path='/dialogs/*' element={<DialogsContainer />} />
+              <Route path='/login' element={<Login />}></Route>
+              <Route path='/users' element={<UsersContainer />}></Route>
+              <Route path='/news' element={<News />} />
+              <Route path='/music' element={<Music />} />
+              <Route path='/settings' element={<Settings />} />
+            </Routes>
+          </div>
         </div>
-      </div>
-    </BrowserRouter>
-  );
+      </BrowserRouter>
+    );
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    isInitialized: state.app.initialized,
+  };
 };
 
-export default App;
+export default connect(mapStateToProps, { initializeApp })(App);

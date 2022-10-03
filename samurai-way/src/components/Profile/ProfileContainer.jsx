@@ -9,6 +9,7 @@ import {
 import Preloader from '../common/Preloader/Preloader';
 import { useParams } from 'react-router-dom';
 import { compose } from 'redux';
+import { withRouter } from '../../hoc/withRouter';
 
 class ProfileContainer extends React.Component {
   constructor(props) {
@@ -17,16 +18,18 @@ class ProfileContainer extends React.Component {
 
   componentDidMount() {
     let userId = this.props.param.userId;
-    //if (!userId) return;
-    if (!userId && this.props.isAuth) userId = this.props.userId;
+    if (!userId) {
+      userId = this.props.userId;
+      if (!userId) {
+        debugger;
+        this.props.navigate('/login');
+      }
+    }
     this.props.takeUserProfile(userId);
     this.props.getUserStatus_TC(userId);
-    //usersAPI.takeUser(userId).then((data) => this.props.setUserProfile(data));
   }
 
   render() {
-    // console.log(this.props.param);
-    //if (!this.props.isAuth) return <Navigate to='/login' />;
     if (!this.props.profile) return <Preloader />;
     return (
       <Profile
@@ -38,15 +41,9 @@ class ProfileContainer extends React.Component {
   }
 }
 
-// const RedirectProfileContainer = withAuthRedirect(<ProfileContainer {...props} param={useParams()} />);
-
 const TakeParams = (props) => {
   return <ProfileContainer {...props} param={useParams()} />;
 };
-
-// const TakeParams = (props) => {
-//   return withAuthRedirect(<ProfileContainer {...props} param={useParams()} />);
-// };
 
 const mapStateToProps = (state) => {
   return {
@@ -58,6 +55,7 @@ const mapStateToProps = (state) => {
 };
 
 export default compose(
+  withRouter,
   connect(mapStateToProps, {
     takeUserProfile: takeUser_TC,
     getUserStatus_TC,

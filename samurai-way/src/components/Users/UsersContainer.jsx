@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import {
-  follow,
   followUserThunkCreator,
   getUsersThunkCreator,
   setCurrentPage,
@@ -8,13 +7,20 @@ import {
   takeUsers,
   toggleFollowInProgress,
   toggleIsFetching,
-  unfollow,
   unfollowUserThunkCreator,
 } from '../../redux/users-reducer';
 import React from 'react';
 import Users from './Users';
 import Preloader from '../common/Preloader/Preloader';
-import { usersAPI } from '../../api/api';
+
+import {
+  getCurrentPage,
+  getFollowInProgress,
+  getIsFetching,
+  getTotalUsersCount,
+  getUsers,
+  getUsersAmount,
+} from '../../redux/selectors/users-selectors';
 
 class UsersContainer extends React.Component {
   constructor(props) {
@@ -59,12 +65,12 @@ class UsersContainer extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    users: state.users.usersData,
-    usersAmount: state.users.usersAmount,
-    totalUsersCount: state.users.totalUsersCount,
-    currentPage: state.users.currentPage,
-    isFetching: state.users.isFetching,
-    followInProgress: state.users.followInProgress,
+    users: getUsers(state),
+    usersAmount: getUsersAmount(state),
+    totalUsersCount: getTotalUsersCount(state),
+    currentPage: getCurrentPage(state),
+    isFetching: getIsFetching(state),
+    followInProgress: getFollowInProgress(state),
   };
 };
 
