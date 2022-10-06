@@ -10,21 +10,16 @@ class ProfileStatus extends Component {
     this.setState({
       editMode: isEdit,
     });
-    // debugger;
     this.props.updateUserStatus(this.state.status);
   };
 
   onStatusChange = (e) => {
-    // console.log(e.currentTarget.value);
     this.setState({
       status: e.currentTarget.value,
     });
-    //console.log(this.state.status);
   };
 
   componentDidUpdate(prevProps, prevState) {
-    // console.log(prevState.status);
-    // console.log(prevProps.status);
     //If current status from server !== old status from server -> rewrite local state
     if (prevProps.status !== this.props.status) {
       this.setState({

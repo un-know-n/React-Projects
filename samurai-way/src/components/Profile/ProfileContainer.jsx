@@ -21,7 +21,6 @@ class ProfileContainer extends React.Component {
     if (!userId) {
       userId = this.props.userId;
       if (!userId) {
-        debugger;
         this.props.navigate('/login');
       }
     }

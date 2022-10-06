@@ -1,12 +1,12 @@
 import classes from '../../Users/Users.module.css';
 
 const Pagination = ({
-  totalUsersCount,
+  totalUsersCount: totalItemsCount,
   usersAmount,
   currentPage,
   usersFromPage,
 }) => {
-  let pagesCount = Math.ceil(totalUsersCount / usersAmount);
+  let pagesCount = Math.ceil(totalItemsCount / usersAmount);
   let pages = [];
   // let currentPage = props.currentPage;
   for (
