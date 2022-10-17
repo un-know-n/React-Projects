@@ -69,6 +69,7 @@ const mapStateToProps = (state) => {
     usersAmount: getUsersAmount(state),
     totalUsersCount: getTotalUsersCount(state),
     currentPage: getCurrentPage(state),
+    //portionsSize: getPortionSize(state),
     isFetching: getIsFetching(state),
     followInProgress: getFollowInProgress(state),
   };

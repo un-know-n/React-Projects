@@ -17,6 +17,9 @@ export const getTotalUsersCount = (state) => {
 export const getCurrentPage = (state) => {
   return state.users.currentPage;
 };
+// export const getPortionSize = (state) => {
+//   return state.users.portionsSize;
+// };
 export const getIsFetching = (state) => {
   return state.users.isFetching;
 };

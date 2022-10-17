@@ -3,6 +3,7 @@ import Profile from './Profile';
 import { connect } from 'react-redux';
 import {
   getUserStatus_TC,
+  savePhoto_TC,
   takeUser_TC,
   updateUserStatus_TC,
 } from '../../redux/profile-reducer';
@@ -16,7 +17,7 @@ class ProfileContainer extends React.Component {
     super(props);
   }
 
-  componentDidMount() {
+  renewProfile = () => {
     let userId = this.props.param.userId;
     if (!userId) {
       userId = this.props.userId;
@@ -26,6 +27,16 @@ class ProfileContainer extends React.Component {
     }
     this.props.takeUserProfile(userId);
     this.props.getUserStatus_TC(userId);
+  };
+
+  componentDidMount() {
+    this.renewProfile();
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.param.userId != this.props.param.userId) {
+      this.renewProfile();
+    }
   }
 
   render() {
@@ -33,6 +44,8 @@ class ProfileContainer extends React.Component {
     return (
       <Profile
         {...this.props}
+        param={this.props.param}
+        isOwner={!this.props.param.userId}
         getUserStatus={this.props.getUserStatus_TC}
         updateUserStatus={this.props.updateUserStatus_TC}
       />
@@ -59,6 +72,7 @@ export default compose(
     takeUserProfile: takeUser_TC,
     getUserStatus_TC,
     updateUserStatus_TC,
+    savePhoto: savePhoto_TC,
   }),
 )(TakeParams);
 

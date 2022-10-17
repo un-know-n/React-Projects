@@ -1,3 +1,5 @@
+import { isUserAuthorized_TC } from './auth-reducer';
+
 const INITIALIZE_SUCCESS = 'app/INITIALIZE-SUCCESS';
 
 const initialState = {
@@ -14,7 +16,7 @@ const appReducer = (state = initialState, action) => {
 };
 
 export const initializeApp = () => async (dispatch) => {
-  //await dispatch(isUserAuthorized_TC());
+  await dispatch(isUserAuthorized_TC());
   await dispatch(initializeSuccess());
 };
 
