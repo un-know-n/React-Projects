@@ -43,16 +43,31 @@ export const profileAPI = {
       },
     });
   },
+  saveProfile(profile) {
+    return instance.put(`profile`, profile);
+  },
 };
 
 export const authAPI = {
   isUserAuthorized() {
     return instance.get('auth/me');
   },
-  logIn(email, password, rememberMe = false) {
-    return instance.post('auth/login', { email, password, rememberMe });
+  logIn(email, password, rememberMe = false, captcha = null) {
+    debugger;
+    return instance.post('auth/login', {
+      email,
+      password,
+      rememberMe,
+      captcha,
+    });
   },
   logOut() {
     return instance.delete('auth/login');
+  },
+};
+
+export const securityAPI = {
+  getCaptchaURL() {
+    return instance.get(`security/get-captcha-url`);
   },
 };

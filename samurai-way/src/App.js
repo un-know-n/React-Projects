@@ -1,14 +1,7 @@
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import './assets/images/header-logo.png';
-// import News from './components/News/News';
-// import Music from './components/Music/Music';
-// import Settings from './components/Settings/Settings';
-// import UsersContainer from './components/Users/UsersContainer';
-// import ProfileContainer from './components/Profile/ProfileContainer';
-// import HeaderContainer from './components/Header/HeaderContainer';
-// import Login from './components/Login/Login';
 import React, { Component, Suspense } from 'react';
 import { initializeApp } from './redux/app-reducer';
 import { connect } from 'react-redux';
@@ -57,6 +50,7 @@ class App extends Component {
                   </div>
                 }>
                 <Routes>
+                  <Route path='/' element={<Navigate to='/profile' />} />
                   <Route
                     path='/profile/:userId'
                     element={<ProfileContainer />}

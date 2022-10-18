@@ -1,4 +1,5 @@
 import { profileAPI } from '../api/api';
+import { stopSubmit } from 'redux-form';
 
 const ADD_POST = 'profile/ADD-POST';
 const DELETE_POST = 'profile/DELETE-POST';
@@ -96,6 +97,23 @@ export const savePhoto_TC = (photo) => {
     const response = await profileAPI.savePhoto(photo);
     if (response.data.resultCode === 0) {
       dispatch(savePhotoSuccess(response.data.data.photo));
+    }
+  };
+};
+
+export const saveProfile_TC = (profile) => {
+  return async (dispatch, getState) => {
+    const response = await profileAPI.saveProfile(profile);
+    const userId = getState().auth.userId;
+    if (response.data.resultCode === 0) {
+      dispatch(takeUser_TC(userId));
+    } else {
+      const message =
+        response.data.messages.length > 0
+          ? response.data.messages[0]
+          : 'Unexpected error...';
+      dispatch(stopSubmit('edit-profile', { _error: message }));
+      return Promise.reject(message);
     }
   };
 };

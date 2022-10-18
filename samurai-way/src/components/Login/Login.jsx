@@ -16,8 +16,8 @@ const minSymbols3 = minField(3);
 const Input = FormControlElement('input');
 
 const Login = (props) => {
-  const onSubmitLogin = ({ email, password, rememberMe }) => {
-    props.logInUser_TC(email, password, rememberMe);
+  const onSubmitLogin = ({ email, password, rememberMe, captchaURL }) => {
+    props.logInUser_TC(email, password, rememberMe, captchaURL);
   };
 
   if (props.isAuth) return <Navigate to='/profile' />;
@@ -25,7 +25,7 @@ const Login = (props) => {
   return (
     <div className={classes.loginWrapper}>
       <h1>Login in here</h1>
-      <LoginReduxForm onSubmit={onSubmitLogin} />
+      <LoginReduxForm captchaURL={props.captchaURL} onSubmit={onSubmitLogin} />
     </div>
   );
 };
@@ -60,6 +60,18 @@ const LoginForm = (props) => {
         <div>
           <button type='submit'>Login</button>
         </div>
+
+        {props.captchaURL && (
+          <div>
+            <img src={props.captchaURL} />
+            <Field
+              component={Input}
+              name='captchaURL'
+              type='text'
+              validate={[requiredField]}
+            />
+          </div>
+        )}
       </form>
     </>
   );
@@ -72,6 +84,7 @@ const LoginReduxForm = reduxForm({
 const mapState = (state) => {
   return {
     isAuth: state.auth.isAuth,
+    captchaURL: state.auth.captchaURL,
   };
 };
 

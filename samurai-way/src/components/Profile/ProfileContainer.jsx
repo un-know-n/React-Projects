@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import {
   getUserStatus_TC,
   savePhoto_TC,
+  saveProfile_TC,
   takeUser_TC,
   updateUserStatus_TC,
 } from '../../redux/profile-reducer';
@@ -73,6 +74,7 @@ export default compose(
     getUserStatus_TC,
     updateUserStatus_TC,
     savePhoto: savePhoto_TC,
+    saveProfile: saveProfile_TC,
   }),
 )(TakeParams);
 
