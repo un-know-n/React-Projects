@@ -1,0 +1,53 @@
+.nav {
+  grid-area: n;
+  background-color: rgb(119, 107, 197);
+  padding-top: 50px;
+}
+
+.item {
+  color: #fff;
+  padding-left: 35px;
+  font-size: 20px;
+  margin: 6px 0;
+  text-decoration: none;
+}
+
+.item a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.active {
+  border-bottom: 2px solid green;
+  border-bottom-style: dashed;
+}
+
+.friendsWrapper {
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: repeat(1fr, auto);
+  grid-template-rows: 1fr;
+  text-align: center;
+}
+
+.friendsTitle {
+  color: #fff;
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+.friendsItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.friendsItem:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+.friendsIcon img {
+  width: 30px;
+  border-radius: 50%;
+}

@@ -1,0 +1,16 @@
+.dialogs {
+  display: flex;
+}
+
+.dialogs_items {
+  width: 35%;
+}
+
+.dialog_item {
+}
+
+.messages {
+}
+
+.message {
+}

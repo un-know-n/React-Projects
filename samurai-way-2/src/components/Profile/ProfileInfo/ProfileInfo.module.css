@@ -1,0 +1,10 @@
+.descriptionBlock {
+  padding: 10px;
+}
+
+.profileBackground {
+  width: 100%;
+  overflow: hidden;
+  object-position: center center;
+  object-fit: cover;
+}
