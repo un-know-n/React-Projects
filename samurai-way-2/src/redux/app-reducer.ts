@@ -13,7 +13,9 @@ const initialState = {
   initialized: false,
 };
 
-const appReducer = (state = initialState, action: any) => {
+type InitialStateType = typeof initialState;
+
+const appReducer = (state = initialState, action: any): InitialStateType => {
   switch (action.type) {
     case INITIALIZE_SUCCESS:
       return { ...state, initialized: true };
@@ -22,11 +24,17 @@ const appReducer = (state = initialState, action: any) => {
   }
 };
 
-export const initializeApp = () => async (dispatch: Function) => {
+export const initializeApp = () => async (dispatch: any) => {
   await dispatch(isUserAuthorized_TC());
   await dispatch(initializeSuccess());
 };
 
-export const initializeSuccess = () => ({ type: INITIALIZE_SUCCESS });
+type InitializeSuccessType = {
+  type: typeof INITIALIZE_SUCCESS;
+};
+
+export const initializeSuccess = (): InitializeSuccessType => ({
+  type: INITIALIZE_SUCCESS,
+});
 
 export default appReducer;

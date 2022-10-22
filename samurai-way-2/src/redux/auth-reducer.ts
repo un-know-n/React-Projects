@@ -5,36 +5,60 @@ const SET_AUTH_USER_DATA = 'auth/SET-AUTH-USER-DATA';
 const SET_CAPTCHA_SUCCESS = 'auth/SET-CAPTCHA-SUCCESS';
 
 let initialState = {
-  userId: null,
-  login: null,
-  email: null,
+  userId: null as number | null,
+  login: null as string | null,
+  email: null as string | null,
   isFetching: false,
   isAuth: false,
-  captchaURL: null,
+  captchaURL: null as string | null,
 };
 
-const authReducer = (state = initialState, action) => {
+type InitialStateType = typeof initialState;
+
+const authReducer = (state = initialState, action: any): InitialStateType => {
   switch (action.type) {
     case SET_AUTH_USER_DATA:
     case SET_CAPTCHA_SUCCESS:
-      return { ...state, ...action.data };
+      return { ...state, ...action.data, some: 'awdaw' }; //TODO: See what is wrong with return value type(with spread operator)
     default:
       return state;
   }
 };
 
-export const setAuthUserData = (userId, login, email, isAuth) => ({
+type SetAuthUserDataObjectType = {
+  userId: number | null;
+  login: string | null;
+  email: string | null;
+  isAuth: boolean;
+};
+
+type SetAuthUserDataType = {
+  type: typeof SET_AUTH_USER_DATA;
+  data: SetAuthUserDataObjectType;
+};
+
+export const setAuthUserData = (
+  userId: number | null,
+  login: string | null,
+  email: string | null,
+  isAuth: boolean,
+): SetAuthUserDataType => ({
   type: SET_AUTH_USER_DATA,
   data: { userId, login, email, isAuth },
 });
 
-export const setCaptcha = (captchaURL) => ({
+type SetCaptchaType = {
+  type: typeof SET_CAPTCHA_SUCCESS;
+  data: Object;
+};
+
+export const setCaptcha = (captchaURL: string): SetCaptchaType => ({
   type: SET_CAPTCHA_SUCCESS,
   data: { captchaURL },
 });
 
 export const isUserAuthorized_TC = () => {
-  return async (dispatch) => {
+  return async (dispatch: any) => {
     const response = await authAPI.isUserAuthorized();
     if (response.data.resultCode === 0) {
       let { id, login, email } = response.data.data;
@@ -44,8 +68,13 @@ export const isUserAuthorized_TC = () => {
   };
 };
 
-export const logInUser_TC = (email, password, rememberMe, captcha = null) => {
-  return async (dispatch) => {
+export const logInUser_TC = (
+  email: string,
+  password: string,
+  rememberMe: boolean,
+  captcha = null,
+) => {
+  return async (dispatch: any) => {
     const response = await authAPI.logIn(email, password, rememberMe, captcha);
     if (response.data.resultCode === 0) {
       dispatch(isUserAuthorized_TC());
@@ -63,7 +92,7 @@ export const logInUser_TC = (email, password, rememberMe, captcha = null) => {
 };
 
 export const logOutUser_TC = () => {
-  return async (dispatch) => {
+  return async (dispatch: any) => {
     const response = await authAPI.logOut();
     if (response.data.resultCode === 0) {
       dispatch(setAuthUserData(null, null, null, false));
@@ -72,7 +101,7 @@ export const logOutUser_TC = () => {
 };
 
 export const getCaptcha_TC = () => {
-  return async (dispatch) => {
+  return async (dispatch: any) => {
     const response = await securityAPI.getCaptchaURL();
     const captchaURL = response.data.url;
     dispatch(setCaptcha(captchaURL));

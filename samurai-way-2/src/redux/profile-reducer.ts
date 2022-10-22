@@ -1,5 +1,7 @@
-import { profileAPI } from '../api/api';
 import { stopSubmit } from 'redux-form';
+
+import { profileAPI } from '../api/api';
+import { PhotoType, PostType, ProfileType } from '../shared/types/reducer-types';
 
 const ADD_POST = 'profile/ADD-POST';
 const DELETE_POST = 'profile/DELETE-POST';
@@ -13,15 +15,21 @@ let initialState = {
     { id: 2, title: 'Post 2', likesCount: '14' },
     { id: 3, title: 'Post 3', likesCount: '1' },
     { id: 4, title: 'Post 4', likesCount: '18' },
-  ],
-  profile: null,
+  ] as Array<PostType>,
+  profile: null as ProfileType | null,
   status: '',
 };
 
-const profileReducer = (state = initialState, action) => {
+type InitialStateType = typeof initialState;
+
+const profileReducer = (
+  state = initialState,
+  action: any,
+): InitialStateType => {
   switch (action.type) {
     case ADD_POST:
-      let currentID = state.postsData.at(-1).id;
+      //let currentID = state.postsData.at(-1).id;
+      const currentID = state.postsData[state.postsData.length - 1].id;
       const newPostObj = {
         id: currentID ? currentID + 1 : 1,
         title: action.message,
@@ -45,7 +53,10 @@ const profileReducer = (state = initialState, action) => {
       return { ...state, status: action.userStatus };
 
     case SAVE_PHOTO_SUCCESS:
-      return { ...state, profile: { ...state.profile, photo: action.photo } };
+      return {
+        ...state,
+        profile: { ...state.profile, photo: action.photo } as ProfileType,
+      };
 
     default:
       return state;
@@ -54,37 +65,72 @@ const profileReducer = (state = initialState, action) => {
 
 export default profileReducer;
 
-export const addPost_AC = (message) => ({ type: ADD_POST, message });
-export const deletePost_AC = (postId) => ({ type: DELETE_POST, postId });
-export const setUserProfile = (profile) => ({
+type AddPostType = {
+  type: typeof ADD_POST;
+  message: string;
+};
+
+export const addPost_AC = (message: string): AddPostType => ({
+  type: ADD_POST,
+  message,
+});
+
+type DeletePostType = {
+  type: typeof DELETE_POST;
+  postId: number;
+};
+
+export const deletePost_AC = (postId: number): DeletePostType => ({
+  type: DELETE_POST,
+  postId,
+});
+
+type SetUserProfileType = {
+  type: typeof SET_USER_PROFILE;
+  profile: ProfileType;
+};
+
+export const setUserProfile = (profile: ProfileType): SetUserProfileType => ({
   type: SET_USER_PROFILE,
   profile,
 });
-export const setUserStatus = (userStatus) => ({
+
+type SetUserStatusType = {
+  type: typeof SET_USER_STATUS;
+  userStatus: string;
+};
+
+export const setUserStatus = (userStatus: string): SetUserStatusType => ({
   type: SET_USER_STATUS,
   userStatus,
 });
-export const savePhotoSuccess = (photo) => ({
+
+type SavePhotoSuccessType = {
+  type: typeof SAVE_PHOTO_SUCCESS;
+  photo: PhotoType;
+};
+
+export const savePhotoSuccess = (photo: PhotoType): SavePhotoSuccessType => ({
   type: SAVE_PHOTO_SUCCESS,
   photo,
 });
 
-export const takeUser_TC = (userId) => {
-  return async (dispatch) => {
+export const takeUser_TC = (userId: number) => {
+  return async (dispatch: any) => {
     const data = await profileAPI.takeUserProfile(userId);
     dispatch(setUserProfile(data));
   };
 };
 
-export const getUserStatus_TC = (userId) => {
-  return async (dispatch) => {
+export const getUserStatus_TC = (userId: number) => {
+  return async (dispatch: any) => {
     const data = await profileAPI.getUserStatus(userId);
     dispatch(setUserStatus(data));
   };
 };
 
-export const updateUserStatus_TC = (status) => {
-  return async (dispatch) => {
+export const updateUserStatus_TC = (status: string) => {
+  return async (dispatch: any) => {
     const response = await profileAPI.updateUserStatus(status);
     if (response.data.resultCode === 0) {
       dispatch(setUserStatus(status));
@@ -92,8 +138,8 @@ export const updateUserStatus_TC = (status) => {
   };
 };
 
-export const savePhoto_TC = (photo) => {
-  return async (dispatch) => {
+export const savePhoto_TC = (photo: PhotoType) => {
+  return async (dispatch: any) => {
     const response = await profileAPI.savePhoto(photo);
     if (response.data.resultCode === 0) {
       dispatch(savePhotoSuccess(response.data.data.photo));
@@ -101,8 +147,8 @@ export const savePhoto_TC = (photo) => {
   };
 };
 
-export const saveProfile_TC = (profile) => {
-  return async (dispatch, getState) => {
+export const saveProfile_TC = (profile: ProfileType) => {
+  return async (dispatch: any, getState: any) => {
     const response = await profileAPI.saveProfile(profile);
     const userId = getState().auth.userId;
     if (response.data.resultCode === 0) {

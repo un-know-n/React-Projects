@@ -10,6 +10,7 @@
     "@types/node": "^18.11.3",
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
+    "@types/redux-form": "^8.3.5",
     "@typescript-eslint/eslint-plugin": "^5.40.1",
     "@typescript-eslint/parser": "^5.40.1",
     "axios": "^0.27.2",
