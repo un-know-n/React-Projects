@@ -1,5 +1,7 @@
-import { authAPI, securityAPI } from '../api/api';
 import { stopSubmit } from 'redux-form';
+
+import { authAPI, securityAPI } from '../api/api';
+import { ResultCodes } from '../shared/types/reducer-types';
 
 const SET_AUTH_USER_DATA = 'auth/SET-AUTH-USER-DATA';
 const SET_CAPTCHA_SUCCESS = 'auth/SET-CAPTCHA-SUCCESS';
@@ -59,12 +61,12 @@ export const setCaptcha = (captchaURL: string): SetCaptchaType => ({
 
 export const isUserAuthorized_TC = () => {
   return async (dispatch: any) => {
-    const response = await authAPI.isUserAuthorized();
-    if (response.data.resultCode === 0) {
-      let { id, login, email } = response.data.data;
+    const data = await authAPI.isUserAuthorized();
+    if (data.resultCode === ResultCodes.Success) {
+      let { id, login, email } = data.data;
       let isAuth = true;
       dispatch(setAuthUserData(id, login, email, isAuth));
-    } else console.log(response.data);
+    } else console.log(data);
   };
 };
 
@@ -72,7 +74,7 @@ export const logInUser_TC = (
   email: string,
   password: string,
   rememberMe: boolean,
-  captcha = null,
+  captcha: string | null = null,
 ) => {
   return async (dispatch: any) => {
     const response = await authAPI.logIn(email, password, rememberMe, captcha);

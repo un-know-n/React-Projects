@@ -37,3 +37,12 @@ export type UsersDataType = {
   followed: boolean;
   uniqueUrlName: string | null;
 };
+
+export enum ResultCodes {
+  Success = 0,
+  Error = 1,
+}
+
+export enum ResultCodesForCaptcha {
+  CaptchaNeeded = 10,
+}

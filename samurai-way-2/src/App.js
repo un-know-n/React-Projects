@@ -1,11 +1,13 @@
 import './App.css';
-import Navbar from './components/Navbar/Navbar';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import './assets/images/header-logo.png';
+
 import React, { Component, Suspense } from 'react';
-import { initializeApp } from './redux/app-reducer';
 import { connect } from 'react-redux';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+
 import Preloader from './components/common/Preloader/Preloader';
+import Navbar from './components/Navbar/Navbar';
+import { initializeApp } from './redux/app-reducer';
 
 const DialogsContainer = React.lazy(() =>
   import('./components/Dialogs/DialogsContainer'),
@@ -58,7 +60,11 @@ class App extends Component {
                   <Route path='/profile' element={<ProfileContainer />} />
                   <Route path='/dialogs/*' element={<DialogsContainer />} />
                   <Route path='/login' element={<Login />}></Route>
-                  <Route path='/users' element={<UsersContainer />}></Route>
+                  <Route
+                    path='/users'
+                    element={
+                      <UsersContainer outerTitle={'Some title here'} />
+                    }></Route>
                   <Route path='/news' element={<News />} />
                   <Route path='/music' element={<Music />} />
                   <Route path='/settings' element={<Settings />} />

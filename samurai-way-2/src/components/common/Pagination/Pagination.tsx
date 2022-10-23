@@ -1,9 +1,18 @@
-import classes from './Pagination.module.css';
 import classNames from 'classnames';
-import { useState } from 'react';
+import { FC, useState } from 'react';
 
-const Pagination = ({
-  totalUsersCount: totalItemsCount,
+import classes from './Pagination.module.css';
+
+type PropsType = {
+  totalItemsCount: number;
+  usersAmount: number;
+  currentPage: number;
+  usersFromPage: (page: number) => void;
+  portionSize?: number;
+};
+
+const Pagination: FC<PropsType> = ({
+  totalItemsCount,
   usersAmount,
   currentPage,
   usersFromPage,
