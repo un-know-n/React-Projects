@@ -1,12 +1,12 @@
 import { FC } from 'react';
 import { connect } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import { Field, InjectedFormProps, reduxForm } from 'redux-form';
+import { InjectedFormProps, reduxForm } from 'redux-form';
 
 import { logInUser_TC } from '../../redux/auth-reducer';
 import { AppStateType } from '../../redux/redux-store';
 import { maxField, minField, requiredField } from '../../utils/validators/validators';
-import { FormControlElement } from '../common/FormsControls/FormsControls';
+import { createField, FormControlElement } from '../common/FormsControls/FormsControls';
 import classes from './Login.module.css';
 
 const maxSymbols15 = maxField(30);
@@ -34,6 +34,8 @@ type LoginFormValuesType = {
   rememberMe: boolean;
   captchaURL: string;
 };
+
+type LoginFormValuesTypeKeys = Extract<keyof LoginFormValuesType, string>;
 
 type LoginOwnProps = {
   captchaURL: string | null;
@@ -66,43 +68,41 @@ const LoginForm: FC<
     <>
       {error ? <div className={classes.error}>{error}</div> : ''}
       <form onSubmit={handleSubmit}>
-        <div>
-          <Field
-            label='Email'
-            component={Input}
-            name='email'
-            type='email'
-            validate={[requiredField, maxSymbols15, minSymbols3]}
-          />
-        </div>
-        <div>
-          <Field
-            label='Password'
-            component={Input}
-            name='password'
-            type='password'
-            validate={[requiredField, maxSymbols15, minSymbols3]}
-          />
-        </div>
-        <div>
-          <Field component={Input} type='checkbox' name='rememberMe' />
-          remember me
-        </div>
+        {createField<LoginFormValuesTypeKeys>(
+          'Email',
+          'email',
+          [requiredField, maxSymbols15, minSymbols3],
+          Input,
+          { type: 'email' },
+        )}
+        {createField<LoginFormValuesTypeKeys>(
+          'Password',
+          'password',
+          [requiredField, maxSymbols15, minSymbols3],
+          Input,
+          { type: 'password' },
+        )}
+        {createField<LoginFormValuesTypeKeys>(
+          '',
+          'rememberMe',
+          [],
+          Input,
+          { type: 'checkbox' },
+          'remember me',
+        )}
         <div>
           <button type='submit'>Login</button>
         </div>
 
-        {captchaURL && (
-          <div>
-            <img src={captchaURL} />
-            <Field
-              component={Input}
-              name='captchaURL'
-              type='text'
-              validate={[requiredField]}
-            />
-          </div>
-        )}
+        {captchaURL && <img src={captchaURL} />}
+        {captchaURL &&
+          createField<LoginFormValuesTypeKeys>(
+            'Symbols from image',
+            'captchaURL',
+            [requiredField],
+            Input,
+            {},
+          )}
       </form>
     </>
   );

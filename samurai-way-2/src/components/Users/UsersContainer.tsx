@@ -11,12 +11,7 @@ import {
   getUsers,
   getUsersAmount,
 } from '../../redux/selectors/users-selectors';
-import {
-  followUserThunkCreator,
-  getUsersThunkCreator,
-  setCurrentPage,
-  unfollowUserThunkCreator,
-} from '../../redux/users-reducer';
+import { actions, followUserThunkCreator, getUsersThunkCreator, unfollowUserThunkCreator } from '../../redux/users-reducer';
 import { UsersDataType } from '../../shared/types/reducer-types';
 import Preloader from '../common/Preloader/Preloader';
 import Users from './Users';
@@ -99,7 +94,7 @@ export default compose<React.Component<PropsType>>(
   connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStateType>(
     mapStateToProps,
     {
-      setCurrentPage,
+      setCurrentPage: actions.setCurrentPage,
       getUsersThunkCreator,
       unfollowUserThunkCreator,
       followUserThunkCreator,
