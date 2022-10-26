@@ -30,12 +30,6 @@ type MapDispatchPropsType = {
   getUsersThunkCreator: (usersAmount: number, page: number) => void;
   unfollowUserThunkCreator: (userId: number) => void;
   followUserThunkCreator: (userId: number) => void;
-
-  // setCurrentPage,
-  // toggleIsFetching,
-  // getUsersThunkCreator,
-  // unfollowUserThunkCreator,
-  // followUserThunkCreator,
 };
 
 type OwnPropsType = {
@@ -88,8 +82,6 @@ const mapStateToProps = (state: AppStateType) => {
   };
 };
 
-//Creating a wrapper automatically over the Action Creators(using them with the dispatch() method)
-
 export default compose<React.Component<PropsType>>(
   connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStateType>(
     mapStateToProps,
@@ -101,4 +93,3 @@ export default compose<React.Component<PropsType>>(
     },
   ),
 )(UsersContainer);
-//export default ;

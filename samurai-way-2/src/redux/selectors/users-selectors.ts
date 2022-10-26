@@ -2,30 +2,32 @@ import { createSelector } from 'reselect';
 
 import { AppStateType } from '../redux-store';
 
-export const getUsersSelector = (state: AppStateType) => {
+export type WeakSelectorType = (state: AppStateType) => any;
+
+export const getUsersSelector: WeakSelectorType = (state) => {
   return state.users.usersData;
 };
 
 export const getUsers = createSelector(getUsersSelector, (users) => {
-  return users.filter((user) => true);
+  return users.filter((user: any) => true);
 });
 
-export const getUsersAmount = (state: AppStateType) => {
+export const getUsersAmount: WeakSelectorType = (state) => {
   return state.users.usersAmount;
 };
 
-export const getTotalUsersCount = (state: AppStateType) => {
+export const getTotalUsersCount: WeakSelectorType = (state) => {
   return state.users.totalUsersCount;
 };
 
-export const getCurrentPage = (state: AppStateType) => {
+export const getCurrentPage: WeakSelectorType = (state) => {
   return state.users.currentPage;
 };
 
-export const getIsFetching = (state: AppStateType) => {
+export const getIsFetching: WeakSelectorType = (state) => {
   return state.users.isFetching;
 };
 
-export const getFollowInProgress = (state: AppStateType) => {
+export const getFollowInProgress: WeakSelectorType = (state) => {
   return state.users.followInProgress;
 };

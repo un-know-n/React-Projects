@@ -1,40 +1,35 @@
 import { isUserAuthorized_TC } from './auth-reducer';
-
-const INITIALIZE_SUCCESS = 'app/INITIALIZE-SUCCESS';
-
-// type ActionType = {
-//   type: string;
-//   payload?: string | number;
-// };
-
-//type InitialStateType
+import { GeneralThunkType, InferActionsTypes } from './redux-store';
 
 const initialState = {
   initialized: false,
 };
 
 type InitialStateType = typeof initialState;
+type ActionsTypes = InferActionsTypes<typeof actions>;
+type ThunkType = GeneralThunkType;
 
-const appReducer = (state = initialState, action: any): InitialStateType => {
+const appReducer = (
+  state = initialState,
+  action: ActionsTypes,
+): InitialStateType => {
   switch (action.type) {
-    case INITIALIZE_SUCCESS:
+    case 'app/INITIALIZE-SUCCESS':
       return { ...state, initialized: true };
     default:
       return state;
   }
 };
 
-export const initializeApp = () => async (dispatch: any) => {
+export const actions = {
+  initializeSuccess: () => ({
+    type: 'app/INITIALIZE-SUCCESS',
+  }),
+};
+
+export const initializeApp = (): ThunkType => async (dispatch: any) => {
   await dispatch(isUserAuthorized_TC());
-  await dispatch(initializeSuccess());
+  await dispatch(actions.initializeSuccess());
 };
-
-type InitializeSuccessType = {
-  type: typeof INITIALIZE_SUCCESS;
-};
-
-export const initializeSuccess = (): InitializeSuccessType => ({
-  type: INITIALIZE_SUCCESS,
-});
 
 export default appReducer;

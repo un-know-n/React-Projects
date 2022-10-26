@@ -35,7 +35,7 @@ export type UsersDataType = {
   status: string;
   photos: PhotoType;
   followed: boolean;
-  uniqueUrlName: string | null;
+  uniqueUrlName?: string | null;
 };
 
 export enum ResultCodes {
