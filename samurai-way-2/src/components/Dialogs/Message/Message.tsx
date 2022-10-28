@@ -1,6 +1,10 @@
 import classes from '../Dialogs.module.css';
 
-const Message = (props) => {
+type TProps = {
+  message: string;
+};
+
+const Message = (props: TProps) => {
   return <div className={classes.message}>{props.message}</div>;
 };
 

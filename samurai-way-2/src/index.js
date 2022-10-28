@@ -1,16 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import store from './redux/redux-store';
 import { Provider } from 'react-redux';
+
+import App from './App';
+import store from './redux/redux-store';
+import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 // const renderAll = (state) => {
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App friends={store.getState().sidebar.friendsData} />
+      <App />
     </Provider>
   </React.StrictMode>,
 );

@@ -8,25 +8,31 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Preloader from './components/common/Preloader/Preloader';
 import Navbar from './components/Navbar/Navbar';
 import { initializeApp } from './redux/app-reducer';
+import { AppStateType } from './redux/redux-store';
 
-const DialogsContainer = React.lazy(() =>
-  import('./components/Dialogs/DialogsContainer'),
+const DialogsContainer = React.lazy(
+  () => import('./components/Dialogs/DialogsContainer'),
 );
-const UsersContainer = React.lazy(() =>
-  import('./components/Users/UsersContainer'),
+const UsersContainer = React.lazy(
+  () => import('./components/Users/UsersContainer'),
 );
-const HeaderContainer = React.lazy(() =>
-  import('./components/Header/HeaderContainer'),
+const HeaderContainer = React.lazy(
+  () => import('./components/Header/HeaderContainer'),
 );
-const ProfileContainer = React.lazy(() =>
-  import('./components/Profile/ProfileContainer'),
+const ProfileContainer = React.lazy(
+  () => import('./components/Profile/ProfileContainer'),
 );
 const Login = React.lazy(() => import('./components/Login/Login'));
 const News = React.lazy(() => import('./components/News/News'));
 const Music = React.lazy(() => import('./components/Music/Music'));
 const Settings = React.lazy(() => import('./components/Settings/Settings'));
 
-class App extends Component {
+type MapStatePropsType = ReturnType<typeof mapStateToProps>;
+type MapDispatchPropsType = {
+  initializeApp: () => void;
+};
+
+class App extends Component<MapStatePropsType & MapDispatchPropsType> {
   componentDidMount() {
     this.props.initializeApp();
   }
@@ -63,6 +69,8 @@ class App extends Component {
                   <Route
                     path='/users'
                     element={
+                      // TODO: Fix the following issue
+                      //@ts-ignore
                       <UsersContainer outerTitle={'Some title here'} />
                     }></Route>
                   <Route path='/news' element={<News />} />
@@ -78,9 +86,10 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: AppStateType) => {
   return {
     isInitialized: state.app.initialized,
+    friends: state.sidebar.friendsData,
   };
 };
 

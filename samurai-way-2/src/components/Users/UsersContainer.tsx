@@ -1,4 +1,5 @@
 import React from 'react';
+import { ComponentType } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 
@@ -33,7 +34,7 @@ type MapDispatchPropsType = {
 };
 
 type OwnPropsType = {
-  outerTitle: string;
+  outerTitle?: string;
 };
 
 type PropsType = MapStatePropsType & MapDispatchPropsType & OwnPropsType;
@@ -82,7 +83,7 @@ const mapStateToProps = (state: AppStateType) => {
   };
 };
 
-export default compose<React.Component<PropsType>>(
+export default compose<ComponentType>(
   connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStateType>(
     mapStateToProps,
     {

@@ -1,6 +1,19 @@
+import { FC } from 'react';
+
+import { ContactsType, ProfileType } from '../../../../shared/types/reducer-types';
 import classes from '../ProfileInfo.module.css';
 
-const ProfileData = (props) => {
+type TProps = {
+  profile: ProfileType;
+  setEditMode: any;
+};
+
+export type TContact = {
+  contactTitle: string;
+  contactValue: string | null;
+};
+
+const ProfileData = (props: TProps) => {
   return (
     <div className={classes.descriptionBlock}>
       <div>
@@ -29,7 +42,7 @@ const ProfileData = (props) => {
   );
 };
 
-export const Contacts = (props) => {
+export const Contacts = (props: Pick<ProfileType, 'contacts'>) => {
   return (
     <>
       <div>
@@ -38,7 +51,7 @@ export const Contacts = (props) => {
           <Contact
             key={key}
             contactTitle={key}
-            contactValue={props.contacts[key]}
+            contactValue={props.contacts[key as keyof ContactsType]} // TODO: See detailed explanation
           />
         ))}
       </div>
@@ -46,7 +59,7 @@ export const Contacts = (props) => {
   );
 };
 
-const Contact = ({ contactTitle, contactValue }) => {
+const Contact: FC<TContact> = ({ contactTitle, contactValue }) => {
   return (
     <div>
       <b>{contactTitle}: </b> <p>{contactValue}</p>

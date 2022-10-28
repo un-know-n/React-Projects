@@ -1,9 +1,17 @@
 import { NavLink } from 'react-router-dom';
+
+import { FriendsDataType } from '../../redux/sidebar-reducer';
 import classes from './Navbar.module.css';
 
-const activeLink = ({ isActive }) => (isActive ? classes.active : '');
+const activeLink: TActiveLink = ({ isActive }) =>
+  isActive ? classes.active : '';
 
-const Navbar = (props) => {
+type TActiveLink = (isActive: any) => any;
+type PropsType = {
+  friends: Array<FriendsDataType>;
+};
+
+const Navbar = (props: PropsType) => {
   const friends = props.friends.map((friend) => {
     return (
       <div className={classes.friendsItem} key={friend.id}>

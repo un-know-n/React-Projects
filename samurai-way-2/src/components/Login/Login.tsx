@@ -94,7 +94,7 @@ const LoginForm: FC<
           <button type='submit'>Login</button>
         </div>
 
-        {captchaURL && <img src={captchaURL} />}
+        {captchaURL && <img src={captchaURL} alt='' />}
         {captchaURL &&
           createField<LoginFormValuesTypeKeys>(
             'Symbols from image',

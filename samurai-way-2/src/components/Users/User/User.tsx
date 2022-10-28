@@ -1,13 +1,22 @@
-import classes from '../Users.module.css';
 import { NavLink } from 'react-router-dom';
+
 import userPhoto from '../../../assets/images/user.webp';
+import { UsersDataType } from '../../../shared/types/reducer-types';
+import classes from '../Users.module.css';
+
+type PropsType = {
+  user: UsersDataType;
+  followInProgress: Array<number>;
+  unfollowUserThunkCreator: (userId: number) => void;
+  followUserThunkCreator: (userId: number) => void;
+};
 
 const User = ({
   user,
   followInProgress,
   unfollowUserThunkCreator,
   followUserThunkCreator,
-}) => {
+}: PropsType) => {
   return (
     <div key={user.id} className={classes.userContainer}>
       <span>

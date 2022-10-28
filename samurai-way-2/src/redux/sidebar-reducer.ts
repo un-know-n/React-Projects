@@ -1,4 +1,4 @@
-type FriendsDataType = {
+export type FriendsDataType = {
   id: number;
   name: string;
 };

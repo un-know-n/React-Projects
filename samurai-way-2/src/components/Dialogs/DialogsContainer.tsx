@@ -1,24 +1,20 @@
+import { ComponentType } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 
 import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 import { actions } from '../../redux/dialog-reducer';
+import { AppStateType } from '../../redux/redux-store';
 import Dialogs from './Dialogs';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: AppStateType) => {
   return {
     messages: state.messages,
     isAuth: state.auth.isAuth,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addMessage: (message) => dispatch(actions.addMessage_AC(message)),
-  };
-};
-
-export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
+export default compose<ComponentType>(
+  connect(mapStateToProps, { addMessage: actions.addMessage_AC }),
   withAuthRedirect,
 )(Dialogs);

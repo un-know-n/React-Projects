@@ -15,7 +15,7 @@ let initialState = {
   status: '',
 };
 
-type InitialStateType = typeof initialState;
+export type InitialStateType = typeof initialState;
 type ActionsTypes = InferActionsTypes<typeof actions>;
 type ThunkType = GeneralThunkType;
 

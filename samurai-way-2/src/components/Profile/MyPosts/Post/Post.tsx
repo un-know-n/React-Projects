@@ -1,12 +1,15 @@
+import userImage from './../../../../assets/images/user.webp';
 import classes from './Post.module.css';
 
-const Post = (props) => {
+type PropsType = {
+  title: string;
+  positiveCounter: string;
+};
+
+const Post = (props: PropsType) => {
   return (
     <div className={classes.item}>
-      <img
-        src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-        alt=""
-      />
+      <img src={userImage} alt='' />
       {props.title}
       <div>
         <span>{props.positiveCounter} like</span>

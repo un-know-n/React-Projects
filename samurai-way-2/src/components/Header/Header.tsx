@@ -1,8 +1,15 @@
-import classes from './Header.module.css';
-import headerLogo from '../../assets/images/header-logo.png';
 import { NavLink } from 'react-router-dom';
 
-const Header = (props) => {
+import headerLogo from '../../assets/images/header-logo.png';
+import classes from './Header.module.css';
+
+export type PropsType = {
+  isAuth: boolean;
+  login: string;
+  logOutUser_TC: () => void;
+};
+
+const Header = (props: PropsType) => {
   const logOutBtn = () => {
     props.logOutUser_TC();
   };

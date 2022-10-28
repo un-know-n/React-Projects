@@ -1,6 +1,10 @@
 import React from 'react';
-import Profile from './Profile';
+import { ComponentType } from 'react';
 import { connect } from 'react-redux';
+import { NavigateFunction, useParams } from 'react-router-dom';
+import { compose } from 'redux';
+
+import { withRouter } from '../../hoc/withRouter';
 import {
   getUserStatus_TC,
   savePhoto_TC,
@@ -8,18 +12,24 @@ import {
   takeUser_TC,
   updateUserStatus_TC,
 } from '../../redux/profile-reducer';
+import { AppStateType } from '../../redux/redux-store';
+import { ProfileType } from '../../shared/types/reducer-types';
 import Preloader from '../common/Preloader/Preloader';
-import { useParams } from 'react-router-dom';
-import { compose } from 'redux';
-import { withRouter } from '../../hoc/withRouter';
+import Profile from './Profile';
 
-class ProfileContainer extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+type TProps = {
+  param: Readonly<Partial<{ userId?: string | undefined }>>;
+  userId: number;
+  navigate: NavigateFunction;
+  takeUserProfile: (userId: number) => void;
+  getUserStatus_TC: (userId: number) => void;
+  updateUserStatus_TC: (status: string) => void;
+  profile: ProfileType;
+};
 
+class ProfileContainer extends React.Component<TProps> {
   renewProfile = () => {
-    let userId = this.props.param.userId;
+    let userId = this.props.param.userId ? +this.props.param.userId : 0;
     if (!userId) {
       userId = this.props.userId;
       if (!userId) {
@@ -34,7 +44,7 @@ class ProfileContainer extends React.Component {
     this.renewProfile();
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
+  componentDidUpdate(prevProps: TProps) {
     if (prevProps.param.userId != this.props.param.userId) {
       this.renewProfile();
     }
@@ -44,6 +54,13 @@ class ProfileContainer extends React.Component {
     if (!this.props.profile) return <Preloader />;
     return (
       <Profile
+        status={''}
+        savePhoto={function (photo: File): void {
+          throw new Error('Function not implemented.');
+        }}
+        saveProfile={function (profile: ProfileType): Promise<void> {
+          throw new Error('Function not implemented.');
+        }}
         {...this.props}
         param={this.props.param}
         isOwner={!this.props.param.userId}
@@ -54,11 +71,13 @@ class ProfileContainer extends React.Component {
   }
 }
 
-const TakeParams = (props) => {
-  return <ProfileContainer {...props} param={useParams()} />;
+const TakeParams = (props: TProps) => {
+  return (
+    <ProfileContainer {...props} param={useParams<{ userId?: string }>()} />
+  );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: AppStateType) => {
   return {
     profile: state.profile.profile,
     isAuth: state.auth.isAuth,
@@ -67,7 +86,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default compose(
+export default compose<ComponentType>(
   withRouter,
   connect(mapStateToProps, {
     takeUserProfile: takeUser_TC,
@@ -77,7 +96,3 @@ export default compose(
     saveProfile: saveProfile_TC,
   }),
 )(TakeParams);
-
-// export default withAuthRedirect(
-//   connect(mapStateToProps, { takeUser: takeUserThunkCreator })(TakeParams),
-// );
