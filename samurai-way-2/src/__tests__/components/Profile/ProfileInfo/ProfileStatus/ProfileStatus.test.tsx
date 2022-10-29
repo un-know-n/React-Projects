@@ -1,21 +1,37 @@
-import ProfileStatus from '../../../../../components/Profile/ProfileInfo/ProfileStatus/ProfileStatus';
 import { create } from 'react-test-renderer';
+
+import ProfileStatusWithHooks from './../../../../../components/Profile/ProfileInfo/ProfileStatus/ProfileStatusWithHooks';
 
 describe('Profile component', () => {
   test('profile status from props should be in the state', async () => {
-    const component = create(<ProfileStatus status='I am fine' />);
+    const component = create(
+      <ProfileStatusWithHooks
+        status='I am fine'
+        updateUserStatus={function (status: string): void {
+          throw new Error('Function not implemented.');
+        }}
+      />,
+    );
     const instance = component.getInstance();
+    //@ts-ignore
     expect(instance.state.status).toBe('I am fine');
   });
   test('profile status should have the span element', async () => {
-    const component = create(<ProfileStatus status='I am fine' />);
+    const component = create(
+      <ProfileStatusWithHooks
+        status='I am fine'
+        updateUserStatus={function (status: string): void {
+          throw new Error('Function not implemented.');
+        }}
+      />,
+    );
     const root = component.root;
     let span = await root.findByType('span');
     expect(span.children.length).toBe(1);
   });
   test('input should be displayed instead of span', async () => {
     const component = create(
-      <ProfileStatus status='I am fine' updateUserStatus={() => {}} />,
+      <ProfileStatusWithHooks status='I am fine' updateUserStatus={() => {}} />,
     );
     const root = component.root;
     let span = await root.findByType('span');
@@ -26,7 +42,7 @@ describe('Profile component', () => {
   test('callback should be called', async () => {
     const mockCallback = jest.fn();
     const component = create(
-      <ProfileStatus
+      <ProfileStatusWithHooks
         status='I am fine'
         updateUserStatus={() => {
           mockCallback();
@@ -34,6 +50,7 @@ describe('Profile component', () => {
       />,
     );
     const instance = component.getInstance();
+    //@ts-ignore
     instance.toggleEditMode();
     expect(mockCallback.mock.calls.length).toBe(1);
   });

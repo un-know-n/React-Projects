@@ -31,3 +31,7 @@ export const getIsFetching: WeakSelectorType = (state) => {
 export const getFollowInProgress: WeakSelectorType = (state) => {
   return state.users.followInProgress;
 };
+
+export const getFilter: WeakSelectorType = (state) => {
+  return state.users.filter;
+};

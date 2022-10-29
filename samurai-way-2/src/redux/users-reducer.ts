@@ -1,7 +1,10 @@
+import { AxiosResponse } from 'axios';
+import { Dispatch } from 'react';
 import { ThunkAction } from 'redux-thunk';
 
+import { GeneralResponse } from '../api/api';
 import { usersAPI } from '../api/users-api';
-import { UsersDataType } from '../shared/types/reducer-types';
+import { ResultCodes, UsersDataType } from '../shared/types/reducer-types';
 import { updateObjectInArray } from '../utils/helpers/object-helpers';
 import { AppStateType, InferActionsTypes } from './redux-store';
 
@@ -12,12 +15,17 @@ let initialState = {
   currentPage: 1,
   isFetching: false,
   followInProgress: [] as Array<number>,
+  filter: {
+    term: '',
+    friend: null as null | boolean,
+  },
 };
 
-type InitialStateType = typeof initialState;
+export type InitialStateType = typeof initialState;
+export type TFilter = typeof initialState.filter;
 type ActionsTypes = InferActionsTypes<typeof actions>;
 
-const usersReducer = (
+export const usersReducer = (
   state = initialState,
   action: ActionsTypes,
 ): InitialStateType => {
@@ -36,6 +44,8 @@ const usersReducer = (
           followed: false,
         }),
       };
+    case 'SET_FILTER':
+      return { ...state, filter: action.filter };
     case 'TAKE_USERS':
       return { ...state, usersData: action.users };
     case 'SET_CURRENT_PAGE':
@@ -89,6 +99,12 @@ export const actions = {
       count,
     } as const),
 
+  setFilter: (filter: TFilter) =>
+    ({
+      type: 'SET_FILTER',
+      filter,
+    } as const),
+
   toggleIsFetching: (fetching: boolean) =>
     ({
       type: 'TOGGLE_IS_FETCHING',
@@ -113,35 +129,50 @@ type ThunkType = ThunkAction<
 export const getUsersThunkCreator = (
   usersAmount: number,
   currentPage: number,
+  filter: TFilter,
 ): ThunkType => {
   return async (dispatch) => {
     dispatch(actions.toggleIsFetching(true));
-    const data = await usersAPI.getUsers(usersAmount, currentPage);
+    dispatch(actions.setFilter(filter));
+    const data = await usersAPI.getUsers(usersAmount, currentPage, filter);
     dispatch(actions.takeUsers(data.items));
     dispatch(actions.setTotalCount(data.totalCount));
     dispatch(actions.toggleIsFetching(false));
   };
 };
 
-const followUnfollowFlow = (
+const followUnfollowFlow = async (
+  dispatch: Dispatch<ActionsTypes>,
   userId: number,
-  apiMethod: any,
+  apiMethod: (userId: number) => Promise<AxiosResponse<GeneralResponse>>,
   actionCreator: (userId: number) => ActionsTypes,
-): ThunkType => {
+) => {
+  dispatch(actions.toggleFollowInProgress(true, userId));
+  const response = await apiMethod(userId);
+  if (response.data.resultCode === ResultCodes.Success) {
+    dispatch(actionCreator(userId));
+    dispatch(actions.toggleFollowInProgress(false, userId));
+  } else console.log(response.data);
+};
+
+export const unfollowUserThunkCreator = (userId: number): ThunkType => {
   return async (dispatch) => {
-    dispatch(actions.toggleFollowInProgress(true, userId));
-    const response = await apiMethod(userId);
-    if (response.data.resultCode === 0) {
-      dispatch(actionCreator(userId));
-      dispatch(actions.toggleFollowInProgress(false, userId));
-    } else console.log(response.data);
+    await followUnfollowFlow(
+      dispatch,
+      userId,
+      usersAPI.unfollowUser,
+      actions.unfollow,
+    );
   };
 };
 
-export const unfollowUserThunkCreator = (userId: number) => {
-  return followUnfollowFlow(userId, usersAPI.unfollowUser, actions.unfollow);
-};
-
-export const followUserThunkCreator = (userId: number) => {
-  return followUnfollowFlow(userId, usersAPI.followUser, actions.follow);
+export const followUserThunkCreator = (userId: number): ThunkType => {
+  return async (dispatch) => {
+    await followUnfollowFlow(
+      dispatch,
+      userId,
+      usersAPI.followUser,
+      actions.follow,
+    );
+  };
 };

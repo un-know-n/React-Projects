@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { FC, useState } from 'react';
 
+import { TFilter } from '../../../redux/users-reducer';
 import classes from './Pagination.module.css';
 
 type PropsType = {
@@ -9,6 +10,7 @@ type PropsType = {
   currentPage: number;
   usersFromPage: (page: number) => void;
   portionSize?: number;
+  filter: TFilter;
 };
 
 const Pagination: FC<PropsType> = ({
