@@ -1,12 +1,13 @@
-import { TFilter } from '../redux/users-reducer';
 import { UsersDataType } from '../shared/types/reducer-types';
 import { GeneralResponse, GetItemsType, instance } from './api';
 
 export const usersAPI = {
-  getUsers(usersAmount = 5, page = 1, { term, friend }: TFilter) {
-    let filter = (term && `&term=${term}`) + (friend && `&friend=${friend}`);
+  getUsers(usersAmount = 5, page = 1, { term, friend }: any) {
+    let filter =
+      (term === 'null' ? '' : `&term=${term}`) +
+      (friend === 'null' ? '' : `&friend=${friend}`);
     filter = filter === 'null' ? '' : filter;
-    debugger;
+    //debugger;
     return instance
       .get<GetItemsType<UsersDataType>>(
         `users?count=${usersAmount}&page=${page}${filter}`,

@@ -1,26 +1,28 @@
 import classNames from 'classnames';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 import { TFilter } from '../../../redux/users-reducer';
 import classes from './Pagination.module.css';
 
 type PropsType = {
   totalItemsCount: number;
-  usersAmount: number;
+  itemsAmount: number;
   currentPage: number;
-  usersFromPage: (page: number) => void;
+  itemsFromPage: (page: number) => void;
   portionSize?: number;
   filter: TFilter;
 };
 
 const Pagination: FC<PropsType> = ({
   totalItemsCount,
-  usersAmount,
+  itemsAmount,
   currentPage,
-  usersFromPage,
+  itemsFromPage,
   portionSize = 5,
 }) => {
-  let pagesCount = Math.ceil(totalItemsCount / usersAmount);
+  useEffect(() => {}, [currentPage]);
+
+  let pagesCount = Math.ceil(totalItemsCount / itemsAmount);
   let pages = [];
   // let currentPage = props.currentPage;
 
@@ -59,7 +61,7 @@ const Pagination: FC<PropsType> = ({
                 },
                 classes.pageNumber,
               )}
-              onClick={() => usersFromPage(page)}>
+              onClick={() => itemsFromPage(page)}>
               {page}
             </span>
           );

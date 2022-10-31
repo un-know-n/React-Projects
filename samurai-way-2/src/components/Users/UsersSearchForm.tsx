@@ -1,7 +1,9 @@
 import { Field, Form, Formik } from 'formik';
 import React from 'react';
 import { FC } from 'react';
+import { useSelector } from 'react-redux';
 
+import { getFilter } from '../../redux/selectors/users-selectors';
 import { TFilter } from '../../redux/users-reducer';
 
 type TProps = {
@@ -14,6 +16,8 @@ export const UsersSearchForm: FC<TProps> = React.memo((props) => {
     return errors;
   };
 
+  const filter = useSelector(getFilter);
+
   const formSubmit = (
     values: TFilter,
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void },
@@ -25,7 +29,8 @@ export const UsersSearchForm: FC<TProps> = React.memo((props) => {
   return (
     <div>
       <Formik
-        initialValues={{ term: '', friend: null as null | boolean }}
+        enableReinitialize
+        initialValues={{ ...filter }}
         validate={usersSearchFormValidation}
         onSubmit={formSubmit}>
         {({ isSubmitting }) => (

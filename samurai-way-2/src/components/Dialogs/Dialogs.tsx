@@ -23,7 +23,7 @@ type TProps = {
 };
 
 const Dialogs = (props: TProps) => {
-  debugger;
+  //debugger;
   //if (props.isAuth === true) return <Navigate to='/login' />;
 
   const dialogs = props.messages.dialogsData.map((dialog) => (

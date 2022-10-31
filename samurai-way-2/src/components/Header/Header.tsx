@@ -1,6 +1,8 @@
-import { NavLink } from 'react-router-dom';
+import 'antd/dist/antd.css';
 
-import headerLogo from '../../assets/images/header-logo.png';
+import { Button } from 'antd';
+import { Link, NavLink } from 'react-router-dom';
+
 import classes from './Header.module.css';
 
 export type PropsType = {
@@ -16,11 +18,15 @@ const Header = (props: PropsType) => {
 
   return (
     <header className={classes.header}>
-      <img src={headerLogo} alt='header-logo' />
+      <Link to='/users'>Developers</Link>
+      {/* <img src={headerLogo} alt='header-logo' /> */}
       <div className={classes.loginBlock}>
         {props.isAuth ? (
           <div>
-            {props.login} - <button onClick={logOutBtn}>Log Out</button>
+            {props.login} -
+            <Button danger onClick={logOutBtn}>
+              Log out
+            </Button>
           </div>
         ) : (
           <NavLink className={classes.loginLink} to='/login'>
