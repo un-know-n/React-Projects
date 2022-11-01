@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { BrowserRouter, Link, Navigate, Route, Routes } from 'react-router-dom';
 
 import Preloader from './components/common/Preloader/Preloader';
+import { ChatPage } from './pages/Chat/ChatPage';
 import { initializeApp } from './redux/app-reducer';
 import { AppStateType } from './redux/redux-store';
 
@@ -94,7 +95,6 @@ class App extends Component<MapStatePropsType & MapDispatchPropsType> {
                 <Breadcrumb.Item>App</Breadcrumb.Item>
               </Breadcrumb>
               <Content className='site-layout-background'>
-                Content
                 <Suspense
                   fallback={
                     <div>
@@ -137,6 +137,8 @@ class App extends Component<MapStatePropsType & MapDispatchPropsType> {
                           <Route path='/news' element={<News />} />
                           <Route path='/music' element={<Music />} />
                           <Route path='/settings' element={<Settings />} />
+                          <Route path='/chat' element={<ChatPage />} />
+                          <Route path='*' element='There is no such page!' />
                         </Routes>
                       </Suspense>
                     </div>
