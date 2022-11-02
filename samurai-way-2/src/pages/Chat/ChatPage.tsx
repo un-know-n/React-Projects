@@ -1,6 +1,7 @@
 import { Button } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
-import { FC, useEffect, useState } from 'react';
+import React from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Action } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
@@ -40,19 +41,31 @@ export const Chat: FC = () => {
 export const Messages: FC = () => {
   const messages = useSelector((state: AppStateType) => state.chat.messages);
 
+  const messageAnchorRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    messageAnchorRef.current?.scrollIntoView({
+      block: 'end',
+      behavior: 'smooth',
+    });
+  }, [messages]);
+
   return (
     <>
       <div style={{ height: '350px', width: '100%', overflowY: 'scroll' }}>
         {messages.map((message: TMessage, index) => {
           return <Message key={index} {...message} />;
         })}
+        <div ref={messageAnchorRef}></div>
       </div>
     </>
   );
 };
 
-const Message: FC<TMessage> = (props) => {
+const Message: FC<TMessage> = React.memo((props) => {
   const { photo, userName, message } = props;
+  //console.log('>>>>>>>>>>>>>>>>>>>Message');
+
   return (
     <>
       <div className='messageWrapper'>
@@ -62,13 +75,14 @@ const Message: FC<TMessage> = (props) => {
       </div>
     </>
   );
-};
+});
 
 export const AddMessageForm: FC = () => {
   let [message, setMessage] = useState('');
-  let [readyStatus, setStatus] = useState<'pending' | 'ready'>('pending');
 
   const dispatch = useDispatch<TOwnDispatch>();
+
+  const status = useSelector((state: AppStateType) => state.chat.status);
 
   const sendMessageHandler = () => {
     dispatch(sendMessage(message));
@@ -81,7 +95,10 @@ export const AddMessageForm: FC = () => {
         <TextArea
           value={message}
           onChange={(e) => setMessage(e.currentTarget.value)}></TextArea>
-        <Button type='dashed' disabled={false} onClick={sendMessageHandler}>
+        <Button
+          type='dashed'
+          disabled={status !== 'ready'}
+          onClick={sendMessageHandler}>
           Send
         </Button>
       </div>
