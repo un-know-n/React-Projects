@@ -1,15 +1,21 @@
 import { FC } from 'react';
 
 import { TUserDetails } from '../Github';
+import { Timer } from '../Timer/Timer';
 
-type TProps = {
+export type TProps = {
   userDetails: TUserDetails | null;
+  setUserDetails: (details: TUserDetails | null) => void;
 };
 
-export const GithubDetails: FC<TProps> = ({ userDetails }) => {
+export const GithubDetails: FC<TProps> = ({ userDetails, setUserDetails }) => {
   return (
     <>
       <div>
+        {userDetails !== null && (
+          <Timer userDetails={userDetails} setUserDetails={setUserDetails} />
+        )}
+        <br />
         <h1>{userDetails === null ? 'Name' : userDetails.login}</h1>
         {userDetails?.avatar_url && <img src={userDetails.avatar_url} alt="" />}
 

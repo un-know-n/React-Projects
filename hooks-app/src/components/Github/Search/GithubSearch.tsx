@@ -4,21 +4,25 @@ import { FC, useEffect, useState } from 'react';
 import { TResponse, TUser } from '../Github';
 
 type TProps = {
-  
   setUsers: (users: TUser[]) => void;
+  setSearchTerm: (term: string) => void;
+  searchTerm: string;
 };
 
 export const GithubSearch: FC<TProps> = ({
-  
   setUsers,
-  
+  setSearchTerm,
+  searchTerm,
 }) => {
-  const [tempSearch, setTempSearch] = useState('it-kamasutra');
-  const [searchTerm, setSearchTerm] = useState('it-kamasutra');
+  const [tempSearch, setTempSearch] = useState('unk');
+
+  useEffect(() => {
+    setTempSearch(searchTerm);
+  }, [searchTerm]);
 
   useEffect(() => {
     axios
-      .get<TResponse>(`https://api.github.com/search/users?q=${tempSearch}`)
+      .get<TResponse>(`https://api.github.com/search/users?q=${searchTerm}`)
       .then((res) => setUsers(res.data.items));
   }, [searchTerm]);
 
@@ -33,7 +37,10 @@ export const GithubSearch: FC<TProps> = ({
         />
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded"
-          onClick={() => setSearchTerm(tempSearch)}
+          onClick={() => {
+            debugger;
+            return setSearchTerm(tempSearch);
+          }}
         >
           Find
         </button>

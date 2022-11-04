@@ -19,19 +19,32 @@ export type TUser = {
 
 export type TUserDetails = TUser & { followers: number; public_repos: number };
 
+const defaultSearchTerm = 'unk';
+
 export const Github: FC = () => {
   const [users, setUsers] = useState<TUser[]>([]);
   const [userDetails, setUserDetails] = useState<TUserDetails | null>(null);
+  const [searchTerm, setSearchTerm] = useState(defaultSearchTerm);
 
   return (
     <>
       <div className="flex">
         <div>
-          <GithubSearch setUsers={setUsers} />
+          <GithubSearch
+            setUsers={setUsers}
+            searchTerm={searchTerm}
+            setSearchTerm={(value: string) => setSearchTerm(value)}
+          />
+          <button onClick={() => setSearchTerm(defaultSearchTerm)}>
+            reset
+          </button>
           <GithubList setUserDetails={setUserDetails} users={users} />
         </div>
         <div>
-          <GithubDetails userDetails={userDetails} />
+          <GithubDetails
+            userDetails={userDetails}
+            setUserDetails={setUserDetails}
+          />
         </div>
       </div>
     </>
