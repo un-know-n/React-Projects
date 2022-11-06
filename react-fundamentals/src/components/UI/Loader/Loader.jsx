@@ -1,7 +1,13 @@
 import React from 'react';
 
-//TODO: Do the loader component
+import cl from './Loader.module.css';
 
 export const Loader = () => {
-  return <div>Loader</div>;
+  return (
+    <>
+      <div className={cl.loaderWrapper}>
+        <div className={cl.loader}></div>
+      </div>
+    </>
+  );
 };

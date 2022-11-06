@@ -6,7 +6,14 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { TPostsList } from '../../../types/Posts';
 import { PostItem } from './PostItem/PostItem';
 
-export const PostsList: FC<TPostsList> = ({ posts, title, removePost }) => {
+export const PostsList: FC<TPostsList> = ({
+  posts,
+  title,
+  removePost,
+  error,
+}) => {
+  if (error) return <h1>{error}</h1>;
+
   if (!posts.length) {
     return (
       <h1 style={{ textAlign: 'center', marginTop: '15px' }}>

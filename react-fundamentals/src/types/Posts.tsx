@@ -9,5 +9,6 @@ export type TPostProps = {
 export type TPostsList = {
   posts: TPostProps[];
   title: string;
+  error?: string;
   removePost: (postId: number) => void;
 };
