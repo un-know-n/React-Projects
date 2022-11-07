@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { FC } from 'react';
 
 import cl from './Loader.module.css';
 
-export const Loader = () => {
+export const Loader: FC = () => {
   return (
     <>
       <div className={cl.loaderWrapper}>

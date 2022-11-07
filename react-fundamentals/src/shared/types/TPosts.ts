@@ -1,13 +1,12 @@
-export type TPostProps = {
+export type Post = {
+  userId?: number;
   id: number;
   title: string;
   body: string;
-  postNumber: number;
-  removePost: (postId: number) => void;
 };
 
 export type TPostsList = {
-  posts: TPostProps[];
+  posts: Post[];
   title: string;
   error?: string;
   removePost: (postId: number) => void;

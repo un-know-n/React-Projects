@@ -19,4 +19,16 @@ export default class PostService {
     );
     return response;
   }
+  static async getPostById(postId: number | string) {
+    const response = await axios.get(
+      `https://jsonplaceholder.typicode.com/posts/${postId}`
+    );
+    return response;
+  }
+  static async getCommentsByPostId(postId: number | string) {
+    const response = await axios.get(
+      `https://jsonplaceholder.typicode.com/posts/${postId}/comments`
+    );
+    return response;
+  }
 }

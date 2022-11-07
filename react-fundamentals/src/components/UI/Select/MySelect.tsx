@@ -1,6 +1,20 @@
-import React from 'react';
+import React, { FC } from 'react';
 
-export const MySelect = ({ options, defaulValue, value, onChange }) => {
+type Option = { value: string | number; name: string };
+
+type Props = {
+  options: Option[];
+  defaultValue: string;
+  value: string | number;
+  onChange: (value: any) => void;
+};
+
+export const MySelect: FC<Props> = ({
+  options,
+  defaultValue,
+  value,
+  onChange,
+}) => {
   return (
     <div>
       <hr style={{ margin: '15px 0' }} />
@@ -9,7 +23,7 @@ export const MySelect = ({ options, defaulValue, value, onChange }) => {
         onChange={(event) => onChange(event.currentTarget.value)}
       >
         <option disabled value="">
-          {defaulValue}
+          {defaultValue}
         </option>
         {options.map((option) => (
           <option key={option.value} value={option.value}>

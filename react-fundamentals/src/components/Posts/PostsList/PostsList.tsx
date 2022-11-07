@@ -3,7 +3,7 @@ import './PostsList.css';
 import React, { FC } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
-import { TPostsList } from '../../../types/Posts';
+import { Post, TPostsList } from '../../../shared/types/TPosts';
 import { PostItem } from './PostItem/PostItem';
 
 export const PostsList: FC<TPostsList> = ({
@@ -26,11 +26,11 @@ export const PostsList: FC<TPostsList> = ({
     <div>
       {title && <h1 style={{ textAlign: 'center' }}>{title}</h1>}
       <TransitionGroup>
-        {posts.map((post, index) => (
+        {posts.map((post: Post, index: number) => (
           <CSSTransition key={post.id} timeout={500} classNames="post">
             <PostItem
               {...post}
-              postNumber={index + 1}
+              postNumber={post.id}
               removePost={() => removePost(post.id)}
             />
           </CSSTransition>

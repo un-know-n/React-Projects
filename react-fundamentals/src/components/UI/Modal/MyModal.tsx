@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { FC } from 'react';
 
 import cl from './MyModal.module.css';
 
-export const MyModal = ({ children, visible, setVisible }) => {
+type Props = {
+  children: JSX.Element | string;
+  visible: boolean;
+  setVisible: (visible: boolean) => void;
+};
+
+export const MyModal: FC<Props> = ({ children, visible, setVisible }) => {
   const rootClasses = [cl.myModal];
   if (visible) rootClasses.push(cl.active);
 
