@@ -1,6 +1,18 @@
-import { applyMiddleware, legacy_createStore as createStore } from 'redux';
-import thunk from 'redux-thunk';
+import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers } from 'redux';
 
-import { rootReducer } from './reducers';
+import usersReducer from './reducers/usersSlice';
 
-export const store = createStore(rootReducer, applyMiddleware(thunk));
+export const rootReducer = combineReducers({
+  users: usersReducer,
+});
+
+export const setupStore = () => {
+  return configureStore({
+    reducer: rootReducer,
+  });
+};
+
+export type TRootState = ReturnType<typeof rootReducer>;
+export type TAppStore = ReturnType<typeof setupStore>;
+export type TAppDispatch = TAppStore['dispatch'];

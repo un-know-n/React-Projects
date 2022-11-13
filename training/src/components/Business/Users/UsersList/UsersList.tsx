@@ -2,8 +2,8 @@ import React, { FC, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import { useTypedDispatch } from '../../../../store/hooks/useTypedDispatch';
-import { takeUsers } from '../../../../store/selectors/userSelectors';
-import { fetchUsersT } from '../../../../store/thunk/userThunk';
+import { takeUsers } from '../../../../store/selectors/usersSelectors';
+import { fetchUsersAsyncT } from '../../../../store/thunk/userThunk';
 import { User } from './User/User';
 
 export const UsersList: FC = () => {
@@ -15,7 +15,7 @@ export const UsersList: FC = () => {
   //const { fetchUsersT } = useThunk();
 
   useEffect(() => {
-    dispatch(fetchUsersT());
+    dispatch(fetchUsersAsyncT());
     //fetchUsersT();
   }, []);
 

@@ -13,6 +13,10 @@ const AppWrapper = styled.div`
 `;
 
 function App() {
+  // const { users } = useTypedSelector((state) => state.users);
+  // const { setError } = usersSlice.actions;
+  // const dispatch = useAppDispatch();
+
   return (
     <div className="App">
       <AppWrapper>
