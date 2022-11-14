@@ -1,0 +1,34 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Leanne Graham",
+      "username": "Bret",
+      "email": "Sincere@april.biz"
+    },
+    {
+      "id": 2,
+      "name": "Name vwe",
+      "username": "Alive",
+      "email": "lele@april.biz"
+    },
+    {
+      "id": 3,
+      "name": "Aset vhouaw",
+      "username": "grid",
+      "email": "keke@april.biz"
+    },
+    {
+      "name": "qwer",
+      "email": "qwer",
+      "username": "qwer",
+      "id": 4
+    },
+    {
+      "name": "1234",
+      "email": "1234",
+      "username": "1234",
+      "id": 5
+    }
+  ]
+}

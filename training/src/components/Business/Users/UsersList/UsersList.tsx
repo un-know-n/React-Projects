@@ -1,13 +1,25 @@
 import React, { FC, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 
+import { usersAPI } from '../../../../api/usersAPI';
 import { useTypedDispatch } from '../../../../store/hooks/useTypedDispatch';
-import { takeUsers } from '../../../../store/selectors/usersSelectors';
 import { fetchUsersAsyncT } from '../../../../store/thunk/userThunk';
+import { IUser } from '../../../../types/IUsers';
 import { User } from './User/User';
 
 export const UsersList: FC = () => {
-  const { loading, error, users } = useSelector(takeUsers);
+  const {
+    data: users,
+    isError: error,
+    isLoading: loading,
+  } = usersAPI.useFetchAllUsersQuery(10);
+  const [createUser, {}] = usersAPI.useCreateUserMutation();
+
+  const handleCreate = async () => {
+    const title = prompt();
+    await createUser({ name: title, email: title, username: title } as IUser);
+  };
+
+  //const { loading, error, users } = useSelector(takeUsers);
 
   const dispatch = useTypedDispatch();
 
@@ -25,9 +37,14 @@ export const UsersList: FC = () => {
 
   return (
     <>
-      {users.map((user) => (
-        <User key={user.id} {...user} />
-      ))}
+      <div>
+        <div>
+          <button onClick={handleCreate}>Add new user</button>
+        </div>
+        <div>
+          {users && users.map((user) => <User key={user.id} {...user} />)}
+        </div>
+      </div>
     </>
   );
 };

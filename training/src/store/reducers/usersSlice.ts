@@ -21,7 +21,7 @@ export const usersSlice = createSlice({
     // },
     // setUsers(state, action: PayloadAction<IUser[]>) {
     //   state.users = action.payload;
-    // }
+    // },
   },
   extraReducers: {
     [fetchUsersAsyncT.rejected.type]: (
@@ -44,5 +44,7 @@ export const usersSlice = createSlice({
     },
   },
 });
+
+//export const { setError, setLoading, setUsers } = usersSlice.actions;
 
 export default usersSlice.reducer;
