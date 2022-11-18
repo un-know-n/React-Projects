@@ -1,3 +1,22 @@
+/* Initialization */
+
+*,
+*:after,
+*:before {
+  scroll-behavior: smooth;
+  scroll-margin-block-start: 10vh;
+  box-sizing: border-box;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+*,
+*:focus,
+*:active {
+  outline: none;
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -16,6 +35,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   color: $black;
+}
+
+img {
+  max-width: 100%;
+  pointer-events: none;
+  background-attachment: fixed;
 }
 
 a,

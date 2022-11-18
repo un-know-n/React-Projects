@@ -1,29 +1,33 @@
 import React from 'react';
 
+import c from './Item.module.scss';
+
 export const Item = () => {
   return (
     <>
-      <div className='pizza-block'>
+      <div className=' w-full text-center mb-7'>
         <img
-          className='pizza-block__image'
+          className='w-full'
           src='https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg'
           alt='Pizza'
         />
-        <h4 className='pizza-block__title'>Name here</h4>
-        <div className='pizza-block__selector'>
+        <h4 className='text-xl my-3'>Jacket</h4>
+        <div className={c.item__selector}>
+          <div>
+            <span>⭐⭐⭐⭐</span>
+            <span>
+              111 <sub>left</sub>
+            </span>
+          </div>
           <ul>
-            <li className='active'>opt 1</li>
-            <li>opt 2</li>
-          </ul>
-          <ul>
-            <li className='active'>s1 см.</li>
-            <li>s1 см.</li>
-            <li>40 см.</li>
+            <li className={c.active}>XS</li>
+            <li>XM</li>
+            <li>XL</li>
           </ul>
         </div>
-        <div className='pizza-block__bottom'>
-          <div className='pizza-block__price'>Price - $</div>
-          <div className='button button--outline button--add'>
+        <div className='flex items-center justify-between mt-5'>
+          <div className='text-2xl font-bold'>Price - $</div>
+          <button className='button button--outline button--add '>
             <svg
               width='12'
               height='12'
@@ -37,7 +41,7 @@ export const Item = () => {
             </svg>
             <span>Add</span>
             <i>1</i>
-          </div>
+          </button>
         </div>
       </div>
     </>
