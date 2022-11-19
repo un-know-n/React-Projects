@@ -5,12 +5,8 @@ import logo from './../../assets/images/shopping-logo.png';
 export const Header: FC = () => {
   return (
     <>
-      <header className='App-header'>
-        <div></div>
-      </header>
-
       <header className='header'>
-        <div className='container'>
+        <div className='container flex md:flex-row flex-col'>
           <div className='header__logo'>
             <img
               src={logo}
@@ -23,11 +19,11 @@ export const Header: FC = () => {
               <p>Things for every occasion</p>
             </div>
           </div>
-          <div className='header__cart'>
+          <div className='header__cart md:mt-0 mt-4'>
             <a
               href='/cart.html'
               className='button button--cart'>
-              <span>Price here - $</span>
+              <span>[Price here] - $</span>
               <div className='button__delimiter'></div>
               <svg
                 width='18'
@@ -57,7 +53,7 @@ export const Header: FC = () => {
                   strokeLinejoin='round'
                 />
               </svg>
-              <span>0</span>
+              <span>[Amount]</span>
             </a>
           </div>
         </div>

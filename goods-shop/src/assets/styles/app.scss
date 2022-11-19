@@ -16,6 +16,21 @@ body {
   max-width: 1400px;
 }
 
+@media (max-width: 640px) {
+  .wrapper {
+    width: 100%;
+    margin: 0;
+  }
+
+  .cart {
+    &--empty {
+      img {
+        width: 60% !important;
+      }
+    }
+  }
+}
+
 .content {
   padding: 40px 0;
   &__top {
@@ -104,8 +119,11 @@ body {
     &-img {
       display: flex;
       align-items: center;
+      justify-content: center;
       margin-right: 15px;
-      width: 10%;
+      width: 100%;
+      max-width: 170px;
+      min-width: 100px;
 
       img {
         width: 80px;
@@ -136,7 +154,8 @@ body {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      width: 13%;
+      min-width: 100px;
+      width: 30%;
 
       &-minus {
         svg {
@@ -146,8 +165,14 @@ body {
         }
       }
 
-      b {
-        font-size: 22px;
+      &-amount {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        b {
+          font-size: 22px;
+        }
       }
     }
 
@@ -155,6 +180,7 @@ body {
       display: flex;
       align-items: center;
       justify-content: center;
+      min-width: 220px;
       width: 33%;
 
       b {
@@ -168,6 +194,7 @@ body {
       display: flex;
       align-items: center;
       justify-content: flex-end;
+      min-width: 30px;
       width: 4%;
 
       .button {
@@ -263,7 +290,8 @@ body {
 
   &--empty {
     margin: 0 auto;
-    width: 560px;
+    width: 100%;
+    max-width: 460px;
     text-align: center;
 
     h2 {

@@ -8,7 +8,7 @@ export const Items: FC = () => {
   return (
     <>
       <h2 className='my-7'>All items</h2>
-      <div className='grid grid-cols-4 gap-12'>
+      <div className='grid lg:gap-12 md:gap-8 xl:grid-cols-4  lg:grid-cols-3 md:grid-cols-2 grid-cols-1'>
         {someData.current.map((item) => (
           <Item key={item} />
         ))}

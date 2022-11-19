@@ -4,14 +4,12 @@ export const Footer = () => {
   return (
     <>
       <div className='cart__bottom'>
-        <div className='cart__bottom-details'>
+        <div className='cart__bottom-details md:flex-row flex-col'>
           <span>
-            {' '}
-            Total amount: <b>Pieces here - pcs.</b>{' '}
+            Total amount: <b>[Pieces here] - pcs.</b>
           </span>
           <span>
-            {' '}
-            Order price: <b>Price here - $</b>{' '}
+            Order price: <b>[Price here] - $</b>
           </span>
         </div>
         <div className='cart__bottom-buttons'>

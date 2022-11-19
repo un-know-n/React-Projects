@@ -11,12 +11,12 @@ export const Item = () => {
           src='https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg'
           alt='Pizza'
         />
-        <h4 className='text-xl my-3'>Jacket</h4>
+        <h4 className='text-xl my-3'>[Item title]</h4>
         <div className={c.item__selector}>
           <div>
             <span>⭐⭐⭐⭐</span>
             <span>
-              111 <sub>left</sub>
+              [Amount] <sub>left</sub>
             </span>
           </div>
           <ul>
@@ -26,7 +26,7 @@ export const Item = () => {
           </ul>
         </div>
         <div className='flex items-center justify-between mt-5'>
-          <div className='text-2xl font-bold'>Price - $</div>
+          <div className='text-2xl font-bold'>[Price] - $</div>
           <button className='button button--outline button--add '>
             <svg
               width='12'
@@ -40,7 +40,7 @@ export const Item = () => {
               />
             </svg>
             <span>Add</span>
-            <i>1</i>
+            <i>[A]</i>
           </button>
         </div>
       </div>

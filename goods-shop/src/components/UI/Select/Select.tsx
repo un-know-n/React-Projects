@@ -21,7 +21,8 @@ export const Select = () => {
         </div>
         <div className='sort__popup'>
           <ul>
-            <li className='active'>popularity</li>
+            <li className='active'>newest</li>
+            <li>oldest</li>
             <li>price</li>
             <li>alphabet</li>
           </ul>
