@@ -6,6 +6,7 @@
 
   ul {
     display: flex;
+    overflow: scroll;
 
     li {
       background-color: $basic-light;
@@ -16,6 +17,8 @@
       cursor: pointer;
       transition: background-color 0.1s ease-in-out;
       @include noselect();
+      white-space: nowrap;
+      inline-size: min-content;
 
       &:hover {
         background-color: darken($bg-darker, 2%);

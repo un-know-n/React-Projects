@@ -1,6 +1,18 @@
-import React from 'react';
+import classNames from 'classnames';
+import React, { FC, useState } from 'react';
 
-export const Select = () => {
+import { sorts } from '../../../constants/filter';
+
+const options = [
+  { value: 'chocolate', label: 'Chocolate' },
+  { value: 'strawberry', label: 'Strawberry' },
+  { value: 'vanilla', label: 'Vanilla' },
+];
+
+export const SortSelect: FC = () => {
+  const [selectedOption, setSelectedOption] = useState(0);
+  const [isOpen, toggleIsOpen] = useState(false);
+
   return (
     <>
       <div className='sort'>
@@ -17,16 +29,28 @@ export const Select = () => {
             />
           </svg>
           <b>Sort by:</b>
-          <span>popularity</span>
+          <span onClick={() => toggleIsOpen(!isOpen)}>
+            {sorts.map((s, i) => (selectedOption === i ? s : ''))}
+          </span>
         </div>
-        <div className='sort__popup'>
-          <ul>
-            <li className='active'>newest</li>
-            <li>oldest</li>
-            <li>price</li>
-            <li>alphabet</li>
-          </ul>
-        </div>
+        {isOpen && (
+          <div className='sort__popup'>
+            <ul>
+              {sorts.map((s, i) => (
+                <li
+                  key={s}
+                  className={classNames({ active: selectedOption === i })}
+                  onClick={() => {
+                    setSelectedOption(i);
+                    toggleIsOpen(!isOpen);
+                  }}>
+                  {s}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        {/* <Select options={options} /> */}
       </div>
     </>
   );

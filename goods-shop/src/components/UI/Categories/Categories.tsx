@@ -1,13 +1,25 @@
-import React from 'react';
+import classNames from 'classnames';
+import React, { useState } from 'react';
+
+import { categories } from '../../../constants/filter';
 
 export const Categories = () => {
+  const [selectedCategory, setSelectedCategory] = useState(0);
+
   return (
     <>
       <div className='categories'>
         <ul>
-          <li className='active'>All</li>
-          <li>Electronics</li>
-          <li>Jewelry</li>
+          {categories.map((c, i) => (
+            <li
+              key={c}
+              className={classNames({
+                active: selectedCategory === i,
+              })}
+              onClick={() => setSelectedCategory(i)}>
+              {c}
+            </li>
+          ))}
         </ul>
       </div>
     </>

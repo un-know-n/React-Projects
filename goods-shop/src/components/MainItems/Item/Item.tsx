@@ -1,22 +1,36 @@
-import React from 'react';
+import React, { FC, useCallback } from 'react';
 
+import { IProduct } from '../../../types/IProduct';
 import c from './Item.module.scss';
 
-export const Item = () => {
+export const Item: FC<IProduct> = ({
+  image,
+  title,
+  rating: { count, rate },
+  price,
+}) => {
+  const returnStars = useCallback(
+    (rate: number) => {
+      const amount = Math.ceil(rate);
+      return Array.from(Array(amount).keys()).map((s) => '⭐');
+    },
+    [rate],
+  );
+
   return (
     <>
       <div className=' w-full text-center mb-7'>
         <img
           className='w-full'
-          src='https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg'
+          src={image}
           alt='Pizza'
         />
-        <h4 className='text-xl my-3'>[Item title]</h4>
+        <h4 className='text-xl my-3'>{title}</h4>
         <div className={c.item__selector}>
           <div>
-            <span>⭐⭐⭐⭐</span>
+            <span>{returnStars(rate)}</span>
             <span>
-              [Amount] <sub>left</sub>
+              {count} <sub>left</sub>
             </span>
           </div>
           <ul>
@@ -26,7 +40,7 @@ export const Item = () => {
           </ul>
         </div>
         <div className='flex items-center justify-between mt-5'>
-          <div className='text-2xl font-bold'>[Price] - $</div>
+          <div className='text-2xl font-bold'>{price} - $</div>
           <button className='button button--outline button--add '>
             <svg
               width='12'
@@ -40,7 +54,7 @@ export const Item = () => {
               />
             </svg>
             <span>Add</span>
-            <i>[A]</i>
+            <i>[0]</i>
           </button>
         </div>
       </div>
