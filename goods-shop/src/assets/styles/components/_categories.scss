@@ -2,11 +2,15 @@
 
 .categories {
   width: 100%;
-  overflow: scroll;
 
   ul {
     display: flex;
-    overflow: scroll;
+    flex-wrap: wrap;
+
+    @media (max-width: 1280px) {
+      justify-content: center;
+      margin-bottom: 20px;
+    }
 
     li {
       background-color: $basic-light;
@@ -31,6 +35,10 @@
       &.active {
         background-color: #282828;
         color: #fff;
+      }
+
+      @media (max-width: 1280px) {
+        margin-bottom: 10px;
       }
     }
   }

@@ -18,6 +18,7 @@ export const SortSelect: FC = () => {
       <div className='sort'>
         <div className='sort__label'>
           <svg
+            className={isOpen ? 'active' : ''}
             width='10'
             height='6'
             viewBox='0 0 10 6'

@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 
 import { IProduct } from '../../../types/IProduct';
 import c from './Item.module.scss';
@@ -9,6 +9,8 @@ export const Item: FC<IProduct> = ({
   rating: { count, rate },
   price,
 }) => {
+  const [addCount, setAddCount] = useState(0);
+
   const returnStars = useCallback(
     (rate: number) => {
       const amount = Math.ceil(rate);
@@ -19,13 +21,16 @@ export const Item: FC<IProduct> = ({
 
   return (
     <>
-      <div className=' w-full text-center mb-7'>
+      <div className='w-full text-center mb-7'>
         <img
-          className='w-full'
+          className='w-auto
+          h-60 block m-auto'
           src={image}
           alt='Pizza'
         />
-        <h4 className='text-xl my-3'>{title}</h4>
+
+        <h4 className='text-xl my-3 truncate'>{title}</h4>
+
         <div className={c.item__selector}>
           <div>
             <span>{returnStars(rate)}</span>
@@ -40,8 +45,10 @@ export const Item: FC<IProduct> = ({
           </ul>
         </div>
         <div className='flex items-center justify-between mt-5'>
-          <div className='text-2xl font-bold'>{price} - $</div>
-          <button className='button button--outline button--add '>
+          <div className='text-2xl font-bold'>{price} $</div>
+          <button
+            className='button button--outline button--add'
+            onClick={() => setAddCount((actual) => actual + 1)}>
             <svg
               width='12'
               height='12'
@@ -54,7 +61,7 @@ export const Item: FC<IProduct> = ({
               />
             </svg>
             <span>Add</span>
-            <i>[0]</i>
+            <i>{addCount}</i>
           </button>
         </div>
       </div>

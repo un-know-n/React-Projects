@@ -1,0 +1,56 @@
+.header__search {
+  position: relative;
+
+  .search__svg {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    top: 8px;
+    left: 8px;
+  }
+
+  .close__svg {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    top: 8px;
+    right: 8px;
+  }
+
+  .input__search {
+    width: 100%;
+    height: 40px;
+    padding: 9px;
+    padding-left: 34px;
+    padding-right: 34px;
+    border: 1px solid #dddddd;
+    border-radius: 9px;
+
+    &:focus {
+      border-color: #adadad;
+    }
+  }
+}
+
+.user {
+  width: 50px;
+  height: 50px;
+  background-color: #1d9b47;
+  border: 1px solid #1d9b47;
+  border-radius: 50%;
+  transition: all 0.3s;
+  margin-left: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__icon {
+    width: 35px;
+    height: 35px;
+    fill: #fff;
+  }
+
+  &:hover {
+    background-color: darken(#1d9b47, 8%);
+  }
+}

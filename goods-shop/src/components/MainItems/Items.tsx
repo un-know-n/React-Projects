@@ -4,8 +4,6 @@ import { useFetchAllProductsQuery } from '../../api/products.api';
 import { Item } from './Item/Item';
 
 export const Items: FC = () => {
-  const someData = useRef([1, 2, 3, 4, 5, 6]);
-
   const { isLoading, isError, data, error } = useFetchAllProductsQuery(10);
 
   return (

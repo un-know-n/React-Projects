@@ -9,7 +9,7 @@ export const Categories = () => {
   return (
     <>
       <div className='categories'>
-        <ul>
+        <ul className='m-auto'>
           {categories.map((c, i) => (
             <li
               key={c}

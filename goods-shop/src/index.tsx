@@ -22,3 +22,4 @@ root.render(
 );
 
 setupListeners(store.dispatch);
+//TODO: Write comments to every realization
