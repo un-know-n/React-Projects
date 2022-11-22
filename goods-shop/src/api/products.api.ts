@@ -1,5 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
+import { limit } from '../constants/filter';
+import { IFilter } from '../types/IFilter';
 import { IProduct } from '../types/IProduct';
 
 export const productsAPI = createApi({
@@ -8,10 +10,24 @@ export const productsAPI = createApi({
   tagTypes: ['Products'],
   endpoints: (build) => ({
     fetchAllProducts: build.query<IProduct[], number>({
-      query: (limit = 10) => ({
+      query: (_limit = limit) => ({
         url: '/products',
         params: {
-          limit,
+          _limit,
+        },
+      }),
+    }),
+    fetchProductsByFilter: build.query<IProduct[], IFilter>({
+      query: ({ category, limit, query, sort, page }) => ({
+        url: `/products`,
+        params: {
+          q: query,
+          _sort: sort.sortProps.title,
+          _order: sort.sortProps.order,
+          _limit: limit,
+          _page: page,
+          ...(category !== 'all' && { category }),
+          // category: category === 'all' ? '' : category,
         },
       }),
     }),
@@ -19,3 +35,4 @@ export const productsAPI = createApi({
 });
 
 export const { useFetchAllProductsQuery } = productsAPI;
+export const { useLazyFetchProductsByFilterQuery } = productsAPI;

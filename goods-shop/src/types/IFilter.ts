@@ -1,6 +1,11 @@
+import { TCategories, TSorts } from './common';
+
 export interface IFilter {
-  category: string;
-  sort: string;
+  category: TCategories;
+  sort: TSorts;
+  query: string;
+  limit: number;
+  page: number;
 }
 
 //* Possible variant

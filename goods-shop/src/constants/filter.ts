@@ -4,13 +4,15 @@ export const categories = [
   'jewelery',
   "men's clothing",
   "women's clothing",
-];
+] as const;
 
 export const sorts = [
-  'newest',
-  'oldest',
-  'high price',
-  'low price',
-  'from A to Z',
-  'from Z to A',
-];
+  { name: 'newest', sortProps: { title: 'id', order: 'asc' } },
+  { name: 'oldest', sortProps: { title: 'id', order: 'desc' } },
+  { name: 'high price', sortProps: { title: 'price', order: 'desc' } },
+  { name: 'low price', sortProps: { title: 'price', order: 'asc' } },
+  { name: 'from A to Z', sortProps: { title: 'title', order: 'asc' } },
+  { name: 'from Z to A', sortProps: { title: 'title', order: 'desc' } },
+] as const;
+
+export const limit = 8;

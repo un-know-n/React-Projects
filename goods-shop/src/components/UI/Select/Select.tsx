@@ -2,16 +2,17 @@ import classNames from 'classnames';
 import React, { FC, useState } from 'react';
 
 import { sorts } from '../../../constants/filter';
-
-const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' },
-];
+import { useAppDispatch } from '../../../store/hooks/useTypedDispatch';
+import { useTypedSelector } from '../../../store/hooks/useTypedSelector';
+import { setSort } from '../../../store/reducers/filter.slice';
+import { takeSort } from '../../../store/selectors/filter.selector';
 
 export const SortSelect: FC = () => {
-  const [selectedOption, setSelectedOption] = useState(0);
+  //const {order, title} = useTypedSelector(takeSort);
+  // const [selectedOption, setSelectedOption] = useState<string>(sorts[0].name);
   const [isOpen, toggleIsOpen] = useState(false);
+  const { name, sortProps } = useTypedSelector(takeSort);
+  const dispatch = useAppDispatch();
 
   return (
     <>
@@ -31,7 +32,7 @@ export const SortSelect: FC = () => {
           </svg>
           <b>Sort by:</b>
           <span onClick={() => toggleIsOpen(!isOpen)}>
-            {sorts.map((s, i) => (selectedOption === i ? s : ''))}
+            {sorts.map((s) => (name === s.name ? s.name : ''))}
           </span>
         </div>
         {isOpen && (
@@ -39,19 +40,18 @@ export const SortSelect: FC = () => {
             <ul>
               {sorts.map((s, i) => (
                 <li
-                  key={s}
-                  className={classNames({ active: selectedOption === i })}
+                  key={i}
+                  className={classNames({ active: name === s.name })}
                   onClick={() => {
-                    setSelectedOption(i);
+                    dispatch(setSort(s));
                     toggleIsOpen(!isOpen);
                   }}>
-                  {s}
+                  {s.name}
                 </li>
               ))}
             </ul>
           </div>
         )}
-        {/* <Select options={options} /> */}
       </div>
     </>
   );
