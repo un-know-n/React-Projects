@@ -9,12 +9,9 @@ export const productsAPI = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3001/' }),
   tagTypes: ['Products'],
   endpoints: (build) => ({
-    fetchAllProducts: build.query<IProduct[], number>({
-      query: (_limit = limit) => ({
+    fetchAllProducts: build.query<IProduct[], any>({
+      query: () => ({
         url: '/products',
-        params: {
-          _limit,
-        },
       }),
     }),
     fetchProductsByFilter: build.query<IProduct[], IFilter>({

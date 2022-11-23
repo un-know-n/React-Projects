@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import emptyCartImg from './../../assets/images/empty-cart.png';
 
@@ -18,11 +19,11 @@ export const Empty = () => {
                 src={emptyCartImg}
                 alt='Empty cart'
               />
-              <a
-                href='/'
+              <Link
+                to='/'
                 className='button button--black'>
                 <span>Back</span>
-              </a>
+              </Link>
             </div>
           </div>
         </div>

@@ -21,6 +21,7 @@ export const filterSlice = createSlice({
       state.sort = action.payload.sort;
       state.query = action.payload.query;
       state.limit = action.payload.limit;
+      state.page = action.payload.page;
     },
     setQuery(state, action: PayloadAction<string>) {
       state.query = action.payload;
@@ -37,7 +38,7 @@ export const filterSlice = createSlice({
   },
 });
 
-export const { setFilter, setCategory, setQuery, setSort } =
+export const { setFilter, setCategory, setQuery, setSort, setPage } =
   filterSlice.actions;
 
 export default filterSlice.reducer;

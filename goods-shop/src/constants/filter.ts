@@ -15,4 +15,12 @@ export const sorts = [
   { name: 'from Z to A', sortProps: { title: 'title', order: 'desc' } },
 ] as const;
 
-export const limit = 8;
+export const limit = 6;
+
+export const defaultFilter = {
+  sort: sorts[0],
+  category: categories[0],
+  query: '',
+  limit: limit,
+  page: 1,
+};
