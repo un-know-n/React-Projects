@@ -1,9 +1,9 @@
 import { TCategories, TSorts } from './common';
 
 export interface IFilter {
-  category: TCategories;
+  category?: TCategories;
   sort: TSorts;
-  query: string;
+  query?: string;
   limit: number;
   page: number;
 }

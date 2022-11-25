@@ -1,11 +1,15 @@
+import * as Lodash from 'lodash';
+import qs from 'qs';
 import React, { FC, useEffect, useMemo, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { useLazyFetchProductsByFilterQuery } from '../../api/products.api';
 import { defaultFilter } from '../../constants/filter';
 import { useFilter } from '../../store/hooks/useFilter';
 import { useAppDispatch } from '../../store/hooks/useTypedDispatch';
 import { setFilter } from '../../store/reducers/filter.slice';
+import { IFilter } from '../../types/IFilter';
+import { resetFilter } from '../../utils/resetFilter';
 import { Pagination } from '../UI/Pagination/Pagination';
 import { ItemsSkeleton } from '../UI/Skeleton/MainItems/ItemsSkeleton';
 import noProductsImg from './../../assets/images/no-products.svg';
@@ -15,6 +19,10 @@ import c from './Items.module.scss';
 export const Items: FC = () => {
   //Take items from current filter
   const { sort, category, limit, page, query } = useFilter();
+  const navigate = useNavigate();
+
+  const isMounted = useRef(false);
+  const isSearch = useRef(false);
 
   //Get the function that filtrates products using api
   const [filterProducts, { isLoading, isError, data, error }] =
@@ -29,7 +37,54 @@ export const Items: FC = () => {
 
   //If something from filter changes -> call the function to fetch products
   useEffect(() => {
-    filterProducts({ category, limit, query, sort, page });
+    //Fetch products when filter is ready
+    if (isMounted.current) {
+      filterProducts({ category, limit, query, sort, page });
+    }
+  }, [sort, category, limit, page, query]);
+
+  //Take the options from URL for filter, when first render
+  useEffect(() => {
+    if (window.location.search) {
+      //Take the string from URL
+      const filterParams = qs.parse(window.location.search.substring(1));
+      // eslint-disable-next-line prefer-const
+      let { _limit, _page, _sort, category, q } = filterParams;
+      category = category || 'all';
+      q = query || '';
+
+      //Dispatch the object with needed structure
+      dispatch(
+        setFilter({
+          category,
+          query: q,
+          sort: _sort,
+          limit: _limit,
+          page: _page,
+        } as unknown as IFilter),
+      );
+    }
+  }, []);
+
+  //Push the filter options to URL, after first redraw
+  useEffect(() => {
+    //If first render has already happened and filter has changed
+    if (
+      isMounted.current &&
+      !Lodash.isEqual({ sort, category, limit, page, query }, defaultFilter)
+    ) {
+      //Put every parameter into object and push it to URL
+      const filterParams = qs.stringify({
+        _sort: sort,
+        ...(category !== 'all' && { category }),
+        _limit: limit,
+        _page: page,
+        ...(query !== '' && { q: query }),
+      });
+      navigate(`?${filterParams}`);
+    }
+
+    isMounted.current = true;
   }, [sort, category, limit, page, query]);
 
   return (
@@ -37,7 +92,8 @@ export const Items: FC = () => {
       {data?.length ? (
         <>
           <h2 className='my-7'>
-            {category[0].toUpperCase() + category.substring(1)}
+            {category !== undefined &&
+              category[0].toUpperCase() + category.substring(1)}
           </h2>
           <div className='grid lg:gap-12 md:gap-8 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1'>
             {isLoading
@@ -69,8 +125,8 @@ export const Items: FC = () => {
                 alt='Empty cart'
               />
               <Link
-                to='/b'
-                onClick={() => dispatch(setFilter(defaultFilter))}
+                to='/'
+                onClick={() => resetFilter(dispatch)}
                 className='button button--black'>
                 <span>Back</span>
               </Link>

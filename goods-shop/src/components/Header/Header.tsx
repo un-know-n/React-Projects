@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useDebounce } from '../../hooks/useDebounce';
 import { useAppDispatch } from '../../store/hooks/useTypedDispatch';
 import { setQuery } from '../../store/reducers/filter.slice';
+import { resetFilter } from '../../utils/resetFilter';
 import logo from './../../assets/images/shopping-logo.png';
 import c from './Header.module.scss';
 
@@ -42,6 +43,7 @@ export const Header: FC = () => {
           <div className='header__logo lg:mb-0 mb-6'>
             <Link
               to='/'
+              onClick={() => resetFilter(dispatch)}
               className='flex'>
               <img
                 src={logo}
