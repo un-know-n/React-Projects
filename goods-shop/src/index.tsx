@@ -1,4 +1,5 @@
 import './index.scss';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
 import React from 'react';

@@ -1,23 +1,48 @@
-import React from 'react';
+import React, { FC } from 'react';
 
-export const Item = () => {
+import { useAppDispatch } from '../../../../../store/hooks/useTypedDispatch';
+import { editItem, removeItem } from '../../../../../store/reducers/cart.slice';
+import { ICartProduct } from '../../../../../types/ICartProduct';
+
+type TProps = {
+  item: ICartProduct;
+};
+
+export const Item: FC<TProps> = ({ item }) => {
+  const { id, title, additional, price, image, count, category } = item;
+
+  const dispatch = useAppDispatch();
+
+  //Increment item in cart
+  const handleMore = () =>
+    dispatch(editItem({ id, additional, effect: 'increment', price, count }));
+
+  //Decrement item in cart
+  const handleLess = () =>
+    dispatch(editItem({ id, additional, effect: 'decrement', price, count }));
+
+  //Remove item in cart
+  const handleRemove = () =>
+    dispatch(removeItem({ id, additional, price, count }));
+
   return (
     <>
       <div className='cart__item md:flex-row flex-col items-center md:text-left text-center'>
         <div className='cart__item-img'>
           <img
-            className='pizza-block__image'
-            src='https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg'
-            alt='Pizza'
+            src={image}
+            alt=''
           />
         </div>
         <div className='cart__item-info'>
-          <h3>[Item title]</h3>
-          <p>[tags/attributes/oprions here]</p>
+          <h3>{title}</h3>
+          <p>{`${category} / ${additional}`}</p>
         </div>
         <div className='flex sm:flex-row flex-col items-center '>
           <div className='cart__item-count'>
-            <div className='button button--outline button--circle cart__item-count-minus'>
+            <div
+              className='button button--outline button--circle cart__item-count-minus'
+              onClick={handleLess}>
               <svg
                 width='10'
                 height='10'
@@ -35,9 +60,11 @@ export const Item = () => {
               </svg>
             </div>
             <div className='cart__item-count-amount'>
-              <b>99</b>
+              <b>{count}</b>
             </div>
-            <div className='button button--outline button--circle cart__item-count-plus'>
+            <div
+              className='button button--outline button--circle cart__item-count-plus'
+              onClick={handleMore}>
               <svg
                 width='10'
                 height='10'
@@ -56,9 +83,11 @@ export const Item = () => {
             </div>
           </div>
           <div className='cart__item-price sm:my-0 my-3'>
-            <b>[Price here] - $</b>
+            <b>{price} $</b>
           </div>
-          <div className='cart__item-remove'>
+          <div
+            className='cart__item-remove'
+            onClick={handleRemove}>
             <div className='button button--outline button--circle'>
               <svg
                 width='10'

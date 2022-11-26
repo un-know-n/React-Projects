@@ -6,7 +6,7 @@ export interface IProduct {
   category: string;
   image: string;
   rating: IProductRating;
-  size?: string;
+  size?: Array<string>;
 }
 
 export interface IProductRating {

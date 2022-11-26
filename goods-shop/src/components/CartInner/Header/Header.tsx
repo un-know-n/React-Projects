@@ -1,6 +1,13 @@
 import React from 'react';
 
+import { useAppDispatch } from '../../../store/hooks/useTypedDispatch';
+import { clearCart } from '../../../store/reducers/cart.slice';
+
 export const Header = () => {
+  const dispatch = useAppDispatch();
+
+  const handleClear = () => dispatch(clearCart());
+
   return (
     <>
       <div className='cart__top'>
@@ -35,7 +42,9 @@ export const Header = () => {
           </svg>
           Cart
         </h2>
-        <div className='cart__clear'>
+        <div
+          className='cart__clear'
+          onClick={handleClear}>
           <svg
             width='20'
             height='20'

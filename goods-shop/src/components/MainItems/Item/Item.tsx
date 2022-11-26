@@ -1,5 +1,10 @@
-import React, { FC, useCallback, useState } from 'react';
+import React, { FC, useCallback, useMemo, useState } from 'react';
 
+import { useAppDispatch } from '../../../store/hooks/useTypedDispatch';
+import { useTypedSelector } from '../../../store/hooks/useTypedSelector';
+import { editItem, setItem } from '../../../store/reducers/cart.slice';
+import { takeCartItems } from '../../../store/selectors/cart.selector';
+import { ICartProduct } from '../../../types/ICartProduct';
 import { IProduct } from '../../../types/IProduct';
 import c from './Item.module.scss';
 
@@ -8,9 +13,34 @@ export const Item: FC<IProduct> = ({
   title,
   rating: { count, rate },
   price,
+  size,
+  id,
+  category,
 }) => {
-  const [addCount, setAddCount] = useState(0);
+  const realSize = size![0] || '';
+  const [selectedSize, setSelectedSize] = useState(realSize);
+  const cartItems = useTypedSelector(takeCartItems);
 
+  const findItem = (items: ICartProduct[]) => {
+    if (items.length > 0) {
+      return items.find(
+        (item) => item.id === id && item.additional === selectedSize,
+      );
+    } else return null;
+  };
+
+  const cartItem = useMemo(
+    () => findItem(cartItems),
+    [selectedSize, cartItems],
+  );
+
+  const dispatch = useAppDispatch();
+
+  //TODO: Filter items, take one if exists, when add check if it is already in the cart, if is -> increase count, if not -> push to cart(all depending on the additional properties)
+
+  //TODO: Make different price, depending on the additional value(another size -> item with another id and so on...)
+
+  //Shows amount of start, depending on ceiled rate
   const returnStars = useCallback(
     (rate: number) => {
       const amount = Math.ceil(rate);
@@ -18,6 +48,32 @@ export const Item: FC<IProduct> = ({
     },
     [rate],
   );
+
+  //Add item to cart or increase it's amount
+  const addToCart = () => {
+    if (cartItem) {
+      dispatch(
+        editItem({
+          id,
+          additional: selectedSize,
+          effect: 'increment',
+          price,
+          count: cartItem.count,
+        }),
+      );
+    } else
+      dispatch(
+        setItem({
+          id,
+          title,
+          price,
+          count: 1,
+          additional: selectedSize,
+          category,
+          image,
+        }),
+      );
+  };
 
   return (
     <>
@@ -39,16 +95,21 @@ export const Item: FC<IProduct> = ({
             </span>
           </div>
           <ul>
-            <li className={c.active}>XS</li>
-            <li>XM</li>
-            <li>XL</li>
+            {size?.map((s) => (
+              <li
+                key={s}
+                className={s === selectedSize ? c.active : ''}
+                onClick={() => setSelectedSize(s)}>
+                {s}
+              </li>
+            ))}
           </ul>
         </div>
         <div className='flex items-center justify-between mt-5'>
           <div className='text-2xl font-bold'>{price} $</div>
           <button
             className='button button--outline button--add'
-            onClick={() => setAddCount((actual) => actual + 1)}>
+            onClick={addToCart}>
             <svg
               width='12'
               height='12'
@@ -61,7 +122,7 @@ export const Item: FC<IProduct> = ({
               />
             </svg>
             <span>Add</span>
-            <i>{addCount}</i>
+            <i>{cartItem?.count || 0}</i>
           </button>
         </div>
       </div>

@@ -1,20 +1,46 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
+import { useAppDispatch } from '../../../store/hooks/useTypedDispatch';
+import { useTypedSelector } from '../../../store/hooks/useTypedSelector';
+import { clearCart } from '../../../store/reducers/cart.slice';
+import { takeTotalAmount, takeTotalPrice } from '../../../store/selectors/cart.selector';
 
 export const Footer = () => {
+  const amount = useTypedSelector(takeTotalAmount);
+  const price = useTypedSelector(takeTotalPrice);
+
+  const dispatch = useAppDispatch();
+
+  const onSuccess = () => {
+    toast.success('Thank you for your purchase! 😊', {
+      position: 'bottom-right',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'light',
+    });
+    dispatch(clearCart());
+  };
+
   return (
     <>
       <div className='cart__bottom'>
         <div className='cart__bottom-details md:flex-row flex-col'>
           <span>
-            Total amount: <b>[Pieces here] - pcs.</b>
+            Total amount: <b>{amount} pcs.</b>
           </span>
           <span>
-            Order price: <b>[Price here] - $</b>
+            Order price: <b>{price} $</b>
           </span>
         </div>
         <div className='cart__bottom-buttons'>
-          <a
-            href='/'
+          <Link
+            to='/'
             className='button button--outline button--add go-back-btn'>
             <svg
               width='8'
@@ -32,10 +58,14 @@ export const Footer = () => {
             </svg>
 
             <span>Back</span>
-          </a>
-          <div className='button pay-btn'>
-            <span>Buy now</span>
-          </div>
+          </Link>
+          <Link
+            to='/'
+            onClick={onSuccess}>
+            <div className='button pay-btn'>
+              <span>Buy now</span>
+            </div>
+          </Link>
         </div>
       </div>
     </>
