@@ -10,11 +10,10 @@ export const Items = () => {
   return (
     <>
       <div className='content__items'>
-        {items.map((item, i) => (
+        {items.map((item) => (
           <Item
             item={item}
-            // key={item.id}
-            key={i}
+            key={`${item.id}+${item.additional}`}
           />
         ))}
       </div>

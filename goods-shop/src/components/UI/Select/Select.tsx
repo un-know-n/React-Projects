@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { FC, useState } from 'react';
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 
 import { sorts } from '../../../constants/filter';
 import { useAppDispatch } from '../../../store/hooks/useTypedDispatch';
@@ -8,15 +8,30 @@ import { setSort } from '../../../store/reducers/filter.slice';
 import { takeSort } from '../../../store/selectors/filter.selector';
 
 export const SortSelect: FC = () => {
-  //const {order, title} = useTypedSelector(takeSort);
-  // const [selectedOption, setSelectedOption] = useState<string>(sorts[0].name);
   const [isOpen, toggleIsOpen] = useState(false);
   const sort = useTypedSelector(takeSort);
+  const sortRef = useRef(null);
   const dispatch = useAppDispatch();
+
+  const onOutside = useCallback((event: MouseEvent) => {
+    if (
+      !event.composedPath().includes(sortRef.current as unknown as EventTarget)
+    )
+      toggleIsOpen(false);
+  }, []);
+
+  useEffect(() => {
+    document.body.addEventListener('click', onOutside);
+    return () => {
+      document.body.removeEventListener('click', onOutside);
+    };
+  }, []);
 
   return (
     <>
-      <div className='sort'>
+      <div
+        className='sort'
+        ref={sortRef}>
         {sort && (
           <>
             <div className='sort__label'>

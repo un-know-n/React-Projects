@@ -40,7 +40,8 @@ export const Item: FC<TProps> = ({ item }) => {
         </div>
         <div className='flex sm:flex-row flex-col items-center '>
           <div className='cart__item-count'>
-            <div
+            <button
+              disabled={count === 1}
               className='button button--outline button--circle cart__item-count-minus'
               onClick={handleLess}>
               <svg
@@ -58,7 +59,7 @@ export const Item: FC<TProps> = ({ item }) => {
                   fill='#EB5A1E'
                 />
               </svg>
-            </div>
+            </button>
             <div className='cart__item-count-amount'>
               <b>{count}</b>
             </div>

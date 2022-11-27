@@ -36,8 +36,6 @@ export const Item: FC<IProduct> = ({
 
   const dispatch = useAppDispatch();
 
-  //TODO: Filter items, take one if exists, when add check if it is already in the cart, if is -> increase count, if not -> push to cart(all depending on the additional properties)
-
   //TODO: Make different price, depending on the additional value(another size -> item with another id and so on...)
 
   //Shows amount of start, depending on ceiled rate
