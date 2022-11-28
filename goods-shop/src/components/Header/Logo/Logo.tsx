@@ -1,11 +1,11 @@
-import React, { FC, memo } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { useAppDispatch } from '../../../store/hooks/useTypedDispatch';
-import { resetFilter } from '../../../utils/resetFilter';
+import { resetFilter } from '../../../utils/helpers/resetFilter';
 import logo from './../../../assets/images/shopping-logo.png';
 
-export const Logo: FC = () => {
+export const Logo: React.FC = React.memo(() => {
   const dispatch = useAppDispatch();
 
   return (
@@ -29,4 +29,5 @@ export const Logo: FC = () => {
       </div>
     </>
   );
-};
+});
+Logo.displayName = 'Logo';

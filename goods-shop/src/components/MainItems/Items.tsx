@@ -1,7 +1,7 @@
 import * as Lodash from 'lodash';
 import qs from 'qs';
 import React, { FC, useEffect, useMemo, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { useLazyFetchProductsByFilterQuery } from '../../api/products.api';
 import { defaultFilter } from '../../constants/filter';
@@ -9,12 +9,9 @@ import { useFilter } from '../../store/hooks/useFilter';
 import { useAppDispatch } from '../../store/hooks/useTypedDispatch';
 import { setFilter } from '../../store/reducers/filter.slice';
 import { IFilter } from '../../types/IFilter';
-import { resetFilter } from '../../utils/resetFilter';
-import { Pagination } from '../UI/Pagination/Pagination';
+import NoData from '../UI/NoData/NoData';
 import { ItemsSkeleton } from '../UI/Skeleton/MainItems/ItemsSkeleton';
-import noProductsImg from './../../assets/images/no-products.svg';
 import { Item } from './Item/Item';
-import c from './Items.module.scss';
 
 //TODO: Handle the errors from server!
 
@@ -43,6 +40,7 @@ export const Items: FC = () => {
     if (window.location.search) {
       //Take the string from URL
       const filterParams = qs.parse(window.location.search.substring(1));
+      //TODO: Fix the following filter issue
       // eslint-disable-next-line prefer-const
       let { _limit, _page, _sort, category, q } = filterParams;
       category = category || 'all';
@@ -113,34 +111,9 @@ export const Items: FC = () => {
               />
             ))
           ) : (
-            <>
-              <div className={c.noDataWrapper}>
-                <div className={c.noData}>
-                  <h2 className='mb-4 mt-7'>No products found 📦</h2>
-                  <p>
-                    Sorry, we have not found any products on your request. But
-                    we will fix that soon 😉
-                  </p>
-                  <img
-                    src={noProductsImg}
-                    alt='Empty cart'
-                  />
-                  <Link
-                    to='/'
-                    onClick={() => resetFilter(dispatch)}
-                    className='button button--black'>
-                    <span>Back</span>
-                  </Link>
-                </div>
-              </div>
-            </>
+            <NoData />
           )}
         </div>
-        <Pagination
-          forcePage={page}
-          className={c.pagination}
-          pageCount={3}
-        />
       </>
     </>
   );

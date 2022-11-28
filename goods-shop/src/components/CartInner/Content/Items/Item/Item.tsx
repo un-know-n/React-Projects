@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, memo } from 'react';
 
 import { useAppDispatch } from '../../../../../store/hooks/useTypedDispatch';
 import { editItem, removeItem } from '../../../../../store/reducers/cart.slice';
@@ -8,7 +8,7 @@ type TProps = {
   item: ICartProduct;
 };
 
-export const Item: FC<TProps> = ({ item }) => {
+export const Item: FC<TProps> = memo(({ item }) => {
   const { id, title, additional, price, image, count, category } = item;
 
   const dispatch = useAppDispatch();
@@ -111,4 +111,5 @@ export const Item: FC<TProps> = ({ item }) => {
       </div>
     </>
   );
-};
+});
+Item.displayName = 'Item';

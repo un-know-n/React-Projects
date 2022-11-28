@@ -3,7 +3,7 @@ import React from 'react';
 import { useAppDispatch } from '../../../store/hooks/useTypedDispatch';
 import { clearCart } from '../../../store/reducers/cart.slice';
 
-export const Header = () => {
+export const Header = React.memo(() => {
   const dispatch = useAppDispatch();
 
   const handleClear = () => dispatch(clearCart());
@@ -86,4 +86,5 @@ export const Header = () => {
       </div>
     </>
   );
-};
+});
+Header.displayName = 'Header';
