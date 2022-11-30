@@ -1,12 +1,16 @@
-import React, { FC } from 'react';
-import { Link } from 'react-router-dom';
+import React, { FC, useContext } from 'react';
+import { Link, Route } from 'react-router-dom';
 
+import { AuthContext } from '../../../../context/auth';
+import { Routes } from '../../../../routes';
 import c from './Profile.module.scss';
 
 const Profile: FC = () => {
+  const Auth = useContext(AuthContext);
+
   return (
     <>
-      <Link to='/profile'>
+      <Link to={Auth?.isAuth === true ? Routes.Profile : Routes.SignIn}>
         <div className={c.user}>
           <svg
             className={c.user__icon}

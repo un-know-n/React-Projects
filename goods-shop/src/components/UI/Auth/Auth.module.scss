@@ -1,0 +1,89 @@
+@import '/src/assets/styles/variables';
+
+.signInWrapper {
+  width: 100%;
+  min-height: 620px;
+  height: calc(85vh);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+
+    .field {
+      margin-bottom: 8px;
+      padding: 5px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+
+      &:focus {
+        border: 1px solid rgb(170, 170, 170);
+      }
+    }
+
+    .button {
+      display: block;
+      margin: 0 auto;
+      text-align: center;
+      width: 100%;
+      margin-top: 10px;
+      padding: 10px;
+      border: 2px solid lighten($green, 10%);
+      background-color: $background;
+      border-radius: 10px;
+      transition: 0.3s all;
+
+      &__back {
+        margin-top: 10px;
+        border-radius: 10px;
+        padding: 10px;
+        border: 2px solid lighten(rgb(42, 70, 194), 10%);
+        background-color: rgb(88, 187, 226);
+        transition: 0.3s all;
+
+        &:hover {
+          background-color: transparent;
+        }
+      }
+
+      &:hover {
+        background-color: transparent;
+      }
+    }
+
+    .error {
+      padding: 5px;
+      color: red;
+    }
+
+    .error__field {
+      &::placeholder {
+        color: red;
+      }
+      border-color: red;
+      &:focus {
+        border-color: red;
+      }
+    }
+  }
+
+  .signUpOffer {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+
+    .link__offer {
+      color: rgb(98, 141, 69);
+      text-decoration: underline;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+}

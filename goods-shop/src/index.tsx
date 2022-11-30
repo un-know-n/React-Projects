@@ -1,3 +1,4 @@
+import './api/firebase.api';
 import './index.scss';
 import 'react-toastify/dist/ReactToastify.css';
 

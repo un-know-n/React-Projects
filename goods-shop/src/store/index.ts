@@ -18,9 +18,12 @@ const persistConfig = {
   key: 'root',
   version: 1,
   storage,
+  blacklist: ['filter', 'productsAPI'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+//* Main Store
 
 export const store = configureStore({
   reducer: persistedReducer,
@@ -32,8 +35,8 @@ export const store = configureStore({
     }).concat(productsAPI.middleware),
 });
 
-// eslint-disable-next-line prefer-const
-export let persistor = persistStore(store);
+// Main exported variables
+export const persistor = persistStore(store);
 
 export type TRootState = ReturnType<typeof rootReducer>;
 export type TAppStore = typeof store;

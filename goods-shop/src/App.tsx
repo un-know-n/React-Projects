@@ -1,48 +1,20 @@
-import React, { lazy, Suspense } from 'react';
+import React, { lazy, Suspense, useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
 import { Header } from './components/Header/Header';
+import AppRouter from './components/UI/AppRouter/AppRouter';
 import Loader from './components/UI/Loader/Loader';
-
-const MainPage = lazy(() => import('./pages/Main'));
-const CartPage = lazy(() => import('./pages/Cart'));
+import { AuthContext } from './context/auth';
 
 function App() {
+  const [isAuth, setIsAuth] = useState(false);
+
   return (
     <>
-      <Suspense fallback={<Loader />}>
-        <div className='wrapper'>
-          <Header />
-          <Routes>
-            <Route
-              path='/'
-              element={<MainPage />}
-            />
-            <Route
-              path='cart'
-              element={<CartPage />}
-            />
-            <Route
-              path='*'
-              element={<Navigate to={'/'} />}
-            />
-          </Routes>
-        </div>
-
-        <ToastContainer
-          position='bottom-right'
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme='light'
-        />
-      </Suspense>
+      <AuthContext.Provider value={{ isAuth, setIsAuth }}>
+        <AppRouter />
+      </AuthContext.Provider>
     </>
   );
 }

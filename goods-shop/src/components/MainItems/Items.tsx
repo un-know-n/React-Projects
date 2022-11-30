@@ -23,10 +23,8 @@ export const Items: FC = () => {
   const isMounted = useRef(false);
 
   //Get the function that filtrates products using api
-  const [
-    filterProducts,
-    { isLoading, isFetching, isSuccess, isError, data, error },
-  ] = useLazyFetchProductsByFilterQuery();
+  const [filterProducts, { isLoading, isFetching, isSuccess, data }] =
+    useLazyFetchProductsByFilterQuery();
 
   //Number of skeletons on the page
   const skeletons = useMemo(() => {
@@ -78,14 +76,14 @@ export const Items: FC = () => {
     }
 
     isMounted.current = true;
-  }, [sort, category, limit, page, query]);
+  }, [sort, category, limit, page, query, isMounted.current]);
 
   //If something from filter changes -> call the function to fetch products
   useEffect(() => {
     //Fetch products when filter is ready
-    if (isMounted.current) {
-      filterProducts({ category, limit, query, sort, page });
-    }
+    //if (isMounted.current) {
+    filterProducts({ category, limit, query, sort, page });
+    //}
   }, [sort, category, limit, page, query, isMounted.current]);
 
   return (
