@@ -1,7 +1,9 @@
 import React, { useContext } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link } from 'react-router-dom';
 
 import { AuthContext } from '../../../../context/auth';
+import { useUserAuth } from '../../../../hooks/useUserAuth';
 import { Routes } from '../../../../routes';
 import { useTypedSelector } from '../../../../store/hooks/useTypedSelector';
 import { takeTotalAmount, takeTotalPrice } from '../../../../store/selectors/cart.selector';
@@ -10,12 +12,12 @@ const Cart: React.FC = () => {
   const totalPrice = useTypedSelector(takeTotalPrice);
   const totalAmount = useTypedSelector(takeTotalAmount);
 
-  const auth = useContext(AuthContext);
+  const [user, loading, error] = useUserAuth();
 
   return (
     <>
       <Link
-        to={auth?.isAuth === false ? Routes.SignIn : Routes.Cart}
+        to={!user ? Routes.SignIn : Routes.Cart}
         className='button button--cart mr-4'>
         <span>{totalPrice} $</span>
         <div className='button__delimiter'></div>

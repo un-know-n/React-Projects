@@ -5,7 +5,7 @@ export type TSignIn = {
 
 export type TSignUp = {
   name: string;
-  age: string;
+  phone: string;
   email: string;
   password: string;
   passwordConfirmation: string;

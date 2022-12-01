@@ -1,8 +1,10 @@
 import React, { FC, memo, useCallback, useContext, useMemo, useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link } from 'react-router-dom';
 
 import { AuthContext } from '../../../context/auth';
 import { useCartItem } from '../../../hooks/useCartItem';
+import { useUserAuth } from '../../../hooks/useUserAuth';
 import { Routes } from '../../../routes';
 import { useAppDispatch } from '../../../store/hooks/useTypedDispatch';
 import { editItem, setItem } from '../../../store/reducers/cart.slice';
@@ -16,7 +18,7 @@ export const Item: FC<IProduct> = memo(
 
     const cartItem = useCartItem(selectedSize, id);
 
-    const auth = useContext(AuthContext);
+    const [user, loading, error] = useUserAuth();
 
     const dispatch = useAppDispatch();
 
@@ -89,10 +91,10 @@ export const Item: FC<IProduct> = memo(
           </div>
           <div className='flex items-center justify-between mt-5'>
             <div className='text-2xl font-bold'>{price} $</div>
-            <Link to={auth?.isAuth === false ? Routes.SignIn : ''}>
+            <Link to={!user ? Routes.SignIn : ''}>
               <button
                 className='button button--outline button--add'
-                disabled={!auth?.isAuth}
+                disabled={!user}
                 onClick={addToCart}>
                 <svg
                   width='12'

@@ -1,4 +1,7 @@
+import { Auth } from 'firebase/auth';
+import { Firestore } from 'firebase/firestore';
+
 export interface IAuthContext {
-  isAuth: boolean;
-  setIsAuth: (value: boolean) => void;
+  auth: Auth;
+  firestore: Firestore;
 }

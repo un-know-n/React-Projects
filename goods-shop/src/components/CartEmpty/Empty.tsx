@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import { Routes } from '../../routes';
 import emptyCartImg from './../../assets/images/empty-cart.png';
 
 const Empty = () => {
@@ -20,7 +21,7 @@ const Empty = () => {
                 alt='Empty cart'
               />
               <Link
-                to='/'
+                to={Routes.Home}
                 className='button button--black'>
                 <span>Back</span>
               </Link>

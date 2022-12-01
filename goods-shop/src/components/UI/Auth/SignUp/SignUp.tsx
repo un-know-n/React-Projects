@@ -1,30 +1,95 @@
 import classNames from 'classnames';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { FirebaseError } from 'firebase/app';
+import { createUserWithEmailAndPassword, updatePhoneNumber, updateProfile } from 'firebase/auth';
+import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
+import { values } from 'lodash';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import PhoneInput from 'react-phone-number-input';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
+import { useAuthContext } from '../../../../hooks/useAuthContext';
 import { Routes } from '../../../../routes';
 import { TSignUp } from '../../../../types/TAuth';
+import { takeAuthError } from '../../../../utils/helpers/authErrors';
 import { signUpSchema } from '../../../../utils/schemas/authSchema';
 import Layout from '../../Layout/Layout';
 import c from './../Auth.module.scss';
+import PhoneField from './PhoneField';
+
+export const initialValues: TSignUp = {
+  email: '',
+  password: '',
+  phone: '',
+  name: '',
+  passwordConfirmation: '',
+};
+
+export const returnFieldClass = (
+  errorField: string | undefined,
+  touchedField: boolean | undefined,
+) => {
+  return classNames(c.field, {
+    [c.error__field]: errorField !== undefined && !!touchedField,
+  });
+};
 
 const SignUp = () => {
-  const initialValues: TSignUp = {
-    email: '',
-    password: '',
-    age: '',
-    name: '',
-    passwordConfirmation: '',
-  };
+  const navigate = useNavigate();
 
-  const returnFieldClass = (
-    errorField: string | undefined,
-    touchedField: boolean | undefined,
+  const { auth } = useAuthContext();
+
+  const handleSubmit = async (
+    values: TSignUp,
+    formikHelpers: FormikHelpers<TSignUp>,
   ) => {
-    return classNames(c.field, {
-      [c.error__field]: errorField !== undefined && !!touchedField,
-    });
+    formikHelpers.setSubmitting(true);
+    await createUserWithEmailAndPassword(auth, values.email, values.password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+
+        updateProfile(user, {
+          displayName: values.name,
+          photoURL: values.phone,
+        })
+          .then(() => {
+            toast.success(
+              `Greetings, ${user.displayName || 'dear Customer'}!`,
+              {
+                position: 'bottom-right',
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: 'light',
+              },
+            );
+            navigate(Routes.Home);
+          })
+          .catch((error: FirebaseError) => {
+            const errorMsg = takeAuthError(error.code);
+            toast.error(`Error occured, ${errorMsg || error.code}`, {
+              position: 'bottom-right',
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: false,
+              draggable: true,
+              progress: undefined,
+              theme: 'light',
+            });
+            navigate(Routes.Home);
+          });
+      })
+      .catch((error: FirebaseError) => {
+        const errorMessage = takeAuthError(error.code);
+        formikHelpers.setStatus({
+          error: `Error occured: ${errorMessage ?? error.code}`,
+        });
+      });
+    formikHelpers.setSubmitting(false);
   };
 
   return (
@@ -36,15 +101,11 @@ const SignUp = () => {
             validateOnChange={false}
             initialValues={initialValues}
             validationSchema={signUpSchema}
-            onSubmit={(values, { setSubmitting }) => {
-              setSubmitting(true);
-              setTimeout(() => {
-                console.log(JSON.stringify(values, null, 2));
-                setSubmitting(false);
-              }, 400);
-            }}>
-            {({ isSubmitting, errors, touched }) => (
+            onSubmit={handleSubmit}>
+            {({ isSubmitting, errors, touched, status }) => (
               <Form className={c.form}>
+                {status && <div className={c.error}>{status.error}</div>}
+
                 <ErrorMessage
                   className={c.error}
                   name='name'
@@ -59,14 +120,12 @@ const SignUp = () => {
 
                 <ErrorMessage
                   className={c.error}
-                  name='age'
+                  name='phone'
                   component='div'
                 />
                 <Field
-                  className={returnFieldClass(errors.age, touched.age)}
-                  placeholder='Age'
-                  type='number'
-                  name='age'
+                  component={PhoneField}
+                  name='phone'
                 />
 
                 <ErrorMessage

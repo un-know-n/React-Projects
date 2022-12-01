@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
+import { Routes } from '../../../routes';
 import { useAppDispatch } from '../../../store/hooks/useTypedDispatch';
 import { useTypedSelector } from '../../../store/hooks/useTypedSelector';
 import { clearCart } from '../../../store/reducers/cart.slice';
@@ -60,7 +61,7 @@ export const Footer = () => {
             <span>Back</span>
           </Link>
           <Link
-            to='/'
+            to={Routes.Home}
             onClick={onSuccess}>
             <div className='button pay-btn'>
               <span>Buy now</span>

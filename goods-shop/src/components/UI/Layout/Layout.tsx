@@ -17,19 +17,6 @@ const Layout: FC<PropsWithChildren<TProps>> = ({
         {includeHeader && <Header />}
         {children}
       </div>
-
-      <ToastContainer
-        position='bottom-right'
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme='light'
-      />
     </>
   );
 };

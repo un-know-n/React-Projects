@@ -9,9 +9,13 @@ export const signInSchema = object({
     .min(8, 'Password is too short - should be 8 chars minimum')
     .max(20, 'Password is too long - maximum 20 symbols allowed'),
 });
+
 export const signUpSchema = object({
   name: string().required('Name is required'),
-  age: number().required('Age is required').positive().integer(),
+  phone: string()
+    .required('Phone number is required')
+    .min(8, 'Phone number is too short - should be 8 chars minimum')
+    .max(13, 'Phone number is too long - maximum 13 symbols allowed'),
   email: string()
     .email('Please enter valid email')
     .required('Email is required'),
