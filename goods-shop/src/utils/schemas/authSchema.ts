@@ -31,3 +31,9 @@ export const signUpSchema = object({
     .required('Confirm the password')
     .oneOf([ref('password'), null], 'Passwords must match'),
 });
+
+export const resetPassSchema = object({
+  email: string()
+    .email('Please enter valid email')
+    .required('Email is required'),
+});

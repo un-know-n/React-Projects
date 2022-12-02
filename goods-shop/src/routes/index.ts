@@ -1,3 +1,4 @@
+import ResetPass from '../components/UI/Auth/ResetPass/ResetPass';
 import SignUp from '../components/UI/Auth/SignUp/SignUp';
 import SignIn from '../components/UI/Auth/SingIn/SignIn';
 import Cart from '../pages/Cart';
@@ -9,6 +10,7 @@ import { TRoute } from '../types/common';
 export enum Routes {
   SignIn = '/signin',
   SignUp = '/signup',
+  ResetPassword = '/resetpass',
   Home = '/',
   Cart = '/cart',
   Profile = '/profile',
@@ -23,6 +25,10 @@ export const authRoutes: TRoute[] = [
   {
     path: Routes.SignUp,
     element: SignUp,
+  },
+  {
+    path: Routes.ResetPassword,
+    element: ResetPass,
   },
 ];
 
