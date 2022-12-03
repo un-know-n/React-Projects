@@ -3,6 +3,7 @@ import './index.scss';
 import 'react-phone-number-input/style.css';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { ChakraProvider } from '@chakra-ui/react';
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
@@ -31,7 +32,9 @@ root.render(
         <PersistGate
           loading={null}
           persistor={persistor}>
-          <App />
+          <ChakraProvider>
+            <App />
+          </ChakraProvider>
         </PersistGate>
       </AuthContext.Provider>
     </Provider>

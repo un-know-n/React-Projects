@@ -1,0 +1,13 @@
+.profile__preferences {
+  @apply w-full;
+
+  .preferences__personal {
+    @apply grid grid-cols-2 grid-rows-2 gap-3 p-4 m-auto;
+  }
+
+  .preferences__rest {
+    .rest__list {
+      @apply p-4;
+    }
+  }
+}

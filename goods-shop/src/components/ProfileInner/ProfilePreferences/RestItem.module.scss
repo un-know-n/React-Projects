@@ -1,0 +1,11 @@
+.item {
+  @apply p-2 border border-slate-400 rounded-xl transition-all mb-2;
+
+  &:hover {
+    @apply bg-slate-100;
+  }
+
+  &__wrapper {
+    @apply w-full flex justify-between;
+  }
+}

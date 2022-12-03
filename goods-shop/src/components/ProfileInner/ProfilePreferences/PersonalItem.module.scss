@@ -1,0 +1,7 @@
+.wrapper {
+  @apply p-3 w-full border border-slate-600 rounded-xl;
+
+  .personal__group {
+    @apply flex justify-between items-center border-b-2 border-slate-600 pb-1;
+  }
+}

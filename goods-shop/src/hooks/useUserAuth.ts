@@ -1,8 +1,6 @@
-import { Auth } from 'firebase/auth';
-import { useContext } from 'react';
+import { Auth, User } from 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
-import { AuthContext } from '../context/auth';
 import { useAuthContext } from './useAuthContext';
 
 export const useUserAuth = () => {

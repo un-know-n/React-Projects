@@ -33,13 +33,14 @@ const AppRouter = () => {
             element={<route.element />}
           />
         ))}
-        {authRoutes.map((route) => (
-          <Route
-            path={route.path}
-            key={route.path}
-            element={<route.element />}
-          />
-        ))}
+        {!user &&
+          authRoutes.map((route) => (
+            <Route
+              path={route.path}
+              key={route.path}
+              element={<route.element />}
+            />
+          ))}
         {user &&
           privateRoutes.map((route) => (
             <Route
