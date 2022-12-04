@@ -1,10 +1,10 @@
 import { Box, Button, Heading, Stack, StackDivider, Text } from '@chakra-ui/react';
 import React from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { IoExitOutline } from 'react-icons/io5';
 
 import { useAuthContext } from '../../../hooks/useAuthContext';
 import { useUserAuth } from '../../../hooks/useUserAuth';
+import SignOutButton from '../../UI/Auth/SignOutButton/SignOutButton';
 import defaultUserImg from './../../../assets/images/default-user.png';
 import c from './../ProfileInner.module.scss';
 
@@ -30,24 +30,8 @@ const ProfileInfo = () => {
           />
         </div>
         <div className='info__button block m-auto'>
-          <Button
-            rightIcon={<IoExitOutline color='white' />}
-            colorScheme='red'
-            variant='solid'>
-            Sign Out
-          </Button>
-          <button className='logout__button'></button>
+          <SignOutButton title='Sign Out' />
         </div>
-        {/* <ul className='info__list mt-5'>
-          {infoList.map((info) => (
-            <li
-              key={info.title}
-              className='list__item p-1 border-2 border-b-0 border-slate-600'>
-              {info.title}
-              {info.desc}
-            </li>
-          ))}
-        </ul> */}
         <div className='info__description w-full p-3 border rounded-2xl border-slate-600 mt-5'>
           <Stack
             className=' w-full'
