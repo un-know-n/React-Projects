@@ -38,21 +38,21 @@ const ProfileInfo = () => {
             divider={<StackDivider />}
             spacing='1'>
             {infoList.map((info) => (
-              <>
-                <Box className='flex items-baseline justify-between'>
-                  <Heading
-                    size='xs'
-                    textTransform='uppercase'>
-                    {info.title}
-                  </Heading>
-                  <Text
-                    pt='2'
-                    fontSize='sm'
-                    className='text-ellipsis truncate overflow-hidden ml-7'>
-                    {info.desc}
-                  </Text>
-                </Box>
-              </>
+              <Box
+                className='flex items-baseline justify-between'
+                key={info.title}>
+                <Heading
+                  size='xs'
+                  textTransform='uppercase'>
+                  {info.title}
+                </Heading>
+                <Text
+                  pt='2'
+                  fontSize='sm'
+                  className='text-ellipsis truncate overflow-hidden ml-7'>
+                  {info.desc}
+                </Text>
+              </Box>
             ))}
           </Stack>
         </div>
