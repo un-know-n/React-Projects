@@ -11,7 +11,7 @@ import { toast } from 'react-toastify';
 import { useAuthContext } from '../../../../hooks/useAuthContext';
 import { Routes } from '../../../../routes';
 import { TSignUp } from '../../../../types/TAuth';
-import { takeAuthError } from '../../../../utils/helpers/authErrors';
+import { takeAuthError } from '../../../../utils/helpers/auth/authErrors';
 import { signUpSchema } from '../../../../utils/schemas/authSchema';
 import Layout from '../../Layout/Layout';
 import c from './../Auth.module.scss';

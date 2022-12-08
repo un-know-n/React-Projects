@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { useAppDispatch } from '../../../store/hooks/useTypedDispatch';
-import { resetFilter } from '../../../utils/helpers/resetFilter';
+import { resetFilter } from '../../../utils/helpers/filter/resetFilter';
 import noProductsImg from './../../../assets/images/no-products.svg';
 import c from './NoData.module.scss';
 

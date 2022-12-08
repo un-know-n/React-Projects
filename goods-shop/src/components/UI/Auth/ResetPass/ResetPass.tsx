@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 
 import { useAuthContext } from '../../../../hooks/useAuthContext';
 import { Routes } from '../../../../routes';
-import { takeAuthError } from '../../../../utils/helpers/authErrors';
+import { takeAuthError } from '../../../../utils/helpers/auth/authErrors';
 import { resetPassSchema } from '../../../../utils/schemas/authSchema';
 import Layout from '../../Layout/Layout';
 import c from './../Auth.module.scss';

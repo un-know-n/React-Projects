@@ -1,4 +1,4 @@
-import { ICartProduct } from '../../types/ICartProduct';
+import { ICartProduct } from '../../../types/ICartProduct';
 
 export const findCartItem = (
   items: ICartProduct[],

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { useAppDispatch } from '../../../store/hooks/useTypedDispatch';
-import { resetFilter } from '../../../utils/helpers/resetFilter';
+import { resetFilter } from '../../../utils/helpers/filter/resetFilter';
 import logo from './../../../assets/images/shopping-logo.png';
 
 export const Logo: React.FC = React.memo(() => {

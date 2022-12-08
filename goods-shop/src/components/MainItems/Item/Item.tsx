@@ -9,6 +9,7 @@ import { Routes } from '../../../routes';
 import { useAppDispatch } from '../../../store/hooks/useTypedDispatch';
 import { editItem, setItem } from '../../../store/reducers/cart.slice';
 import { IProduct } from '../../../types/IProduct';
+import { returnStars } from '../../../utils/helpers/UI/returnStars';
 import c from './Item.module.scss';
 
 export const Item: FC<IProduct> = memo(
@@ -22,16 +23,9 @@ export const Item: FC<IProduct> = memo(
 
     const dispatch = useAppDispatch();
 
-    //TODO: Make different price, depending on the additional value(another size -> item with another id and so on...)
+    const memoizedStars = useMemo(() => returnStars(rate), [rate]);
 
-    //Shows amount of stars, depending on ceiled rate
-    const returnStars = useCallback(
-      (rate: number) => {
-        const amount = Math.ceil(rate);
-        return Array.from(Array(amount).keys()).map((s) => '⭐');
-      },
-      [rate],
-    );
+    //TODO: Make different price, depending on the additional value(another size -> item with another id and so on...)
 
     //Add item to cart or increase it's amount
     const addToCart = () => {
@@ -73,7 +67,7 @@ export const Item: FC<IProduct> = memo(
 
           <div className={c.item__selector}>
             <div>
-              <span>{returnStars(rate)}</span>
+              <span>{memoizedStars}</span>
               <span>
                 {count} <sub>left</sub>
               </span>

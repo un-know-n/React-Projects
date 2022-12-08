@@ -15,7 +15,7 @@ import { useAuthContext } from '../../../../hooks/useAuthContext';
 import { useUserAuth } from '../../../../hooks/useUserAuth';
 import { Routes } from '../../../../routes';
 import { TSignIn } from '../../../../types/TAuth';
-import { takeAuthError } from '../../../../utils/helpers/authErrors';
+import { takeAuthError } from '../../../../utils/helpers/auth/authErrors';
 import { signInSchema } from '../../../../utils/schemas/authSchema';
 import Layout from '../../Layout/Layout';
 import c from './../Auth.module.scss';
