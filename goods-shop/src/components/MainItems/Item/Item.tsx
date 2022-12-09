@@ -56,14 +56,16 @@ export const Item: FC<IProduct> = memo(
     return (
       <>
         <div className='w-full text-center mb-7'>
-          <img
-            className='w-auto
+          <Link to={`/product/${id}`}>
+            <img
+              className='w-auto
           h-60 block m-auto'
-            src={image}
-            alt='Pizza'
-          />
+              src={image}
+              alt='Pizza'
+            />
 
-          <h4 className='text-xl my-3 truncate'>{title}</h4>
+            <h4 className='text-xl my-3 truncate'>{title}</h4>
+          </Link>
 
           <div className={c.item__selector}>
             <div>

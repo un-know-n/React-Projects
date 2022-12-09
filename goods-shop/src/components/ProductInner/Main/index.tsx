@@ -8,9 +8,10 @@ import { returnStars } from '../../../utils/helpers/UI/returnStars';
 type TProps = {
   rating: IProductRating;
   cartCount: number;
+  image: string;
 };
 
-const ProductMain: FC<TProps> = ({ cartCount, rating: { rate } }) => {
+const ProductMain: FC<TProps> = ({ image, cartCount, rating: { rate } }) => {
   const memoizedStars = useMemo(() => returnStars(rate), [rate]);
 
   return (
@@ -18,8 +19,8 @@ const ProductMain: FC<TProps> = ({ cartCount, rating: { rate } }) => {
       <div className='product__main'>
         <div className='main__image w-48 border border-b-0 border-slate-500 rounded-t-xl p-2'>
           <img
-            src='https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg'
-            alt=''
+            src={image}
+            alt='Product image'
           />
         </div>
         <div className='main__rating p-2 border border-slate-500 rounded-b-xl mb-5'>

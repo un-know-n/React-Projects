@@ -38,8 +38,14 @@ export const productsAPI = createApi({
         },
       }),
     }),
+    fetchProductById: build.query<IProduct, string | number>({
+      query: (id) => ({
+        url: `/products/${id}`,
+      }),
+    }),
   }),
 });
 
 export const { useFetchAllProductsQuery } = productsAPI;
 export const { useLazyFetchProductsByFilterQuery } = productsAPI;
+export const { useFetchProductByIdQuery } = productsAPI;
