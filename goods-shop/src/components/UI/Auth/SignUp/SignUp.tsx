@@ -12,6 +12,8 @@ import { useAuthContext } from '../../../../hooks/useAuthContext';
 import { Routes } from '../../../../routes';
 import { TSignUp } from '../../../../types/TAuth';
 import { takeAuthError } from '../../../../utils/helpers/auth/authErrors';
+import { errorToast } from '../../../../utils/helpers/toasts';
+import { successToast } from '../../../../utils/helpers/toasts';
 import { signUpSchema } from '../../../../utils/schemas/authSchema';
 import Layout from '../../Layout/Layout';
 import c from './../Auth.module.scss';
@@ -53,33 +55,12 @@ const SignUp = () => {
           photoURL: values.phone,
         })
           .then(() => {
-            toast.success(
-              `Greetings, ${user.displayName || 'dear Customer'}!`,
-              {
-                position: 'bottom-right',
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined,
-                theme: 'light',
-              },
-            );
+            successToast(`Greetings, ${user.displayName || 'dear Customer'}!`);
             navigate(Routes.Home);
           })
           .catch((error: FirebaseError) => {
             const errorMsg = takeAuthError(error.code);
-            toast.error(`Error occured, ${errorMsg || error.code}`, {
-              position: 'bottom-right',
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: false,
-              draggable: true,
-              progress: undefined,
-              theme: 'light',
-            });
+            errorToast(`Error occured, ${errorMsg || error.code}`);
             navigate(Routes.Home);
           });
       })

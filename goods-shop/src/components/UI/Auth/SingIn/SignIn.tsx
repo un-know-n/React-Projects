@@ -16,6 +16,7 @@ import { useUserAuth } from '../../../../hooks/useUserAuth';
 import { Routes } from '../../../../routes';
 import { TSignIn } from '../../../../types/TAuth';
 import { takeAuthError } from '../../../../utils/helpers/auth/authErrors';
+import { successToast } from '../../../../utils/helpers/toasts';
 import { signInSchema } from '../../../../utils/schemas/authSchema';
 import Layout from '../../Layout/Layout';
 import c from './../Auth.module.scss';
@@ -35,16 +36,7 @@ const Login = () => {
     await signInWithEmailAndPassword(auth, values.email, values.password)
       .then((userCredential) => {
         const user = userCredential.user;
-        toast.success(`Welcome back, ${user.displayName || 'dear Customer'}!`, {
-          position: 'bottom-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: true,
-          progress: undefined,
-          theme: 'light',
-        });
+        successToast(`Welcome back, ${user.displayName || 'dear Customer'}!`);
         navigate(Routes.Home);
       })
       .catch((error: FirebaseError) => {

@@ -9,6 +9,7 @@ import {
   useEditableControls,
 } from '@chakra-ui/react';
 import React, { FC } from 'react';
+import { useRef } from 'react';
 import { AiOutlineCheckCircle, AiOutlineCloseCircle } from 'react-icons/ai';
 import { BiEdit } from 'react-icons/bi';
 
@@ -17,9 +18,12 @@ import c from './PersonalItem.module.scss';
 type TProps = {
   title: string;
   inner: string | null | undefined;
+  callback: (value: string) => void;
 };
 
-const PersonalItem: FC<TProps> = ({ inner, title }) => {
+const PersonalItem: FC<TProps> = ({ inner, title, callback }) => {
+  const inputRef = useRef<any>();
+
   const EditableControls = () => {
     const {
       isEditing,
@@ -49,6 +53,7 @@ const PersonalItem: FC<TProps> = ({ inner, title }) => {
           aria-label='Edit text'
           size='sm'
           icon={<BiEdit />}
+          onClick={() => console.log(inputRef.current)}
           {...getEditButtonProps()}
         />
       </Flex>
@@ -59,6 +64,7 @@ const PersonalItem: FC<TProps> = ({ inner, title }) => {
     <>
       <div className={c.wrapper}>
         <Editable
+          onSubmit={(value: string) => callback(value)}
           className='truncate'
           textAlign='center'
           defaultValue={inner || 'None...'}
@@ -70,7 +76,10 @@ const PersonalItem: FC<TProps> = ({ inner, title }) => {
           </div>
           <EditablePreview />
           {/* Here is the custom input */}
-          <Input as={EditableInput} />
+          <Input
+            ref={inputRef}
+            as={EditableInput}
+          />
         </Editable>
       </div>
     </>

@@ -1,5 +1,6 @@
 import { Box, Button, Heading, Stack, StackDivider, Text } from '@chakra-ui/react';
-import React from 'react';
+import { Auth, User } from 'firebase/auth';
+import React, { FC } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 import { useAuthContext } from '../../../hooks/useAuthContext';
@@ -8,10 +9,11 @@ import SignOutButton from '../../UI/Auth/SignOutButton/SignOutButton';
 import defaultUserImg from './../../../assets/images/default-user.png';
 import c from './../ProfileInner.module.scss';
 
-const ProfileInfo = () => {
-  const { auth } = useAuthContext();
-  const [user, loading, error] = useAuthState(auth);
+type TProps = {
+  user: User;
+};
 
+const ProfileInfo: FC<TProps> = ({ user }) => {
   const infoList = [
     { title: 'Name: ', desc: user?.displayName },
     { title: 'Email: ', desc: user?.email },

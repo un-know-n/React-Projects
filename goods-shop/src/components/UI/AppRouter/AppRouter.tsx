@@ -18,7 +18,9 @@ const AppRouter = () => {
     return (
       <>
         <Layout>
-          <Loader />
+          <div className='h-screen flex justify-center items-center'>
+            <Loader />
+          </div>
         </Layout>
       </>
     );

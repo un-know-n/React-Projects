@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import { useAuthContext } from '../../../../hooks/useAuthContext';
 import { Routes } from '../../../../routes';
 import { takeAuthError } from '../../../../utils/helpers/auth/authErrors';
+import { successToast } from '../../../../utils/helpers/toasts';
 import { resetPassSchema } from '../../../../utils/schemas/authSchema';
 import Layout from '../../Layout/Layout';
 import c from './../Auth.module.scss';
@@ -27,16 +28,7 @@ const ResetPass = () => {
     formikHelpers.setSubmitting(true);
     await sendPasswordResetEmail(auth, values.email)
       .then(() => {
-        toast.success(`Email sent successfully, check it!`, {
-          position: 'bottom-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: true,
-          progress: undefined,
-          theme: 'light',
-        });
+        successToast(`Email sent successfully, check it!`);
       })
       .catch((error: FirebaseError) => {
         const errorMessage = takeAuthError(error.code);

@@ -89,7 +89,7 @@ export const Items: FC = () => {
   return (
     <>
       <>
-        <h2 className='my-7'>
+        <h2 className='my-7 text-4xl'>
           {category !== undefined &&
             category[0].toUpperCase() + category.substring(1)}
         </h2>

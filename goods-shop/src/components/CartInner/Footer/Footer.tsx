@@ -7,6 +7,7 @@ import { useAppDispatch } from '../../../store/hooks/useTypedDispatch';
 import { useTypedSelector } from '../../../store/hooks/useTypedSelector';
 import { clearCart } from '../../../store/reducers/cart.slice';
 import { takeTotalAmount, takeTotalPrice } from '../../../store/selectors/cart.selector';
+import { successToast } from '../../../utils/helpers/toasts';
 
 export const Footer = () => {
   const amount = useTypedSelector(takeTotalAmount);
@@ -15,16 +16,7 @@ export const Footer = () => {
   const dispatch = useAppDispatch();
 
   const onSuccess = () => {
-    toast.success('Thank you for your purchase! 😊', {
-      position: 'bottom-right',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'light',
-    });
+    successToast('Thank you for your purchase! 😊');
     dispatch(clearCart());
   };
 
