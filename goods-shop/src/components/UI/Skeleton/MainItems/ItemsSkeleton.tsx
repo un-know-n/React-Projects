@@ -6,11 +6,12 @@ export const ItemsSkeleton = (props?: IContentLoaderProps) => {
     <ContentLoader
       speed={2}
       width={370}
-      height={450}
-      viewBox='0 0 370 455'
+      height={500}
+      viewBox='0 0 370 500'
       backgroundColor='#f3f3f3'
       foregroundColor='#ecebeb'
       className='mb-7'
+      style={{ width: '100%', height: '100%' }}
       {...props}>
       <rect
         x='0'
@@ -18,11 +19,11 @@ export const ItemsSkeleton = (props?: IContentLoaderProps) => {
         rx='14'
         ry='14'
         width='360'
-        height='240'
+        height='280'
       />
       <rect
         x='0'
-        y='252'
+        y='292'
         rx='6'
         ry='6'
         width='360'
@@ -30,7 +31,7 @@ export const ItemsSkeleton = (props?: IContentLoaderProps) => {
       />
       <rect
         x='0'
-        y='292'
+        y='332'
         rx='7'
         ry='7'
         width='360'
@@ -38,7 +39,7 @@ export const ItemsSkeleton = (props?: IContentLoaderProps) => {
       />
       <rect
         x='0'
-        y='407'
+        y='447'
         rx='5'
         ry='5'
         width='108'
@@ -46,7 +47,7 @@ export const ItemsSkeleton = (props?: IContentLoaderProps) => {
       />
       <rect
         x='245'
-        y='407'
+        y='447'
         rx='25'
         ry='25'
         width='113'

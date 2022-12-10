@@ -27,15 +27,15 @@ export const Item: FC<TProps> = memo(({ item }) => {
 
   return (
     <>
-      <div className='cart__item md:flex-row flex-col items-center md:text-left text-center'>
-        <div className='cart__item-img'>
+      <div className='cart__item flex md:flex-row flex-col items-center md:text-left text-center '>
+        <div className='cart__item-img m-0'>
           <img
             src={image}
             alt=''
           />
         </div>
-        <div className='cart__item-info'>
-          <h3>{title}</h3>
+        <div className='cart__item-info px-3 w-full md:w-[40%]'>
+          <h3 className='truncate'>{title}</h3>
           <p>{`${category} / ${additional}`}</p>
         </div>
         <div className='flex sm:flex-row flex-col items-center '>
@@ -83,8 +83,8 @@ export const Item: FC<TProps> = memo(({ item }) => {
               </svg>
             </div>
           </div>
-          <div className='cart__item-price sm:my-0 my-3'>
-            <b>{price} $</b>
+          <div className='cart__item-price mx-1 my-2 sm:my-0 '>
+            <b className='truncate'>{price} $</b>
           </div>
           <div
             className='cart__item-remove'

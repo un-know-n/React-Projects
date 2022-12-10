@@ -16,17 +16,17 @@ const ProductMain: FC<TProps> = ({ image, cartCount, rating: { rate } }) => {
 
   return (
     <>
-      <div className='product__main'>
-        <div className='main__image w-48 border border-b-0 border-slate-500 rounded-t-xl p-2'>
+      <div className='product__main flex flex-col items-center justify-center'>
+        <div className='main__image w-2/3 md:w-full md:max-w-xs shadow-[0_-25px_60px_-15px_rgba(0,0,0,0.3)] shadow-slate-300 rounded-t-xl p-2'>
           <img
             src={image}
             alt='Product image'
           />
         </div>
-        <div className='main__rating p-2 border border-slate-500 rounded-b-xl mb-5'>
+        <div className='main__rating w-2/3 md:w-full p-2 shadow-lg shadow-slate-300 rounded-b-xl mb-5'>
           <h3>Rating: {memoizedStars}</h3>
         </div>
-        <div className='main__buttons w-full flex flex-col justify-center space-y-3'>
+        <div className='main__buttons w-auto flex flex-col justify-center space-y-3'>
           <button className='button button--outline button--add'>
             <svg
               width='12'

@@ -31,7 +31,7 @@ export const Footer = () => {
   return (
     <>
       <div className='cart__bottom'>
-        <div className='cart__bottom-details md:flex-row flex-col'>
+        <div className='cart__bottom-details md:flex-row flex-col text-center'>
           <span>
             Total amount: <b>{amount} pcs.</b>
           </span>
@@ -39,10 +39,10 @@ export const Footer = () => {
             Order price: <b>{price} $</b>
           </span>
         </div>
-        <div className='cart__bottom-buttons'>
+        <div className='cart__bottom-buttons flex flex-col-reverse sm:flex-row items-center'>
           <Link
             to='/'
-            className='button button--outline button--add go-back-btn'>
+            className='button button--outline button--add go-back-btn sm:mt-0 mt-4'>
             <svg
               width='8'
               height='14'

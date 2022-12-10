@@ -1,18 +1,23 @@
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box } from '@chakra-ui/react';
-import React, { FC } from 'react';
+import classNames from 'classnames';
+import React, { FC, useState } from 'react';
 
 import { IProduct } from '../../../types/IProduct';
+import c from './../../MainItems/Item/Item.module.scss';
 
-type TProps = Pick<IProduct, 'description' | 'price' | 'rating'>;
+type TProps = Pick<IProduct, 'description' | 'price' | 'rating' | 'size'>;
 
 const ProductDescription: FC<TProps> = ({
   description,
   price,
   rating: { count },
+  size,
 }) => {
+  const [selectedSize, setSelectedSize] = useState(size![0] || '');
+
   return (
     <>
-      <div className='product__description w-full ml-7'>
+      <div className='product__description w-full md:ml-7'>
         <div className='description__info w-full flex justify-between py-4'>
           <div className='price'>
             <h3 className='text-xl font-light'>Price: {price || '-'}$</h3>
@@ -23,6 +28,27 @@ const ProductDescription: FC<TProps> = ({
             </span>
           </div>
         </div>
+        <div className='description__sizes flex flex-col sm:flex-row justify-between items-center mb-4'>
+          <span className='text-xl font-light'>Available sizes:</span>
+          {!size ? (
+            'none'
+          ) : (
+            <div className={`${c.item__selector} mt-3 sm:mt-0 min-w-[200px]`}>
+              <ul>
+                {size.map((s) => (
+                  <li
+                    key={s}
+                    className={classNames('text-center', {
+                      [c.active]: s === selectedSize,
+                    })}
+                    onClick={() => setSelectedSize(s)}>
+                    {s}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
         <Accordion
           defaultIndex={[0]}
           allowMultiple>
@@ -31,7 +57,8 @@ const ProductDescription: FC<TProps> = ({
               <AccordionButton>
                 <Box
                   flex='1'
-                  textAlign='left'>
+                  textAlign='left'
+                  className='text-lg font-light'>
                   Description
                 </Box>
                 <AccordionIcon />

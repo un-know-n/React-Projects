@@ -13,7 +13,7 @@ const ProductInner = () => {
 
   return (
     <>
-      <div className='product__wrapper w-full flex justify-center  p-9'>
+      <div className='product__wrapper w-full flex flex-col md:flex-row justify-center  p-9'>
         {isLoading ? (
           <Loader />
         ) : (
@@ -24,6 +24,7 @@ const ProductInner = () => {
               rating={data?.rating || { rate: 5, count: 0 }}
             />
             <ProductDescription
+              size={data?.size}
               description={data?.description || ''}
               price={data?.price || 0}
               rating={data?.rating || { rate: 5, count: 0 }}
