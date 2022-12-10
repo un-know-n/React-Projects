@@ -1,3 +1,3 @@
 .profile {
-  @apply flex;
+  @apply flex flex-col sm:flex-row max-w-md sm:max-w-none justify-center items-center sm:items-start m-auto;
 }
