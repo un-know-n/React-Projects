@@ -9,7 +9,9 @@ import { Routes } from '../../../routes';
 import { useAppDispatch } from '../../../store/hooks/useTypedDispatch';
 import { editItem, setItem } from '../../../store/reducers/cart.slice';
 import { IProduct } from '../../../types/IProduct';
+import { addToCart } from '../../../utils/helpers/cart/addToCart';
 import { returnStars } from '../../../utils/helpers/UI/returnStars';
+import AddToCart from './../../UI/Buttons/AddToCart';
 import c from './Item.module.scss';
 
 export const Item: FC<IProduct> = memo(
@@ -27,31 +29,31 @@ export const Item: FC<IProduct> = memo(
 
     //TODO: Make different price, depending on the additional value(another size -> item with another id and so on...)
 
-    //Add item to cart or increase it's amount
-    const addToCart = () => {
-      if (cartItem) {
-        dispatch(
-          editItem({
-            id,
-            additional: selectedSize,
-            effect: 'increment',
-            price,
-            count: cartItem.count,
-          }),
-        );
-      } else
-        dispatch(
-          setItem({
-            id,
-            title,
-            price,
-            count: 1,
-            additional: selectedSize,
-            category,
-            image,
-          }),
-        );
-    };
+    // //Add item to cart or increase it's amount
+    // const addToCart = () => {
+    //   if (cartItem) {
+    //     dispatch(
+    //       editItem({
+    //         id,
+    //         additional: selectedSize,
+    //         effect: 'increment',
+    //         price,
+    //         count: cartItem.count,
+    //       }),
+    //     );
+    //   } else
+    //     dispatch(
+    //       setItem({
+    //         id,
+    //         title,
+    //         price,
+    //         count: 1,
+    //         additional: selectedSize,
+    //         category,
+    //         image,
+    //       }),
+    //     );
+    // };
 
     return (
       <>
@@ -88,24 +90,19 @@ export const Item: FC<IProduct> = memo(
           <div className='flex items-center justify-between mt-5'>
             <div className='text-2xl font-bold'>{price} $</div>
             <Link to={!user ? Routes.SignIn : ''}>
-              <button
-                className='button button--outline button--add'
-                disabled={!user}
-                onClick={addToCart}>
-                <svg
-                  width='12'
-                  height='12'
-                  viewBox='0 0 12 12'
-                  fill='none'
-                  xmlns='http://www.w3.org/2000/svg'>
-                  <path
-                    d='M10.8 4.8H7.2V1.2C7.2 0.5373 6.6627 0 6 0C5.3373 0 4.8 0.5373 4.8 1.2V4.8H1.2C0.5373 4.8 0 5.3373 0 6C0 6.6627 0.5373 7.2 1.2 7.2H4.8V10.8C4.8 11.4627 5.3373 12 6 12C6.6627 12 7.2 11.4627 7.2 10.8V7.2H10.8C11.4627 7.2 12 6.6627 12 6C12 5.3373 11.4627 4.8 10.8 4.8Z'
-                    fill='white'
-                  />
-                </svg>
-                <span>Add</span>
-                <i>{cartItem?.count || 0}</i>
-              </button>
+              <AddToCart
+                isDisabled={!user}
+                onClickCallback={() =>
+                  addToCart(dispatch, cartItem, selectedSize, {
+                    id,
+                    title,
+                    price,
+                    category,
+                    image,
+                  })
+                }
+                itemCartCounter={cartItem?.count || 0}
+              />
             </Link>
           </div>
         </div>

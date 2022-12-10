@@ -5,16 +5,19 @@ import React, { FC, useState } from 'react';
 import { IProduct } from '../../../types/IProduct';
 import c from './../../MainItems/Item/Item.module.scss';
 
-type TProps = Pick<IProduct, 'description' | 'price' | 'rating' | 'size'>;
+type TProps = Pick<IProduct, 'description' | 'price' | 'rating' | 'size'> & {
+  selectedSize: string;
+  setSelectedSize: (value: string) => void;
+};
 
 const ProductDescription: FC<TProps> = ({
   description,
   price,
   rating: { count },
   size,
+  selectedSize,
+  setSelectedSize,
 }) => {
-  const [selectedSize, setSelectedSize] = useState(size![0] || '');
-
   return (
     <>
       <div className='product__description w-full md:ml-7'>

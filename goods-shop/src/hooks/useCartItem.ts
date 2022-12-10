@@ -10,6 +10,5 @@ export const useCartItem = (selectedSize: string, id: number) => {
     () => findCartItem(cartItems, id, selectedSize),
     [selectedSize, cartItems],
   );
-  if (cartItem) return cartItem;
-  return null;
+  return cartItem ?? null;
 };
