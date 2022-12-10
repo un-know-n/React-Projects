@@ -29,32 +29,6 @@ export const Item: FC<IProduct> = memo(
 
     //TODO: Make different price, depending on the additional value(another size -> item with another id and so on...)
 
-    // //Add item to cart or increase it's amount
-    // const addToCart = () => {
-    //   if (cartItem) {
-    //     dispatch(
-    //       editItem({
-    //         id,
-    //         additional: selectedSize,
-    //         effect: 'increment',
-    //         price,
-    //         count: cartItem.count,
-    //       }),
-    //     );
-    //   } else
-    //     dispatch(
-    //       setItem({
-    //         id,
-    //         title,
-    //         price,
-    //         count: 1,
-    //         additional: selectedSize,
-    //         category,
-    //         image,
-    //       }),
-    //     );
-    // };
-
     return (
       <>
         <div className='w-full text-center mb-7'>

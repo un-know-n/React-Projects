@@ -17,6 +17,11 @@ export enum Routes {
   Product = '/product/:id',
 }
 
+//TODO: Try to make lazy loadings!!
+
+// const MainPage = lazy(() => import('./pages/Main'));
+// const CartPage = lazy(() => import('./pages/Cart'));
+
 export const authRoutes: TRoute[] = [
   {
     path: Routes.SignIn,

@@ -8,7 +8,10 @@ import { toast } from 'react-toastify';
 
 import { useAuthContext } from '../../../../hooks/useAuthContext';
 import { Routes } from '../../../../routes';
+import { useAppDispatch } from '../../../../store/hooks/useTypedDispatch';
+import { clearCart } from '../../../../store/reducers/cart.slice';
 import { takeAuthError } from '../../../../utils/helpers/auth/authErrors';
+import { errorToast } from '../../../../utils/helpers/toasts';
 
 type TProps = {
   title: string;
@@ -18,23 +21,17 @@ const SignOutButton: FC<TProps> = ({ title }) => {
   const { auth } = useAuthContext();
   const navigate = useNavigate();
 
+  const dispatch = useAppDispatch();
+
   const handleClick = () => {
     signOut(auth)
       .then(() => {
+        dispatch(clearCart());
         navigate(Routes.Home);
       })
       .catch((error: FirebaseError) => {
         const errorMessage = takeAuthError(error.code);
-        toast.error(`Error: ${errorMessage ?? error.code}!`, {
-          position: 'bottom-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: true,
-          progress: undefined,
-          theme: 'light',
-        });
+        errorToast(`Error: ${errorMessage ?? error.code}!`);
       });
   };
 

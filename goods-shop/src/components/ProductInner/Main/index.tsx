@@ -2,6 +2,7 @@ import React, { FC, memo, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useCartItem } from '../../../hooks/useCartItem';
+import { useUserAuth } from '../../../hooks/useUserAuth';
 import { Routes } from '../../../routes';
 import { useAppDispatch } from '../../../store/hooks/useTypedDispatch';
 import { IProduct, IProductRating } from '../../../types/IProduct';
@@ -17,6 +18,8 @@ type TProps = Pick<
 const ProductMain: FC<TProps> = memo(
   ({ image, rating: { rate }, size, id, title, category, price }) => {
     const memoizedStars = useMemo(() => returnStars(rate), [rate]);
+
+    const [user] = useUserAuth();
 
     const cartItem = useCartItem(size, id);
     const dispatch = useAppDispatch();
@@ -34,18 +37,20 @@ const ProductMain: FC<TProps> = memo(
             <h3>Rating: {memoizedStars}</h3>
           </div>
           <div className='main__buttons w-auto flex flex-col justify-center space-y-3'>
-            <AddToCart
-              onClickCallback={() =>
-                addToCart(dispatch, cartItem, size, {
-                  id,
-                  title,
-                  price,
-                  category,
-                  image,
-                })
-              }
-              itemCartCounter={cartItem?.count || 0}
-            />
+            <Link to={!user ? Routes.SignIn : ''}>
+              <AddToCart
+                onClickCallback={() =>
+                  addToCart(dispatch, cartItem, size, {
+                    id,
+                    title,
+                    price,
+                    category,
+                    image,
+                  })
+                }
+                itemCartCounter={cartItem?.count || 0}
+              />
+            </Link>
             <Link
               to={Routes.Home}
               className='border border-blue-500 rounded-full text-center hover:bg-blue-500 hover:text-white transition-all py-2'>

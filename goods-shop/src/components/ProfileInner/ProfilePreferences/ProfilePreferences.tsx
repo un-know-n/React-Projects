@@ -5,6 +5,8 @@ import { useUpdateEmail, useUpdateProfile } from 'react-firebase-hooks/auth';
 import { FiSettings } from 'react-icons/fi';
 
 import { useAuthContext } from '../../../hooks/useAuthContext';
+import { useAppDispatch } from '../../../store/hooks/useTypedDispatch';
+import { setUser } from '../../../store/reducers/user.slice';
 import { errorToast, successToast } from '../../../utils/helpers/toasts';
 import Loader from '../../UI/Loader/Loader';
 import PersonalItem from './PersonalItem';
@@ -16,6 +18,8 @@ const ProfilePreferences = () => {
 
   const [updateName, updatingName, errorName] = useUpdateProfile(auth);
   const [updateUserEmail, updatingEmail, errorEmail] = useUpdateEmail(auth);
+
+  const dispatch = useAppDispatch();
 
   const personalList = [
     {
@@ -55,9 +59,20 @@ const ProfilePreferences = () => {
                   inner={item.inner}
                   callback={async (value: string) => {
                     const success = await item.callback(value);
-                    success
-                      ? successToast('Field updated successfully!')
-                      : errorToast(`Error occurred: ${item.error}`);
+                    if (success) {
+                      successToast('Field updated successfully!');
+                      item.inner !== auth.currentUser?.displayName
+                        ? dispatch(
+                            setUser({
+                              username: value,
+                            }),
+                          )
+                        : dispatch(
+                            setUser({
+                              email: value,
+                            }),
+                          );
+                    } else errorToast(`Error occurred: ${item.error}`);
                   }}
                 />
               ))}

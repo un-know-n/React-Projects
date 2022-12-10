@@ -56,7 +56,7 @@ const SignUp = () => {
         })
           .then(() => {
             successToast(`Greetings, ${user.displayName || 'dear Customer'}!`);
-            navigate(Routes.Home);
+            navigate(Routes.Profile);
           })
           .catch((error: FirebaseError) => {
             const errorMsg = takeAuthError(error.code);

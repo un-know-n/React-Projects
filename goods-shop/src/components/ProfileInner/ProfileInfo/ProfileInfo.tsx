@@ -5,6 +5,8 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 
 import { useAuthContext } from '../../../hooks/useAuthContext';
 import { useUserAuth } from '../../../hooks/useUserAuth';
+import { useTypedSelector } from '../../../store/hooks/useTypedSelector';
+import { takeUser } from '../../../store/selectors/user.selector';
 import SignOutButton from '../../UI/Auth/SignOutButton/SignOutButton';
 import defaultUserImg from './../../../assets/images/default-user.png';
 import c from './../ProfileInner.module.scss';
@@ -14,9 +16,11 @@ type TProps = {
 };
 
 const ProfileInfo: FC<TProps> = ({ user }) => {
+  const reduxUser = useTypedSelector(takeUser);
+
   const infoList = [
-    { title: 'Name: ', desc: user?.displayName },
-    { title: 'Email: ', desc: user?.email },
+    { title: 'Name: ', desc: reduxUser.username },
+    { title: 'Email: ', desc: reduxUser.email },
     { title: 'Phone: ', desc: user?.photoURL },
     { title: 'Status: ', desc: 'Customer' },
     { title: 'Discount: ', desc: '10%' },

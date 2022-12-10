@@ -6,13 +6,14 @@ import { AuthContext } from '../../../context/auth';
 import { useUserAuth } from '../../../hooks/useUserAuth';
 import ErrorPage from '../../../pages/ErrorPage';
 import { authRoutes, privateRoutes, publicRoutes } from '../../../routes';
+import { useAppDispatch } from '../../../store/hooks/useTypedDispatch';
+import { setUser } from '../../../store/reducers/user.slice';
 import Layout from '../Layout/Layout';
 import Loader from './../Loader/Loader';
 
-// const MainPage = lazy(() => import('./pages/Main'));
-// const CartPage = lazy(() => import('./pages/Cart'));
 const AppRouter = () => {
   const [user, loading, error] = useUserAuth();
+  const dispatch = useAppDispatch();
 
   if (loading)
     return (
@@ -24,6 +25,9 @@ const AppRouter = () => {
         </Layout>
       </>
     );
+
+  if (!loading && !error)
+    dispatch(setUser({ username: user?.displayName!, email: user?.email! }));
 
   return (
     <>
