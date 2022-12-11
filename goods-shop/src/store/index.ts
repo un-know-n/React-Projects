@@ -4,6 +4,7 @@ import storage from 'redux-persist/lib/storage';
 import storageSession from 'redux-persist/lib/storage/session';
 
 import { productsAPI } from '../api/products.api';
+import { usersAPI } from '../api/users.api';
 import { cartSlice } from './reducers/cart.slice';
 import { filterSlice } from './reducers/filter.slice';
 import userSlice from './reducers/user.slice';
@@ -14,6 +15,7 @@ export const rootReducer = combineReducers({
   cart: cartSlice.reducer,
   user: userSlice.reducer,
   [productsAPI.reducerPath]: productsAPI.reducer,
+  [usersAPI.reducerPath]: usersAPI.reducer,
 });
 
 //* Redux-Persist for sessionStorage
@@ -22,7 +24,7 @@ const persistConfig = {
   key: 'root',
   version: 1,
   storage: storageSession,
-  blacklist: ['filter', 'productsAPI', 'user'],
+  blacklist: ['filter', 'productsAPI', 'usersAPI', 'user'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -37,7 +39,9 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(productsAPI.middleware),
+    })
+      .concat(productsAPI.middleware)
+      .concat(usersAPI.middleware),
   //getDefaultMiddleware().concat(productsAPI.middleware),
 });
 

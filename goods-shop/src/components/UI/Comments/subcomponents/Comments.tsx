@@ -8,7 +8,7 @@ type TProps = {
 const Comments: FC<TProps> = ({ text }) => {
   return (
     <>
-      <CardBody paddingY={0}>
+      <CardBody paddingTop={0}>
         <Text>{text}</Text>
       </CardBody>
     </>
