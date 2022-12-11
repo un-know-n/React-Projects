@@ -7,8 +7,6 @@ import Layout from '../components/UI/Layout/Layout';
 const Product = () => {
   const id = useParams();
 
-  console.log(id);
-
   return (
     <>
       <Layout

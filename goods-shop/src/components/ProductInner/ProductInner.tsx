@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useFetchProductByIdQuery } from '../../api/products.api';
+import CommentsBlock from '../UI/Comments';
+import CommentsInput from '../UI/CommentsInput';
 import Loader from '../UI/Loader/Loader';
 import ProductDescription from './Description';
 import ProductMain from './Main';
@@ -9,7 +11,11 @@ import ProductMain from './Main';
 const ProductInner = () => {
   const { id } = useParams();
 
-  const { data, isLoading, isError } = useFetchProductByIdQuery(id!);
+  const {
+    data,
+    isLoading: loadingProduct,
+    isError,
+  } = useFetchProductByIdQuery(id!);
 
   const [selectedSize, setSelectedSize] = useState('');
 
@@ -19,8 +25,8 @@ const ProductInner = () => {
 
   return (
     <>
-      <div className='product__wrapper w-full flex flex-col md:flex-row justify-center  p-9'>
-        {isLoading ? (
+      <div className='product__wrapper w-full flex flex-col md:flex-row justify-center p-9'>
+        {loadingProduct ? (
           <Loader />
         ) : (
           <>
@@ -43,6 +49,15 @@ const ProductInner = () => {
             />
           </>
         )}
+      </div>
+      <div className='comments__wrapper p-9'>
+        <CommentsInput />
+        <CommentsBlock
+          author='asd'
+          image='asd'
+          status='asd'
+          text='asd'
+        />
       </div>
     </>
   );

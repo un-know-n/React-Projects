@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
-import { AuthContext } from '../../../context/auth';
+import { useAuthContext } from '../../../hooks/useAuthContext';
 import { useUserAuth } from '../../../hooks/useUserAuth';
 import ErrorPage from '../../../pages/ErrorPage';
 import { authRoutes, privateRoutes, publicRoutes } from '../../../routes';
@@ -12,10 +11,12 @@ import Layout from '../Layout/Layout';
 import Loader from './../Loader/Loader';
 
 const AppRouter = () => {
-  const [user, loading, error] = useUserAuth();
+  const [user, userLoading, userError] = useUserAuth();
   const dispatch = useAppDispatch();
 
-  if (loading)
+  const { db } = useAuthContext();
+
+  if (userLoading)
     return (
       <>
         <Layout>
@@ -26,8 +27,15 @@ const AppRouter = () => {
       </>
     );
 
-  if (!loading && !error)
-    dispatch(setUser({ username: user?.displayName!, email: user?.email! }));
+  if (!userLoading && !userError) {
+    dispatch(
+      setUser({
+        username: user?.displayName!,
+        email: user?.email!,
+        userId: user?.uid,
+      }),
+    );
+  }
 
   return (
     <>

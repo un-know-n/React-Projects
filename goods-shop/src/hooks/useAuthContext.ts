@@ -12,6 +12,6 @@ import { AuthContext } from '../context/auth';
 export const useAuthContext = () => {
   const context = useContext(AuthContext);
   const auth = context?.auth || ({} as Auth);
-  const firestore = context?.firestore || ({} as Firestore);
-  return { auth, firestore };
+  const db = context?.db || ({} as Firestore);
+  return { auth, db };
 };

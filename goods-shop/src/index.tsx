@@ -13,7 +13,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
 
-import { app } from './api/firebase.api';
+import { app, db } from './api/firebase.api';
 import App from './App';
 import { AuthContext } from './context/auth';
 import { persistor, store } from './store';
@@ -24,12 +24,11 @@ const root = ReactDOM.createRoot(
 
 //Take main entities from firebase
 const auth = getAuth(app);
-const firestore = getFirestore();
 
 root.render(
   <BrowserRouter>
     <Provider store={store}>
-      <AuthContext.Provider value={{ auth, firestore }}>
+      <AuthContext.Provider value={{ auth, db }}>
         <PersistGate
           loading={null}
           persistor={persistor}>

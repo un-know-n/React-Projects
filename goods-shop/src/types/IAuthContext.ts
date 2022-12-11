@@ -4,5 +4,5 @@ import { Firestore } from 'firebase/firestore';
 //General type for main context
 export interface IAuthContext {
   auth: Auth;
-  firestore: Firestore;
+  db: Firestore;
 }
