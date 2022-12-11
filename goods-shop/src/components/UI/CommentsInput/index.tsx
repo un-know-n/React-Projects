@@ -1,8 +1,21 @@
 import { Avatar, Button, Flex, Textarea } from '@chakra-ui/react';
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, FC, useState } from 'react';
 
-const CommentsInput = () => {
+import { useTypedSelector } from '../../../store/hooks/useTypedSelector';
+import { takeUser } from '../../../store/selectors/user.selector';
+
+type TProps = {
+  callback: (value: string) => void;
+};
+
+const CommentsInput: FC<TProps> = ({ callback }) => {
+  const user = useTypedSelector(takeUser);
   const [value, setValue] = useState('');
+
+  const handleClick = () => {
+    callback(value);
+    setValue('');
+  };
 
   return (
     <>
@@ -12,7 +25,7 @@ const CommentsInput = () => {
         alignItems='baseline'
         className='flex flex-col sm:flex-row'>
         <Avatar
-          name='Somename'
+          name={user.username!}
           src='img'
         />
 
@@ -26,7 +39,11 @@ const CommentsInput = () => {
           size='lg'
           focusBorderColor='green.500'
         />
-        <Button colorScheme='green'>Send</Button>
+        <Button
+          colorScheme='green'
+          onClick={handleClick}>
+          Send
+        </Button>
       </Flex>
     </>
   );

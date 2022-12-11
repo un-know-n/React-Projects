@@ -10,6 +10,7 @@ import { useAuthContext } from '../../../../hooks/useAuthContext';
 import { Routes } from '../../../../routes';
 import { useAppDispatch } from '../../../../store/hooks/useTypedDispatch';
 import { clearCart } from '../../../../store/reducers/cart.slice';
+import { clearUser } from '../../../../store/reducers/user.slice';
 import { takeAuthError } from '../../../../utils/helpers/auth/authErrors';
 import { errorToast } from '../../../../utils/helpers/toasts';
 
@@ -26,12 +27,13 @@ const SignOutButton: FC<TProps> = ({ title }) => {
   const handleClick = () => {
     signOut(auth)
       .then(() => {
-        dispatch(clearCart());
         navigate(Routes.Home);
+        dispatch(clearCart());
+        dispatch(clearUser());
       })
       .catch((error: FirebaseError) => {
         const errorMessage = takeAuthError(error.code);
-        errorToast(`Error: ${errorMessage ?? error.code}!`);
+        errorToast(`Error occurred: ${errorMessage ?? error.code}!`);
       });
   };
 

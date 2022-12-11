@@ -1,8 +1,12 @@
+import { addDoc, collection, orderBy, query, serverTimestamp, where } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
+import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useParams } from 'react-router-dom';
 
+import { db } from '../../api/firebase.api';
 import { useFetchProductByIdQuery } from '../../api/products.api';
-import { useFetchUsersByProductQuery } from '../../api/users.api';
+import { useUserAuth } from '../../hooks/useUserAuth';
+import { takeCommentsQuery } from '../../utils/helpers/user/takeCommentsQuery';
 import CommentsBlock from '../UI/Comments';
 import CommentsInput from '../UI/CommentsInput';
 import Loader from '../UI/Loader/Loader';
@@ -12,25 +16,44 @@ import ProductMain from './Main';
 const ProductInner = () => {
   const { id } = useParams();
 
+  const [user] = useUserAuth();
+
+  //Take information about product
   const {
     data: product,
     isLoading: loadingProduct,
     isError: productError,
   } = useFetchProductByIdQuery(id!);
 
-  const {
-    data: users,
-    isLoading: loadingUsers,
-    isError: usersError,
-  } = useFetchUsersByProductQuery(id!);
+  //Take user comments on that product
+  const [comments, loadingComments, commentsError, snapshot] =
+    useCollectionData(takeCommentsQuery(db, id!));
 
-  const loadingDone = !loadingProduct && !loadingUsers;
-  const noErrors = !productError && !usersError;
+  //Handle the comment sending by user
+  const handleMessageSend = (value: string) => {
+    addDoc(collection(db, 'comments'), {
+      comment: value,
+      productId: id,
+      userId: user?.uid,
+      userName: user?.displayName,
+      createdAt: serverTimestamp(),
+    });
+    //
+  };
+
+  //Check if there is loading or error state
+  const loadingDone = !loadingProduct && !loadingComments;
+  const noErrors = !productError && !commentsError;
+
+  //Local state of current selected size
   const [selectedSize, setSelectedSize] = useState('');
 
+  //Change selected size when product initialized
   useEffect(() => {
     setSelectedSize(product?.size ? product.size[0] : '');
   }, [product?.size]);
+
+  console.log(commentsError);
 
   return (
     <>
@@ -56,16 +79,19 @@ const ProductInner = () => {
             />
           </div>
           <div className='comments__wrapper p-9'>
-            <CommentsInput />
-            {users?.map((user) => (
-              <CommentsBlock
-                author={user.name}
-                image={`https://randomuser.me/api/portraits/men/${user.id}.jpg`}
-                status='Customer'
-                text={user.body}
-                key={`${user.id}${user.body}`}
-              />
-            ))}
+            {user && <CommentsInput callback={handleMessageSend} />}
+            {comments &&
+              comments.reverse().map((item) => (
+                <CommentsBlock
+                  author={item.userName}
+                  image=''
+                  status={
+                    item.userName !== 'admin' ? 'Customer' : 'Administrator'
+                  }
+                  text={item.comment}
+                  key={`${item.userId}${item.comment}`}
+                />
+              ))}
           </div>
         </>
       ) : (

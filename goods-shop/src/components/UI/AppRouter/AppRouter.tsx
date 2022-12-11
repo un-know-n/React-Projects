@@ -14,8 +14,6 @@ const AppRouter = () => {
   const [user, userLoading, userError] = useUserAuth();
   const dispatch = useAppDispatch();
 
-  const { db } = useAuthContext();
-
   if (userLoading)
     return (
       <>

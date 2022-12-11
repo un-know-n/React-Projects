@@ -5,7 +5,6 @@ import { IUser } from '../../types/IUser';
 const initialState: IUser = {
   username: '',
   email: '',
-  commentsDocumentId: '',
   userId: '',
 };
 
@@ -14,23 +13,19 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setUser(state, action: PayloadAction<typeof initialState>) {
-      const {
-        email,
-        username,
-        commentsDocumentId: cartDocumentId,
-        userId,
-      } = action.payload;
+      const { email, username, userId } = action.payload;
       email ? (state.email = email) : '';
       username ? (state.username = username) : '';
       userId ? (state.userId = userId) : '';
-      cartDocumentId ? (state.commentsDocumentId = cartDocumentId) : '';
     },
-    setDocument(state, action: PayloadAction<string>) {
-      state.commentsDocumentId = action.payload;
+    clearUser(state) {
+      state.email = '';
+      state.username = '';
+      state.userId = '';
     },
   },
 });
 
-export const { setUser } = userSlice.actions;
+export const { setUser, clearUser } = userSlice.actions;
 
 export default userSlice;

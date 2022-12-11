@@ -2,6 +2,5 @@
 export interface IUser {
   username?: string;
   email?: string;
-  commentsDocumentId?: string;
   userId?: string;
 }
