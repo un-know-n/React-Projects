@@ -1,5 +1,13 @@
 import { ICartProduct } from '../../../types/ICartProduct';
 
+/**
+ * Find specific cart item, depending on params
+ *
+ * @param items - array of cart items
+ * @param id - id of the wanted item
+ * @param selectedSize - size of the item
+ * @returns item
+ */
 export const findCartItem = (
   items: ICartProduct[],
   id: number,

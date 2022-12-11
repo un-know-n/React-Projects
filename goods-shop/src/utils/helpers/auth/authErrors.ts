@@ -1,5 +1,11 @@
 import { AuthErrorCodes } from 'firebase/auth';
 
+/**
+ * Takes the error code from Firebase and returns string, that can be shown to user
+ *
+ * @param code - error code from firebase
+ * @returns user-friendly string to output
+ */
 export const takeAuthError = (code: string): string | null => {
   switch (code) {
     case AuthErrorCodes.USER_DELETED:
@@ -7,7 +13,7 @@ export const takeAuthError = (code: string): string | null => {
     case AuthErrorCodes.INVALID_PASSWORD:
       return 'wrong password';
     case AuthErrorCodes.INVALID_EMAIL:
-      return 'wrond email';
+      return 'wrong email';
     case AuthErrorCodes.EMAIL_EXISTS:
       return 'email already exists';
     case AuthErrorCodes.CORS_UNSUPPORTED:

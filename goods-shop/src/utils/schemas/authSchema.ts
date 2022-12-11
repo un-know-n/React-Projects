@@ -1,5 +1,6 @@
 import { number, object, ref, string } from 'yup';
 
+//Validation schema for login page
 export const signInSchema = object({
   email: string()
     .email('Please enter valid email')
@@ -10,6 +11,7 @@ export const signInSchema = object({
     .max(20, 'Password is too long - maximum 20 symbols allowed'),
 });
 
+//Validation schema for register page
 export const signUpSchema = object({
   name: string().required('Name is required'),
   phone: string()
@@ -32,6 +34,7 @@ export const signUpSchema = object({
     .oneOf([ref('password'), null], 'Passwords must match'),
 });
 
+//Validation schema for password reset page
 export const resetPassSchema = object({
   email: string()
     .email('Please enter valid email')

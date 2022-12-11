@@ -22,6 +22,7 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 
+//Take main entities from firebase
 const auth = getAuth(app);
 const firestore = getFirestore();
 

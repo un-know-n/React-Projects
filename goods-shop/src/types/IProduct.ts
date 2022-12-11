@@ -1,3 +1,4 @@
+//Product from API
 export interface IProduct {
   id: number;
   title: string;
@@ -9,6 +10,7 @@ export interface IProduct {
   size?: Array<string>;
 }
 
+//Rating for product
 export interface IProductRating {
   rate: number;
   count: number;

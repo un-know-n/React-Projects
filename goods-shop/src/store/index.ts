@@ -8,6 +8,7 @@ import { cartSlice } from './reducers/cart.slice';
 import { filterSlice } from './reducers/filter.slice';
 import userSlice from './reducers/user.slice';
 
+//Main app reducer
 export const rootReducer = combineReducers({
   filter: filterSlice.reducer,
   cart: cartSlice.reducer,
@@ -43,6 +44,7 @@ export const store = configureStore({
 // Main exported variables
 export const persistor = persistStore(store);
 
+// Types from redux
 export type TRootState = ReturnType<typeof rootReducer>;
 export type TAppStore = typeof store;
 export type TAppDispatch = TAppStore['dispatch'];

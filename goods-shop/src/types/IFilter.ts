@@ -1,5 +1,6 @@
 import { TCategories, TSorts } from './common';
 
+//General type for filter on main page
 export interface IFilter {
   category?: TCategories;
   sort: TSorts;
@@ -7,7 +8,3 @@ export interface IFilter {
   limit: number;
   page: number;
 }
-
-//* Possible variant
-// category: 'electronics' | 'jewelery' | "men's clothing" | "women's clothing";
-//   sort: 'asc' | 'desc' | 'price' | 'alphabet';
