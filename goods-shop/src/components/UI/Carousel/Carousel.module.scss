@@ -1,0 +1,19 @@
+.slider__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid gray;
+  border-radius: 50%;
+  transition: all 0.3s;
+
+  &:first-child {
+    margin-right: 15px;
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: #ddd;
+  }
+}

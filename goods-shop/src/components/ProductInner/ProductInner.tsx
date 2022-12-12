@@ -3,16 +3,20 @@ import { addDoc, collection, deleteDoc, doc, serverTimestamp } from 'firebase/fi
 import React, { useEffect, useState } from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useParams } from 'react-router-dom';
+import { SwiperSlide } from 'swiper/react';
 
 import { db } from '../../api/firebase.api';
-import { useFetchProductByIdQuery } from '../../api/products.api';
+import { useFetchProductByIdQuery, useLazyFetchSimilarProductsQuery } from '../../api/products.api';
 import { useUserAuth } from '../../hooks/useUserAuth';
 import { takeCommentsQuery } from '../../utils/helpers/user/takeCommentsQuery';
+import Carousel from '../UI/Carousel';
 import CommentsBlock from '../UI/Comments';
 import CommentsInput from '../UI/CommentsInput';
 import Loader from '../UI/Loader/Loader';
 import ProductDescription from './Description';
 import ProductMain from './Main';
+import SimilarProduct from './SimilarProducts';
+import SimilarProducts from './SimilarProducts';
 
 const ProductInner = () => {
   const { id } = useParams();
@@ -25,6 +29,16 @@ const ProductInner = () => {
     isLoading: loadingProduct,
     isError: productError,
   } = useFetchProductByIdQuery(id!);
+
+  //Take similar products for slider
+  const [
+    fetchSimilarProducts,
+    { data: similarProducts, isLoading: loadingSimilar, isError: similarError },
+  ] = useLazyFetchSimilarProductsQuery();
+
+  useEffect(() => {
+    !loadingProduct && fetchSimilarProducts(product?.category || 'all');
+  }, [loadingProduct]);
 
   //Take user comments on that product
   const [comments, loadingComments, commentsError, snapshot] =
@@ -42,6 +56,7 @@ const ProductInner = () => {
     //
   };
 
+  //Handle comment deletion
   const handleDelete = (value: string) => {
     console.log('Comment deleted: ', value);
     deleteDoc(doc(db, 'comments', value))
@@ -50,8 +65,8 @@ const ProductInner = () => {
   };
 
   //Check if there is loading or error state
-  const loadingDone = !loadingProduct && !loadingComments;
-  const noErrors = !productError && !commentsError;
+  const loadingDone = !loadingProduct && !loadingComments && !loadingSimilar;
+  const noErrors = !productError && !commentsError && !similarError;
 
   //Local state of current selected size
   const [selectedSize, setSelectedSize] = useState('');
@@ -60,6 +75,8 @@ const ProductInner = () => {
   useEffect(() => {
     setSelectedSize(product?.size ? product.size[0] : '');
   }, [product?.size]);
+
+  //console.log(similarProducts);
 
   return (
     <>
@@ -85,6 +102,24 @@ const ProductInner = () => {
               price={product?.price || 0}
               rating={product?.rating || { rate: 5, count: 0 }}
             />
+          </div>
+          <div className='similar__wrapper w-full p-9'>
+            <Carousel title={'Similar products'}>
+              {similarProducts
+                ?.filter((item) => `${item.id}` !== id)
+                .map((item) => (
+                  <SwiperSlide
+                    className='p-4 mb-5'
+                    key={item.id}>
+                    <SimilarProduct
+                      image={item.image}
+                      rating={item.rating}
+                      title={item.title}
+                      id={item.id}
+                    />
+                  </SwiperSlide>
+                ))}
+            </Carousel>
           </div>
           <div className='comments__wrapper p-9'>
             {user && <CommentsInput callback={handleMessageSend} />}

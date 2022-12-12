@@ -43,9 +43,18 @@ export const productsAPI = createApi({
         url: `/products/${id}`,
       }),
     }),
+    fetchSimilarProducts: build.query<IProduct[], string>({
+      query: (category) => ({
+        url: `/products`,
+        params: {
+          category,
+        },
+      }),
+    }),
   }),
 });
 
 export const { useFetchAllProductsQuery } = productsAPI;
 export const { useLazyFetchProductsByFilterQuery } = productsAPI;
 export const { useFetchProductByIdQuery } = productsAPI;
+export const { useLazyFetchSimilarProductsQuery } = productsAPI;

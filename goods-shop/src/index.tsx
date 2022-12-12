@@ -2,6 +2,9 @@ import './api/firebase.api';
 import './index.scss';
 import 'react-phone-number-input/style.css';
 import 'react-toastify/dist/ReactToastify.css';
+import 'swiper/css';
+import 'swiper/css/lazy';
+import 'swiper/css/navigation';
 
 import { ChakraProvider } from '@chakra-ui/react';
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
@@ -18,6 +21,7 @@ import App from './App';
 import { AuthContext } from './context/auth';
 import { persistor, store } from './store';
 
+// Styles must use direct files imports
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
