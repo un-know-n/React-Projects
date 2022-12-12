@@ -10,6 +10,8 @@ import { useAppDispatch } from '../../../store/hooks/useTypedDispatch';
 import { editItem, setItem } from '../../../store/reducers/cart.slice';
 import { IProduct } from '../../../types/IProduct';
 import { addToCart } from '../../../utils/helpers/cart/addToCart';
+import { composePrice } from '../../../utils/helpers/product/composePrice';
+import { takePriceFactor } from '../../../utils/helpers/product/takePriceFactor';
 import { returnStars } from '../../../utils/helpers/UI/returnStars';
 import AddToCart from './../../UI/Buttons/AddToCart';
 import c from './Item.module.scss';
@@ -26,6 +28,8 @@ export const Item: FC<IProduct> = memo(
     const dispatch = useAppDispatch();
 
     const memoizedStars = useMemo(() => returnStars(rate), [rate]);
+
+    const realPrice = composePrice(price, selectedSize, size);
 
     //TODO: Make different price, depending on the additional value(another size -> item with another id and so on...)
 
@@ -62,7 +66,7 @@ export const Item: FC<IProduct> = memo(
             </ul>
           </div>
           <div className='flex items-center justify-between mt-5'>
-            <div className='text-2xl font-bold'>{price} $</div>
+            <div className='text-2xl font-bold'>{realPrice} $</div>
             <Link to={!user ? Routes.SignIn : ''}>
               <AddToCart
                 isDisabled={!user}
@@ -70,7 +74,7 @@ export const Item: FC<IProduct> = memo(
                   addToCart(dispatch, cartItem, selectedSize, {
                     id,
                     title,
-                    price,
+                    price: realPrice,
                     category,
                     image,
                   })

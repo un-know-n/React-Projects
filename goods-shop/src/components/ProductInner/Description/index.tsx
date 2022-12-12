@@ -3,6 +3,8 @@ import classNames from 'classnames';
 import React, { FC, useState } from 'react';
 
 import { IProduct } from '../../../types/IProduct';
+import { composePrice } from '../../../utils/helpers/product/composePrice';
+import { takePriceFactor } from '../../../utils/helpers/product/takePriceFactor';
 import c from './../../MainItems/Item/Item.module.scss';
 
 type TProps = Pick<
@@ -22,13 +24,15 @@ const ProductDescription: FC<TProps> = ({
   selectedSize,
   setSelectedSize,
 }) => {
+  const realPrice = composePrice(price, selectedSize, size);
+
   return (
     <>
       <div className='product__description w-full md:ml-7'>
         <h1 className='mt-4 md:mt-0 text-2xl font-normal'>{title}</h1>
         <div className='description__info w-full flex justify-between py-4'>
           <div className='price'>
-            <h3 className='text-xl font-light'>Price: {price || '-'}$</h3>
+            <h3 className='text-xl font-light'>Price: {realPrice || '-'}$</h3>
           </div>
           <div className='amount'>
             <span className='text-xl'>

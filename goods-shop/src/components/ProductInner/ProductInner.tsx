@@ -61,24 +61,20 @@ const ProductInner = () => {
     setSelectedSize(product?.size ? product.size[0] : '');
   }, [product?.size]);
 
-  // console.log(snapshot?.docs[1]);
-  // console.log(
-  //   comments && user && `${comments[1].userId} - You --> ${user.uid}`,
-  // );
-
   return (
     <>
       {loadingDone && noErrors ? (
         <>
           <div className='product__wrapper w-full flex flex-col md:flex-row justify-center p-9'>
             <ProductMain
+              selectedSize={selectedSize}
               image={product?.image || ''}
               category={product?.category!}
               id={product?.id!}
               title={product?.title!}
               price={product?.price!}
-              size={selectedSize!}
               rating={product?.rating || { rate: 5, count: 0 }}
+              size={product?.size}
             />
             <ProductDescription
               title={product?.title!}
