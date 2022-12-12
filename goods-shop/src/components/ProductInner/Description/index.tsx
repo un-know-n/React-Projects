@@ -5,7 +5,10 @@ import React, { FC, useState } from 'react';
 import { IProduct } from '../../../types/IProduct';
 import c from './../../MainItems/Item/Item.module.scss';
 
-type TProps = Pick<IProduct, 'description' | 'price' | 'rating' | 'size'> & {
+type TProps = Pick<
+  IProduct,
+  'description' | 'price' | 'rating' | 'size' | 'title'
+> & {
   selectedSize: string;
   setSelectedSize: (value: string) => void;
 };
@@ -15,12 +18,14 @@ const ProductDescription: FC<TProps> = ({
   price,
   rating: { count },
   size,
+  title,
   selectedSize,
   setSelectedSize,
 }) => {
   return (
     <>
       <div className='product__description w-full md:ml-7'>
+        <h1 className='mt-4 md:mt-0 text-2xl font-normal'>{title}</h1>
         <div className='description__info w-full flex justify-between py-4'>
           <div className='price'>
             <h3 className='text-xl font-light'>Price: {price || '-'}$</h3>

@@ -4,5 +4,5 @@ export const takeCommentsQuery = (database: Firestore, productId: string) =>
   query(
     collection(database, 'comments'),
     where('productId', '==', productId),
-    orderBy('createdAt'),
+    orderBy('createdAt', 'desc'),
   );

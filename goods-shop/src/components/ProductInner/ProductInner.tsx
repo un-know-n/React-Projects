@@ -1,4 +1,5 @@
-import { addDoc, collection, orderBy, query, serverTimestamp, where } from 'firebase/firestore';
+import { FirebaseError } from 'firebase/app';
+import { addDoc, collection, deleteDoc, doc, serverTimestamp } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useParams } from 'react-router-dom';
@@ -41,6 +42,13 @@ const ProductInner = () => {
     //
   };
 
+  const handleDelete = (value: string) => {
+    console.log('Comment deleted: ', value);
+    deleteDoc(doc(db, 'comments', value))
+      .then(() => console.log('Document deleted'))
+      .catch((error: FirebaseError) => console.log(error.code));
+  };
+
   //Check if there is loading or error state
   const loadingDone = !loadingProduct && !loadingComments;
   const noErrors = !productError && !commentsError;
@@ -53,7 +61,10 @@ const ProductInner = () => {
     setSelectedSize(product?.size ? product.size[0] : '');
   }, [product?.size]);
 
-  console.log(commentsError);
+  // console.log(snapshot?.docs[1]);
+  // console.log(
+  //   comments && user && `${comments[1].userId} - You --> ${user.uid}`,
+  // );
 
   return (
     <>
@@ -70,6 +81,7 @@ const ProductInner = () => {
               rating={product?.rating || { rate: 5, count: 0 }}
             />
             <ProductDescription
+              title={product?.title!}
               selectedSize={selectedSize!}
               setSelectedSize={(s) => setSelectedSize(s)}
               size={product?.size}
@@ -81,12 +93,16 @@ const ProductInner = () => {
           <div className='comments__wrapper p-9'>
             {user && <CommentsInput callback={handleMessageSend} />}
             {comments &&
-              comments.reverse().map((item) => (
+              comments.map((item, i) => (
                 <CommentsBlock
                   author={item.userName}
                   image=''
                   status={
                     item.userName !== 'admin' ? 'Customer' : 'Administrator'
+                  }
+                  availableDelete={item.userId === user?.uid}
+                  deleteCallback={() =>
+                    handleDelete(snapshot?.docs[i].id || '')
                   }
                   text={item.comment}
                   key={`${item.userId}${item.comment}`}

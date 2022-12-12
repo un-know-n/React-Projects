@@ -4,9 +4,22 @@ import React, { FC } from 'react';
 import Comments from './subcomponents/Comments';
 import CommentsHeader from './subcomponents/CommentsHeader';
 
-type TProps = Record<'author' | 'status' | 'image' | 'text', string>;
+type TProps = Record<'author' | 'status' | 'image' | 'text', string> &
+  TDocument;
 
-const CommentsBlock: FC<TProps> = ({ author, image, status, text }) => {
+export type TDocument = {
+  availableDelete?: boolean;
+  deleteCallback?: () => void;
+};
+
+const CommentsBlock: FC<TProps> = ({
+  author,
+  image,
+  status,
+  text,
+  availableDelete,
+  deleteCallback,
+}) => {
   return (
     <>
       <Card className='mt-4'>
@@ -14,6 +27,8 @@ const CommentsBlock: FC<TProps> = ({ author, image, status, text }) => {
           author={author}
           status={status}
           image={image}
+          availableDelete={availableDelete}
+          deleteCallback={deleteCallback}
         />
         <Comments text={text} />
       </Card>
