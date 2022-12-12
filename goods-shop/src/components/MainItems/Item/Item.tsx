@@ -71,10 +71,10 @@ export const Item: FC<IProduct> = memo(
               <AddToCart
                 isDisabled={!user}
                 onClickCallback={() =>
-                  addToCart(dispatch, cartItem, selectedSize, {
+                  addToCart(dispatch, cartItem, selectedSize, size, {
                     id,
                     title,
-                    price: realPrice,
+                    price,
                     category,
                     image,
                   })

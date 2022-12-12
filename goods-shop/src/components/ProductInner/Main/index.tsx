@@ -51,10 +51,10 @@ const ProductMain: FC<TProps> = ({
           <Link to={!user ? Routes.SignIn : ''}>
             <AddToCart
               onClickCallback={() =>
-                addToCart(dispatch, cartItem, selectedSize, {
+                addToCart(dispatch, cartItem, selectedSize, size, {
                   id,
                   title,
-                  price: realPrice,
+                  price,
                   category,
                   image,
                 })

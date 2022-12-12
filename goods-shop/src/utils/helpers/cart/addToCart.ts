@@ -2,6 +2,7 @@ import { TAppDispatch } from '../../../store';
 import { useAppDispatch } from '../../../store/hooks/useTypedDispatch';
 import { editItem, setItem } from '../../../store/reducers/cart.slice';
 import { ICartProduct } from '../../../types/ICartProduct';
+import { composePrice } from '../product/composePrice';
 
 /**
  * Add item to cart or increase it's amount(if item is already there)
@@ -15,19 +16,21 @@ export const addToCart = (
   dispatch: TAppDispatch,
   cartItem: ICartProduct | null,
   selectedSize: string,
+  sizes: string[] | undefined,
   currentItem: Pick<
     ICartProduct,
     'id' | 'title' | 'price' | 'category' | 'image'
   >,
 ) => {
   const { id, title, price, category, image } = currentItem;
+  const realPrice = composePrice(price, selectedSize, sizes);
   if (cartItem) {
     dispatch(
       editItem({
         id: cartItem.id,
         additional: selectedSize,
         effect: 'increment',
-        price: cartItem.price,
+        price: realPrice,
         count: cartItem.count,
       }),
     );
@@ -36,7 +39,7 @@ export const addToCart = (
       setItem({
         id,
         title,
-        price,
+        price: realPrice,
         count: 1,
         additional: selectedSize,
         category,
