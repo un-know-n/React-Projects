@@ -16,8 +16,8 @@ import RestItem from './RestItem';
 const ProfilePreferences = () => {
   const { auth } = useAuthContext();
 
-  const [updateName, updatingName, errorName] = useUpdateProfile(auth);
-  const [updateUserEmail, updatingEmail, errorEmail] = useUpdateEmail(auth);
+  const [updateName, updatingName] = useUpdateProfile(auth);
+  const [updateUserEmail, updatingEmail] = useUpdateEmail(auth);
 
   const dispatch = useAppDispatch();
 
@@ -26,13 +26,11 @@ const ProfilePreferences = () => {
       title: 'Name',
       inner: auth.currentUser?.displayName,
       callback: (value: string) => updateName({ displayName: value }),
-      error: errorName,
     },
     {
       title: 'Email',
       inner: auth.currentUser?.email,
       callback: (value: string) => updateUserEmail(value),
-      error: errorEmail,
     },
   ];
 
@@ -60,7 +58,6 @@ const ProfilePreferences = () => {
                   callback={async (value: string) => {
                     const success = await item.callback(value);
                     if (success) {
-                      successToast('Field updated successfully!');
                       item.inner !== auth.currentUser?.displayName
                         ? dispatch(
                             setUser({
@@ -72,7 +69,11 @@ const ProfilePreferences = () => {
                               email: value,
                             }),
                           );
-                    } else errorToast(`Error occurred: ${item.error}`);
+                    } else
+                      errorToast(
+                        `Unexpected error: try to sign-in again`,
+                        true,
+                      );
                   }}
                 />
               ))}

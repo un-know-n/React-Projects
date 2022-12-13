@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import { Routes } from '../../../routes';
 import { useAppDispatch } from '../../../store/hooks/useTypedDispatch';
 import { resetFilter } from '../../../utils/helpers/filter/resetFilter';
 import noProductsImg from './../../../assets/images/no-products.svg';
@@ -23,7 +24,7 @@ const NoData = () => {
             alt='Empty cart'
           />
           <Link
-            to='/'
+            to={Routes.Home}
             onClick={() => resetFilter(dispatch)}
             className='button button--black'>
             <span>Back</span>
