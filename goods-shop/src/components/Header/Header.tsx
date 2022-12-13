@@ -1,6 +1,5 @@
-import React, { FC, memo, useRef, useState } from 'react';
+import React, { FC, memo } from 'react';
 
-import { useAppDispatch } from '../../store/hooks/useTypedDispatch';
 import { CartSection } from './CartSection/CartSection';
 import { Logo } from './Logo/Logo';
 import { Search } from './Search/Search';
@@ -12,8 +11,6 @@ type TProps = {
 
 export const Header: FC<TProps> = memo(
   ({ includeCartSection = true, includeSearch = true }) => {
-    const dispatch = useAppDispatch();
-
     return (
       <>
         <header className='header'>

@@ -13,6 +13,7 @@ export const Categories = () => {
 
   const dispatch = useAppDispatch();
 
+  //When click set selected category on first page
   const handleClick = (category: TCategories) => {
     dispatch(setCategory(category));
     dispatch(setPage(1));

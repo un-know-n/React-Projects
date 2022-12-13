@@ -1,7 +1,5 @@
 import React, { FC } from 'react';
 
-import { TAddToCart } from '../../../../utils/helpers/cart/addToCart';
-
 type TProps = {
   isDisabled?: boolean;
   onClickCallback: () => void;

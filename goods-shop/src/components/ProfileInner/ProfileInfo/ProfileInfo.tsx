@@ -1,15 +1,11 @@
-import { Box, Button, Heading, Stack, StackDivider, Text } from '@chakra-ui/react';
-import { Auth, User } from 'firebase/auth';
+import { Box, Heading, Stack, StackDivider, Text } from '@chakra-ui/react';
+import { User } from 'firebase/auth';
 import React, { FC } from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
 
-import { useAuthContext } from '../../../hooks/useAuthContext';
-import { useUserAuth } from '../../../hooks/useUserAuth';
 import { useTypedSelector } from '../../../store/hooks/useTypedSelector';
 import { takeUser } from '../../../store/selectors/user.selector';
 import SignOutButton from '../../UI/Auth/SignOutButton/SignOutButton';
 import defaultUserImg from './../../../assets/images/default-user.png';
-import c from './../ProfileInner.module.scss';
 
 type TProps = {
   user: User;

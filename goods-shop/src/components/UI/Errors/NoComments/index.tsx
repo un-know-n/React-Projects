@@ -1,7 +1,5 @@
 import React from 'react';
 
-import c from './../../NoData/NoData.module.scss';
-
 const NoComments = () => {
   return (
     <>

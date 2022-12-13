@@ -10,7 +10,6 @@ import { useAppDispatch } from '../../../store/hooks/useTypedDispatch';
 import { IProduct } from '../../../types/IProduct';
 import { addToCart } from '../../../utils/helpers/cart/addToCart';
 import { composePrice } from '../../../utils/helpers/product/composePrice';
-import { takePriceFactor } from '../../../utils/helpers/product/takePriceFactor';
 import { returnStars } from '../../../utils/helpers/UI/returnStars';
 import AddToCart from '../../UI/Buttons/AddToCart';
 import c from './../../MainItems/Item/Item.module.scss';

@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 import dataErrorImg from '../../../assets/images/dataError.webp';
 import { Routes } from '../../../routes';
-import c from './../NoData/NoData.module.scss';
 
 type TProps = {
   includeButton?: boolean;

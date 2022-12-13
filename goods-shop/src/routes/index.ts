@@ -1,8 +1,8 @@
-import ResetPass from '../components/UI/Auth/ResetPass/ResetPass';
+import { lazy } from 'react';
+
 import SignUp from '../components/UI/Auth/SignUp/SignUp';
 import SignIn from '../components/UI/Auth/SingIn/SignIn';
 import Cart from '../pages/Cart';
-import Main from '../pages/Main';
 import Product from '../pages/Product';
 import Profile from '../pages/Profile';
 import { TRoute } from '../types/common';
@@ -19,42 +19,49 @@ export enum Routes {
 
 //TODO: Try to make lazy loadings!!
 
-// const MainPage = lazy(() => import('./pages/Main'));
-// const CartPage = lazy(() => import('./pages/Cart'));
+const MainPage = lazy(() => import('../pages/Main'));
+const CartPage = lazy(() => import('../pages/Cart'));
+const ProductPage = lazy(() => import('../pages/Product'));
+const ProfilePage = lazy(() => import('../pages/Profile'));
+const SignUpPage = lazy(() => import('../components/UI/Auth/SignUp/SignUp'));
+const SignInPage = lazy(() => import('../components/UI/Auth/SingIn/SignIn'));
+const ResetPassPage = lazy(
+  () => import('../components/UI/Auth/ResetPass/ResetPass'),
+);
 
 export const authRoutes: TRoute[] = [
   {
     path: Routes.SignIn,
-    element: SignIn,
+    element: SignInPage,
   },
   {
     path: Routes.SignUp,
-    element: SignUp,
+    element: SignUpPage,
   },
   {
     path: Routes.ResetPassword,
-    element: ResetPass,
+    element: ResetPassPage,
   },
 ];
 
 export const publicRoutes: TRoute[] = [
   {
     path: Routes.Home,
-    element: Main,
+    element: MainPage,
   },
   {
     path: Routes.Product,
-    element: Product,
+    element: ProductPage,
   },
 ];
 
 export const privateRoutes: TRoute[] = [
   {
     path: Routes.Cart,
-    element: Cart,
+    element: CartPage,
   },
   {
     path: Routes.Profile,
-    element: Profile,
+    element: ProfilePage,
   },
 ];

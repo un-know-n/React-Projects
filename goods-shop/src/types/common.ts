@@ -1,3 +1,5 @@
+import { LazyExoticComponent } from 'react';
+
 import { categories, sorts } from '../constants/filter';
 import { Routes } from '../routes';
 
@@ -8,5 +10,6 @@ export type TSorts = typeof sorts[number];
 // Main app routes
 export type TRoute = {
   path: Routes;
-  element: () => JSX.Element;
+  //element: () => JSX.Element;
+  element: LazyExoticComponent<() => JSX.Element>;
 };

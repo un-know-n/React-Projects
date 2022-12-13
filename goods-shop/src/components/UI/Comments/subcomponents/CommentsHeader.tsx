@@ -12,8 +12,6 @@ import {
   PopoverHeader,
   PopoverTrigger,
   Text,
-  Wrap,
-  WrapItem,
 } from '@chakra-ui/react';
 import React, { FC, MouseEventHandler, useState } from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';

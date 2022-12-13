@@ -1,4 +1,3 @@
-import { Divider } from '@chakra-ui/react';
 import { FirebaseError } from 'firebase/app';
 import { addDoc, collection, deleteDoc, doc, serverTimestamp } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
@@ -22,7 +21,6 @@ import Loader from '../UI/Loader/Loader';
 import ProductDescription from './Description';
 import ProductMain from './Main';
 import SimilarProduct from './SimilarProducts';
-import SimilarProducts from './SimilarProducts';
 
 const ProductInner = () => {
   const { id } = useParams();

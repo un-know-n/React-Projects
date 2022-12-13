@@ -1,15 +1,12 @@
-import React, { FC, useContext } from 'react';
-import { Link, Route } from 'react-router-dom';
+import React, { FC } from 'react';
+import { Link } from 'react-router-dom';
 
-import { AuthContext } from '../../../../context/auth';
 import { useUserAuth } from '../../../../hooks/useUserAuth';
 import { Routes } from '../../../../routes';
 import c from './Profile.module.scss';
 
 const Profile: FC = () => {
-  const Auth = useContext(AuthContext);
-
-  const [user, loading, error] = useUserAuth();
+  const [user] = useUserAuth();
 
   return (
     <>

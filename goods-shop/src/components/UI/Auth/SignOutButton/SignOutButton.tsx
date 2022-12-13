@@ -4,7 +4,6 @@ import { signOut } from 'firebase/auth';
 import React, { FC } from 'react';
 import { IoExitOutline } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 import { useAuthContext } from '../../../../hooks/useAuthContext';
 import { Routes } from '../../../../routes';

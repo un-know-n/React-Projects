@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import { IconType } from 'react-icons/lib';
 
 import c from './RestItem.module.scss';
 

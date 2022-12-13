@@ -1,5 +1,4 @@
 import React, { FC, PropsWithChildren } from 'react';
-import { ToastContainer } from 'react-toastify';
 
 import { Header } from '../../Header/Header';
 

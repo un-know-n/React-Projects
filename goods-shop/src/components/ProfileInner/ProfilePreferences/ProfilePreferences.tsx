@@ -1,5 +1,3 @@
-import { FirebaseError } from 'firebase/app';
-import { Auth } from 'firebase/auth';
 import React from 'react';
 import { useUpdateEmail, useUpdateProfile } from 'react-firebase-hooks/auth';
 import { FiSettings } from 'react-icons/fi';
@@ -7,7 +5,7 @@ import { FiSettings } from 'react-icons/fi';
 import { useAuthContext } from '../../../hooks/useAuthContext';
 import { useAppDispatch } from '../../../store/hooks/useTypedDispatch';
 import { setUser } from '../../../store/reducers/user.slice';
-import { errorToast, successToast } from '../../../utils/helpers/toasts';
+import { errorToast } from '../../../utils/helpers/toasts';
 import Loader from '../../UI/Loader/Loader';
 import PersonalItem from './PersonalItem';
 import c from './ProfilePreferences.module.scss';

@@ -1,19 +1,15 @@
 import classNames from 'classnames';
 import { FirebaseError } from 'firebase/app';
-import { createUserWithEmailAndPassword, updatePhoneNumber, updateProfile } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
-import { values } from 'lodash';
 import React from 'react';
-import PhoneInput from 'react-phone-number-input';
 import { Link, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 import { useAuthContext } from '../../../../hooks/useAuthContext';
 import { Routes } from '../../../../routes';
 import { TSignUp } from '../../../../types/TAuth';
 import { takeAuthError } from '../../../../utils/helpers/auth/authErrors';
-import { errorToast } from '../../../../utils/helpers/toasts';
-import { successToast } from '../../../../utils/helpers/toasts';
+import { errorToast, successToast } from '../../../../utils/helpers/toasts';
 import { signUpSchema } from '../../../../utils/schemas/authSchema';
 import Layout from '../../Layout/Layout';
 import c from './../Auth.module.scss';

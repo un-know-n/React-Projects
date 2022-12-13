@@ -13,6 +13,7 @@ export const SortSelect: FC = () => {
   const sortRef = useRef(null);
   const dispatch = useAppDispatch();
 
+  //Close select when clicked outside it's area
   const onOutside = useCallback((event: MouseEvent) => {
     if (
       !event.composedPath().includes(sortRef.current as unknown as EventTarget)
@@ -20,6 +21,7 @@ export const SortSelect: FC = () => {
       toggleIsOpen(false);
   }, []);
 
+  //Set event listeners
   useEffect(() => {
     document.body.addEventListener('click', onOutside);
     return () => {

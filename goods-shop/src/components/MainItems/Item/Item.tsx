@@ -1,17 +1,13 @@
-import React, { FC, memo, useCallback, useContext, useMemo, useState } from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
+import React, { FC, memo, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { AuthContext } from '../../../context/auth';
 import { useCartItem } from '../../../hooks/useCartItem';
 import { useUserAuth } from '../../../hooks/useUserAuth';
 import { Routes } from '../../../routes';
 import { useAppDispatch } from '../../../store/hooks/useTypedDispatch';
-import { editItem, setItem } from '../../../store/reducers/cart.slice';
 import { IProduct } from '../../../types/IProduct';
 import { addToCart } from '../../../utils/helpers/cart/addToCart';
 import { composePrice } from '../../../utils/helpers/product/composePrice';
-import { takePriceFactor } from '../../../utils/helpers/product/takePriceFactor';
 import { returnStars } from '../../../utils/helpers/UI/returnStars';
 import AddToCart from './../../UI/Buttons/AddToCart';
 import c from './Item.module.scss';
