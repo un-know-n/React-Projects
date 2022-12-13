@@ -23,7 +23,7 @@ const SimilarProduct: FC<TProps> = ({
             src={image}
             alt={title}
             borderRadius='lg'
-            maxHeight={'150px'}
+            maxHeight={'130px'}
             margin={'auto'}
           />
           <Stack

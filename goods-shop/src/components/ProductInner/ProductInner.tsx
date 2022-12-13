@@ -2,12 +2,14 @@ import { FirebaseError } from 'firebase/app';
 import { addDoc, collection, deleteDoc, doc, serverTimestamp } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
-import { useParams } from 'react-router-dom';
+import { BiChevronLeftCircle } from 'react-icons/bi';
+import { Link, useParams } from 'react-router-dom';
 import { SwiperSlide } from 'swiper/react';
 
 import { db } from '../../api/firebase.api';
 import { useFetchProductByIdQuery, useLazyFetchSimilarProductsQuery } from '../../api/products.api';
 import { useUserAuth } from '../../hooks/useUserAuth';
+import { Routes } from '../../routes';
 import { takeCommentsQuery } from '../../utils/helpers/user/takeCommentsQuery';
 import Carousel from '../UI/Carousel';
 import CommentsBlock from '../UI/Comments';
@@ -68,42 +70,28 @@ const ProductInner = () => {
   const loadingDone = !loadingProduct && !loadingComments && !loadingSimilar;
   const noErrors = !productError && !commentsError && !similarError;
 
-  //Local state of current selected size
-  const [selectedSize, setSelectedSize] = useState('');
-
-  //Change selected size when product initialized
-  useEffect(() => {
-    setSelectedSize(product?.size ? product.size[0] : '');
-  }, [product?.size]);
-
   //console.log(similarProducts);
 
   return (
     <>
       {loadingDone && noErrors ? (
         <>
-          <div className='product__wrapper w-full flex flex-col md:flex-row justify-center p-9'>
-            <ProductMain
-              selectedSize={selectedSize}
-              image={product?.image || ''}
-              category={product?.category!}
-              id={product?.id!}
-              title={product?.title!}
-              price={product?.price!}
-              rating={product?.rating || { rate: 5, count: 0 }}
-              size={product?.size}
-            />
-            <ProductDescription
-              title={product?.title!}
-              selectedSize={selectedSize!}
-              setSelectedSize={(s) => setSelectedSize(s)}
-              size={product?.size}
-              description={product?.description || ''}
-              price={product?.price || 0}
-              rating={product?.rating || { rate: 5, count: 0 }}
-            />
+          <div className='back__button flex px-9 pt-6'>
+            <Link
+              to={Routes.Home}
+              className='text-slate-500 text-center hover:text-slate-900 transition-all text-2xl flex items-center'>
+              <BiChevronLeftCircle />
+              <button className='ml-2'> Back</button>
+            </Link>
           </div>
-          <div className='similar__wrapper w-full p-9'>
+          <div className='product__wrapper w-full flex flex-col md:flex-row justify-center items-start p-9 pt-5 pb-0'>
+            <ProductMain
+              image={product?.image || ''}
+              title={product?.title!}
+            />
+            <ProductDescription {...product!} />
+          </div>
+          <div className='similar__wrapper w-full p-9 pb-0'>
             <Carousel title={'Similar products'}>
               {similarProducts
                 ?.filter((item) => `${item.id}` !== id)
@@ -121,7 +109,7 @@ const ProductInner = () => {
                 ))}
             </Carousel>
           </div>
-          <div className='comments__wrapper p-9'>
+          <div className='comments__wrapper p-9 pt-4'>
             {user && <CommentsInput callback={handleMessageSend} />}
             {comments &&
               comments.map((item, i) => (
